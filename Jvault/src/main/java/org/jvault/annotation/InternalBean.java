@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 public @interface InternalBean {
     String name() default "";
     Type type() default Type.SINGLETON;
-    String[] accessVaults() default {""};
+    String[] accesses() default {};
 }

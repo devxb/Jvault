@@ -5,14 +5,15 @@ import org.junit.jupiter.api.Test;
 import org.jvault.beanreader.AnnotationBeanReader;
 import org.jvault.beanreader.BeanReader;
 import org.jvault.beans.Bean;
+import org.jvault.struct.emptyaccess.EmptyAccess;
 import org.jvault.struct.fieldInjectBean.FA;
 import org.jvault.struct.injectInInternalBean.A;
-import org.jvault.struct.injectInInternalBean.B;
-import org.jvault.struct.makeselfstruct.MA;
 import org.jvault.struct.mixedconstructorandfieldinject.MixedConstructorAndFieldInject;
+import org.jvault.struct.multipleaccesses.MultipleAccesses;
 import org.jvault.struct.newinsingleton.TypeNew;
 import org.jvault.struct.singletoninnew.TypeSingleton;
 import org.jvault.struct.typenew.TypeNewA;
+import org.jvault.struct.underbar_in_package_src.Can_Read_Underbar;
 
 import java.util.List;
 import java.util.Map;
@@ -121,7 +122,7 @@ public class DefaultBeanLoaderTest {
     }
 
     @Test
-    public void MAKE_SELFT_BEAN_LOADER_TEST(){
+    public void MAKE_SELF_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
         AnnotationBeanReader beanReader = new AnnotationBeanReader();
@@ -139,11 +140,9 @@ public class DefaultBeanLoaderTest {
 
         // when
         List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
 
         // then
-        MA ma = beans.get("mA").load();
-        Assertions.assertEquals("MA", ma.hello());
+        Assertions.assertThrows(IllegalStateException.class, ()-> beanLoader.load(classes));
     }
 
     @Test
@@ -313,6 +312,108 @@ public class DefaultBeanLoaderTest {
 
         // then
         Assertions.assertEquals("MixedB", result.hello());
+    }
+
+    @Test
+    public void CAN_NOT_ACCESS_BEAN_LOADER_TEST(){
+        // given
+        DefaultBeanLoader beanLoader = new DefaultBeanLoader();
+        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
+            @Override
+            public String getRootPackage() {
+                return "org.jvault.struct.cannotaccess";
+            }
+
+            @Override
+            public String[] getExcludePackages() {
+                return new String[0];
+            }
+        };
+
+        // when
+        List<Class<?>> classes = beanReader.read(location);
+
+        // then
+        Assertions.assertThrows(IllegalStateException.class, ()-> beanLoader.load(classes));
+    }
+
+    @Test
+    public void MULTIPLE_ACCESS_BEAN_LOADER_TEST(){
+        // given
+        DefaultBeanLoader beanLoader = new DefaultBeanLoader();
+        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
+            @Override
+            public String getRootPackage() {
+                return "org.jvault.struct.multipleaccesses";
+            }
+
+            @Override
+            public String[] getExcludePackages() {
+                return new String[0];
+            }
+        };
+
+        // when
+        List<Class<?>> classes = beanReader.read(location);
+        Map<String, Bean> beans = beanLoader.load(classes);
+        MultipleAccesses result = beans.get("multipleAccesses").load();
+
+        // then
+        Assertions.assertEquals("MultipleAccessesMultipleAccessesTargetBean", result.hello());
+    }
+
+    @Test
+    public void EMPTY_ACCESS_BEAN_LOADER_TEST(){
+        // given
+        DefaultBeanLoader beanLoader = new DefaultBeanLoader();
+        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
+            @Override
+            public String getRootPackage() {
+                return "org.jvault.struct.emptyaccess";
+            }
+
+            @Override
+            public String[] getExcludePackages() {
+                return new String[0];
+            }
+        };
+
+        // when
+        List<Class<?>> classes = beanReader.read(location);
+        Map<String, Bean> beans = beanLoader.load(classes);
+        EmptyAccess result = beans.get("emptyAccess").load();
+
+        // then
+        Assertions.assertEquals("EmptyAccessEmptyAccessTargetBean", result.hello());
+    }
+
+    @Test
+    public void UNDERBAR_IN_PACKAGE_SRC_BEAN_LOADER_TEST(){
+        // given
+        DefaultBeanLoader beanLoader = new DefaultBeanLoader();
+        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
+            @Override
+            public String getRootPackage() {
+                return "org.jvault.struct.underbar_in_package_src";
+            }
+
+            @Override
+            public String[] getExcludePackages() {
+                return new String[0];
+            }
+        };
+
+        // when
+        List<Class<?>> classes = beanReader.read(location);
+        Map<String, Bean> beans = beanLoader.load(classes);
+        Can_Read_Underbar can_read_underbar = beans.get("can_Read_Underbar").load();
+
+        // then
+        Assertions.assertEquals(Can_Read_Underbar.class.getSimpleName(), can_read_underbar.toString());
     }
 
 }

@@ -1,0 +1,36 @@
+package org.jvault.util;
+
+import org.jvault.annotation.Inject;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Reflection {
+
+    public Constructor<?> findConstructor(Class<?> cls){
+        Constructor<?>[] constructors = cls.getDeclaredConstructors();
+        Constructor<?> ans = null;
+        for(Constructor<?> constructor : constructors){
+            constructor.setAccessible(true);
+            if(constructor.getDeclaredAnnotation(Inject.class) == null) continue;
+            if(ans != null) throw new IllegalStateException("Duplicate @Inject annotation marked on constructor at " + cls.getName());
+            ans = constructor;
+        }
+        return ans;
+    }
+
+    public List<Field> findFields(Class<?> cls){
+        Field[] fields = cls.getDeclaredFields();
+        List<Field> ans = new ArrayList<>();
+        for(Field field : fields){
+            field.setAccessible(true);
+            Inject inject = field.getDeclaredAnnotation(Inject.class);
+            if(inject == null) continue;
+            ans.add(field);
+        }
+        return ans;
+    }
+
+}

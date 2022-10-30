@@ -3,10 +3,10 @@ package org.jvault.struct.mixedconstructorandfieldinject;
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 
-@InternalBean(accessVaults = "org.jvault")
+@InternalBean(accesses = "org.jvault")
 public final class MixedConstructorAndFieldInject {
 
-    @Inject(name = "mixedA")
+    @Inject("mixedA")
     private Mixed mixed;
 
     public String hello(){
@@ -14,7 +14,7 @@ public final class MixedConstructorAndFieldInject {
     }
 
     @Inject
-    public MixedConstructorAndFieldInject(@Inject(name = "mixedB") Mixed mixed){
+    public MixedConstructorAndFieldInject(@Inject("mixedB") Mixed mixed){
         this.mixed = mixed;
     }
 

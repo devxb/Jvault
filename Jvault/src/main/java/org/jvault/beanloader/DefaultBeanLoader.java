@@ -3,6 +3,7 @@ package org.jvault.beanloader;
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 import org.jvault.beans.Bean;
+import org.jvault.util.Reflection;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -48,10 +49,11 @@ public final class DefaultBeanLoader implements BeanLoader{
             LAZY_LOAD_BEANS.put(beanName, cls);
         }
     }
+
     private void loadBean(Class<?> cls) {
         String beanName = getBeanName(cls);
         if (SCC.containsKey(beanName)) {
-            if (SCC.get(beanName) < order && Objects.equals(FUNC_ENTER.get(beanName), enter))
+            if (SCC.get(beanName) <= order && Objects.equals(FUNC_ENTER.get(beanName), enter))
                 throw new IllegalStateException("Bean cycle was founded");
             return;
         }
@@ -68,26 +70,15 @@ public final class DefaultBeanLoader implements BeanLoader{
     }
 
     private void registerBean(String beanName, Class<?> cls){
-        Constructor<?> constructor = findConstructor(cls);
+        Reflection reflection = new Reflection();
+        Constructor<?> constructor = reflection.findConstructor(cls);
         if(!cls.getDeclaredAnnotation(InternalBean.class).name().equals("")) beanName = cls.getDeclaredAnnotation(InternalBean.class).name();
         if(constructor != null) {
             registerBeanFromConstructor(beanName, cls, constructor);
             return;
         }
-        List<Field> fields = findFields(cls);
+        List<Field> fields = reflection.findFields(cls);
         registerBeanFromField(beanName, cls, fields);
-    }
-
-    private Constructor<?> findConstructor(Class<?> cls){
-        Constructor<?>[] constructors = cls.getDeclaredConstructors();
-        Constructor<?> ans = null;
-        for(Constructor<?> constructor : constructors){
-            constructor.setAccessible(true);
-            if(constructor.getDeclaredAnnotation(Inject.class) == null) continue;
-            if(ans != null) throw new IllegalStateException("Duplicate @Inject annotation marked on constructor in " + cls.getName());
-            ans = constructor;
-        }
-        return ans;
     }
 
     private void registerBeanFromConstructor(String beanName, Class<?> cls, Constructor<?> constructor) {
@@ -95,37 +86,30 @@ public final class DefaultBeanLoader implements BeanLoader{
         List<Object> instancedParameters = new ArrayList<>();
         for(Parameter parameter : parameters){
            Inject inject = parameter.getDeclaredAnnotation(Inject.class);
-           if(inject == null || inject.name().equals("")) throw new IllegalStateException("Constructor injection must specify \"@Inject(name = ?)\"");
-           String name = inject.name();
-           if(!INSTANCES.containsKey(name)) {
-               if(!LAZY_LOAD_BEANS.containsKey(name)) throw new IllegalStateException("Can not find InternalBean named : " + name + " int : " + beanName);
-               loadBean(LAZY_LOAD_BEANS.get(name));
+           if(inject == null || inject.value().equals("")) throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
+           String value = inject.value();
+           if(!BEANS.containsKey(value)) {
+               if(!LAZY_LOAD_BEANS.containsKey(value)) throw new IllegalStateException("Can not find InternalBean named : " + value + " int : " + beanName);
+               loadBean(LAZY_LOAD_BEANS.get(value));
            }
-           instancedParameters.add(INSTANCES.get(name));
+           Bean bean = BEANS.get(value);
+           if(!bean.isInjectable(cls))
+               throw new IllegalStateException("Can not inject Bean named : " + value + " cause bean did not allow access package : " + cls.getPackageName());
+           instancedParameters.add(INSTANCES.get(value));
         }
         try {
             constructor.setAccessible(true);
             INSTANCES.put(beanName, constructor.newInstance(instancedParameters.toArray()));
+            InternalBean internalBean = cls.getDeclaredAnnotation(InternalBean.class);
             BEANS.put(beanName,
-                    cls.getDeclaredAnnotation(InternalBean.class).type().getBuilder()
+                    internalBean.type().getBuilder()
                             .name(beanName)
                             .beans(BEANS)
+                            .accesses(internalBean.accesses())
                             .instance(INSTANCES.get(beanName)).build());
         }catch(InvocationTargetException | InstantiationException | IllegalAccessException IE){
             throw new IllegalStateException("Can not call \"newInstance()\"");
         }
-    }
-
-    private List<Field> findFields(Class<?> cls){
-        Field[] fields = cls.getDeclaredFields();
-        List<Field> ans = new ArrayList<>();
-        for(Field field : fields){
-            field.setAccessible(true);
-            Inject inject = field.getDeclaredAnnotation(Inject.class);
-            if(inject == null) continue;
-            ans.add(field);
-        }
-        return ans;
     }
 
     private void registerBeanFromField(String beanName, Class<?> cls, List<Field> fields){
@@ -139,22 +123,25 @@ public final class DefaultBeanLoader implements BeanLoader{
         }
         for(Field field : fields){
             field.setAccessible(true);
-            String name = field.getName();
-            if(!field.getAnnotation(Inject.class).name().equals("")) name = field.getAnnotation(Inject.class).name();
-            if(!INSTANCES.containsKey(name)){
-                if(!LAZY_LOAD_BEANS.containsKey(name)) throw new IllegalStateException("Can not find InternalBean named : " + name + " in : " + beanName);
-                loadBean(LAZY_LOAD_BEANS.get(name));
+            String value = field.getName();
+            if(!field.getAnnotation(Inject.class).value().equals("")) value = field.getAnnotation(Inject.class).value();
+            if(!BEANS.containsKey(value)){
+                if(!LAZY_LOAD_BEANS.containsKey(value)) throw new IllegalStateException("Can not find InternalBean named : " + value + " in : " + beanName);
+                loadBean(LAZY_LOAD_BEANS.get(value));
             }
-            Object instance = INSTANCES.get(name);
+            if(!BEANS.get(value).isInjectable(cls))
+                throw new IllegalStateException("Can not inject Bean named : " + value + " cause bean did not allow access pacakge : " + cls.getPackageName());
             try {
-                field.set(bean, instance);
+                field.set(bean, INSTANCES.get(value));
             }catch(IllegalAccessException IAE){
-                throw new IllegalStateException("Can not access field named : " + name);
+                throw new IllegalStateException("Can not access field value : " + value);
             }
         }
         INSTANCES.put(beanName, bean);
-        BEANS.put(beanName, cls.getDeclaredAnnotation(InternalBean.class).type().getBuilder()
+        InternalBean internalBean = cls.getDeclaredAnnotation(InternalBean.class);
+        BEANS.put(beanName, internalBean.type().getBuilder()
                 .name(beanName)
+                .accesses(internalBean.accesses())
                 .instance(bean)
                 .beans(BEANS)
                 .build());

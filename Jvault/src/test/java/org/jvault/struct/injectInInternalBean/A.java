@@ -4,7 +4,7 @@ import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 import org.jvault.beans.Type;
 
-@InternalBean(name = "A", type = Type.SINGLETON, accessVaults = "org.jvault")
+@InternalBean(name = "A", type = Type.SINGLETON, accesses = "org.jvault")
 public class A {
 
     private final B B;
@@ -14,7 +14,7 @@ public class A {
     }
 
     @Inject
-    private A(@Inject(name = "B") B B){
+    private A(@Inject("B") B B){
         this.B = B;
     }
 

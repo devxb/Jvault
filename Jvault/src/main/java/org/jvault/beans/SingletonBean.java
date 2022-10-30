@@ -5,13 +5,24 @@ import java.util.Set;
 public final class SingletonBean implements Bean {
 
     private final String NAME;
-    private final Set<String> ACCESS_VAULTS;
+    private final String[] ACCESSES;
     private final Object INSTANCE;
 
     private SingletonBean(Bean.Builder<SingletonBean> builder){
         NAME = builder.name;
         INSTANCE = builder.instance;
-        ACCESS_VAULTS = builder.ACCESS_VAULTS;
+        ACCESSES = builder.accesses;
+    }
+
+    @Override
+    public boolean isInjectable(Class<?> cls) {
+        if(ACCESSES.length == 0) return true;
+        String clsSrc = cls.getPackageName();
+        for(String access : ACCESSES){
+            if(access.length() > clsSrc.length()) continue;
+            if(clsSrc.contains(access)) return true;
+        }
+        return false;
     }
 
     @Override

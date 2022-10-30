@@ -3,10 +3,10 @@ package org.jvault.struct.fieldInjectBean;
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 
-@InternalBean(accessVaults = "org.jvault")
+@InternalBean(accesses = "org.jvault")
 public class FB {
 
-    @Inject(name = "fC")
+    @Inject("fC")
     private FC FC;
 
     public String hello(){
