@@ -1,13 +1,22 @@
 package org.jvault.util;
 
 import org.jvault.annotation.Inject;
+import org.jvault.annotation.InternalBean;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Reflection {
+public final class Reflection {
+
+    private final static Reflection INSTANCE = new Reflection();
+
+    private Reflection(){}
+
+    static Reflection getInstance(){
+        return INSTANCE;
+    }
 
     public Constructor<?> findConstructor(Class<?> cls){
         Constructor<?>[] constructors = cls.getDeclaredConstructors();
@@ -15,7 +24,7 @@ public class Reflection {
         for(Constructor<?> constructor : constructors){
             constructor.setAccessible(true);
             if(constructor.getDeclaredAnnotation(Inject.class) == null) continue;
-            if(ans != null) throw new IllegalStateException("Duplicate @Inject annotation marked on constructor at " + cls.getName());
+            if(ans != null) throw new IllegalStateException("Duplicate @Inject annotation marked on constructor at \"" + cls.getName() + "\"");
             ans = constructor;
         }
         return ans;

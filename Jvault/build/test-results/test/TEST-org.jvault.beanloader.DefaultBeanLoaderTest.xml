@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.jvault.beanloader.DefaultBeanLoaderTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2022-10-30T14:03:52" hostname="xb-apple.local" time="0.025">
+<testsuite name="org.jvault.beanloader.DefaultBeanLoaderTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2022-10-31T09:35:58" hostname="xb-apple.local" time="0.026">
   <properties/>
-  <testcase name="TYPE_NEW_IN_SINGLETON_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.01"/>
+  <testcase name="TYPE_NEW_IN_SINGLETON_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.011"/>
   <testcase name="CAN_NOT_ACCESS_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.001"/>
-  <testcase name="EMPTY_ACCESS_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.001"/>
+  <testcase name="EMPTY_ACCESS_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.002"/>
   <testcase name="CYCLE_OCCURRED_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.001"/>
-  <testcase name="UNDERBAR_IN_PACKAGE_SRC_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.003"/>
+  <testcase name="UNDERBAR_IN_PACKAGE_SRC_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.0"/>
   <testcase name="PRIVATE_CONSTRUCTOR_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.001"/>
   <testcase name="TYPE_NEW_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.001"/>
-  <testcase name="MULTIPLE_ACCESS_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.001"/>
+  <testcase name="MULTIPLE_ACCESS_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.0"/>
   <testcase name="FIELD_INJECT_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.001"/>
-  <testcase name="MIXED_CONSTRUCTOR_AND_FIELD_INJECT_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.0"/>
+  <testcase name="MIXED_CONSTRUCTOR_AND_FIELD_INJECT_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.001"/>
   <testcase name="MAKE_SELF_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.0"/>
-  <testcase name="TYPE_SINGLETON_NEW_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.001"/>
+  <testcase name="TYPE_SINGLETON_NEW_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.0"/>
+  <testcase name="INJECT_INTERFACE_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.0"/>
   <testcase name="DEFAULT_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.001"/>
-  <testcase name="DUPLICATED_CONSTRUCTOR_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.001"/>
+  <testcase name="EXCLUDE_PACKAGE_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.002"/>
+  <testcase name="DUPLICATED_CONSTRUCTOR_BEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.0"/>
   <testcase name="INJECT_IN_INTERNALBEAN_LOADER_TEST()" classname="org.jvault.beanloader.DefaultBeanLoaderTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

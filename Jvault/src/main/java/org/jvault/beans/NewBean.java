@@ -1,8 +1,6 @@
 package org.jvault.beans;
 
-
 import org.jvault.annotation.Inject;
-import org.jvault.annotation.InternalBean;
 import org.jvault.util.Reflection;
 
 import java.lang.reflect.Constructor;
@@ -12,7 +10,6 @@ import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public final class NewBean implements Bean{
 
@@ -20,12 +17,14 @@ public final class NewBean implements Bean{
     private final String[] ACCESSES;
     private final Object INSTANCE;
     private final Map<String, Bean> BEANS;
+    private final Reflection REFLECTION;
 
     private NewBean(Bean.Builder<NewBean> builder){
         NAME = builder.name;
         ACCESSES = builder.accesses;
         INSTANCE = builder.instance;
         BEANS = builder.beans;
+        REFLECTION = builder.reflection;
     }
 
     @Override
@@ -41,11 +40,10 @@ public final class NewBean implements Bean{
 
     @Override
     public <R> R load() {
-        Reflection reflection = new Reflection();
         Class<?> cls = INSTANCE.getClass();
-        Constructor<?> constructor = reflection.findConstructor(cls);
+        Constructor<?> constructor = REFLECTION.findConstructor(cls);
         if(constructor != null) return (R) loadBeanFromConstructor(constructor);
-        List<Field> fields = reflection.findFields(cls);
+        List<Field> fields = REFLECTION.findFields(cls);
         return (R) loadBeanFromField(cls, fields);
     }
 
@@ -56,7 +54,7 @@ public final class NewBean implements Bean{
             Inject inject = parameter.getDeclaredAnnotation(Inject.class);
             if(inject == null || inject.value().equals("")) throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
             String value = inject.value();
-            if(!BEANS.containsKey(value)) throw new IllegalStateException("Can not find bean name : " + value);
+            if(!BEANS.containsKey(value)) throw new IllegalStateException("Can not find bean name \"" + value + "\"");
             instancedParameters.add(BEANS.get(value).load());
         }
         try{
@@ -74,18 +72,18 @@ public final class NewBean implements Bean{
             constructor.setAccessible(true);
             bean = constructor.newInstance();
         }catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            throw new IllegalStateException("Can not find default constructor of " + NAME);
+            throw new IllegalStateException("Can not find default constructor in this class \"" + cls.getSimpleName() + "\"");
         }
         for(Field field : fields){
             field.setAccessible(true);
             String value = field.getName();
             if(!field.getAnnotation(Inject.class).value().equals("")) value = field.getAnnotation(Inject.class).value();
-            if(!BEANS.containsKey(value)) throw new IllegalStateException("Can not find bean named : " + value);
+            if(!BEANS.containsKey(value)) throw new IllegalStateException("Can not find bean named \"" + value + "\"");
             Object instance = BEANS.get(value).load();
             try{
                 field.set(bean, instance);
             } catch (IllegalAccessException e) {
-                throw new IllegalStateException("Can not access field value : " + value);
+                throw new IllegalStateException("Can not access field value \"" + value + "\"");
             }
         }
         return bean;
