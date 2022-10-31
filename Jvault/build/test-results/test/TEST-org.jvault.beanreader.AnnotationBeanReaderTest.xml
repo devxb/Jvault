@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.jvault.beanreader.AnnotationBeanReaderTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2022-10-30T14:03:52" hostname="xb-apple.local" time="0.001">
+<testsuite name="org.jvault.beanreader.AnnotationBeanReaderTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-10-31T09:35:58" hostname="xb-apple.local" time="0.002">
   <properties/>
-  <testcase name="ANNOTATION_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.001"/>
-  <testcase name="UNDERBAR_IN_PACKAGE_SRC_BEAN_LEADER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.0"/>
+  <testcase name="EXCLUDE_PACKAGE_BEAN_LEADER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.001"/>
+  <testcase name="ANNOTATION_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.0"/>
+  <testcase name="UNDERBAR_IN_PACKAGE_SRC_BEAN_LEADER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.001"/>
   <testcase name="FILED_INJECT_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

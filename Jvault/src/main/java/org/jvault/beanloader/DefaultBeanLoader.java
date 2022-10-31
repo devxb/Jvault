@@ -3,6 +3,7 @@ package org.jvault.beanloader;
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 import org.jvault.beans.Bean;
+import org.jvault.beans.BeanBuilderFactory;
 import org.jvault.util.Reflection;
 
 import java.lang.reflect.Constructor;
@@ -15,12 +16,16 @@ public final class DefaultBeanLoader implements BeanLoader{
 
     private int order = 1;
     private int enter = 1;
+    private final Reflection REFLECTION;
+    private final BeanBuilderFactory BEAN_BUILDER_FACTORY;
     private final Map<String, Bean> BEANS;
     private final Map<String, Object> INSTANCES;
     private final Map<String, Class<?>> LAZY_LOAD_BEANS;
     private final Map<String, Integer> SCC;
     private final Map<String, Integer> FUNC_ENTER;
     {
+        REFLECTION = Accessors.UtilAccessor.getAccessor().getReflection();
+        BEAN_BUILDER_FACTORY = Accessors.BeansAccessor.getAccessor().getBeanBuilderFactory();
         BEANS = new HashMap<>();
         INSTANCES = new HashMap<>();
         LAZY_LOAD_BEANS = new HashMap<>();
@@ -45,7 +50,7 @@ public final class DefaultBeanLoader implements BeanLoader{
         for (Class<?> cls : classes) {
             String beanName = getBeanName(cls);
             if (LAZY_LOAD_BEANS.containsKey(beanName))
-                throw new IllegalStateException("Duplicate bean name was founded : " + beanName);
+                throw new IllegalStateException("Duplicate bean name was founded \"" + beanName + "\"");
             LAZY_LOAD_BEANS.put(beanName, cls);
         }
     }
@@ -70,14 +75,13 @@ public final class DefaultBeanLoader implements BeanLoader{
     }
 
     private void registerBean(String beanName, Class<?> cls){
-        Reflection reflection = new Reflection();
-        Constructor<?> constructor = reflection.findConstructor(cls);
+        Constructor<?> constructor = REFLECTION.findConstructor(cls);
         if(!cls.getDeclaredAnnotation(InternalBean.class).name().equals("")) beanName = cls.getDeclaredAnnotation(InternalBean.class).name();
         if(constructor != null) {
             registerBeanFromConstructor(beanName, cls, constructor);
             return;
         }
-        List<Field> fields = reflection.findFields(cls);
+        List<Field> fields = REFLECTION.findFields(cls);
         registerBeanFromField(beanName, cls, fields);
     }
 
@@ -89,12 +93,12 @@ public final class DefaultBeanLoader implements BeanLoader{
            if(inject == null || inject.value().equals("")) throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
            String value = inject.value();
            if(!BEANS.containsKey(value)) {
-               if(!LAZY_LOAD_BEANS.containsKey(value)) throw new IllegalStateException("Can not find InternalBean named : " + value + " int : " + beanName);
+               if(!LAZY_LOAD_BEANS.containsKey(value)) throw new IllegalStateException("Can not find InternalBean named \"" + value + "\"");
                loadBean(LAZY_LOAD_BEANS.get(value));
            }
            Bean bean = BEANS.get(value);
            if(!bean.isInjectable(cls))
-               throw new IllegalStateException("Can not inject Bean named : " + value + " cause bean did not allow access package : " + cls.getPackageName());
+               throw new IllegalStateException("Can not inject Bean named \"" + value + "\" cause bean did not allow access package \"" + cls.getPackageName() + "\"");
            instancedParameters.add(INSTANCES.get(value));
         }
         try {
@@ -102,10 +106,11 @@ public final class DefaultBeanLoader implements BeanLoader{
             INSTANCES.put(beanName, constructor.newInstance(instancedParameters.toArray()));
             InternalBean internalBean = cls.getDeclaredAnnotation(InternalBean.class);
             BEANS.put(beanName,
-                    internalBean.type().getBuilder()
+                    BEAN_BUILDER_FACTORY.getBeanBuilder(internalBean.type())
                             .name(beanName)
                             .beans(BEANS)
                             .accesses(internalBean.accesses())
+                            .reflection(REFLECTION)
                             .instance(INSTANCES.get(beanName)).build());
         }catch(InvocationTargetException | InstantiationException | IllegalAccessException IE){
             throw new IllegalStateException("Can not call \"newInstance()\"");
@@ -119,32 +124,35 @@ public final class DefaultBeanLoader implements BeanLoader{
             constructor.setAccessible(true);
             bean = constructor.newInstance();
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            throw new IllegalStateException("Can not find default constructor of " + beanName);
+            throw new IllegalStateException("Can not find default constructor of \"" + beanName + "\"");
         }
         for(Field field : fields){
             field.setAccessible(true);
             String value = field.getName();
             if(!field.getAnnotation(Inject.class).value().equals("")) value = field.getAnnotation(Inject.class).value();
             if(!BEANS.containsKey(value)){
-                if(!LAZY_LOAD_BEANS.containsKey(value)) throw new IllegalStateException("Can not find InternalBean named : " + value + " in : " + beanName);
+                if(!LAZY_LOAD_BEANS.containsKey(value)) throw new IllegalStateException("Can not find InternalBean named \"" + value + "\" in \"" + beanName + "\"");
                 loadBean(LAZY_LOAD_BEANS.get(value));
             }
             if(!BEANS.get(value).isInjectable(cls))
-                throw new IllegalStateException("Can not inject Bean named : " + value + " cause bean did not allow access pacakge : " + cls.getPackageName());
+                throw new IllegalStateException("Can not inject Bean named \"" + value + "\" cause bean did not allow access package \"" + cls.getPackageName() + "\"");
             try {
                 field.set(bean, INSTANCES.get(value));
             }catch(IllegalAccessException IAE){
-                throw new IllegalStateException("Can not access field value : " + value);
+                throw new IllegalStateException("Can not access field value \"" + value + "\"");
             }
         }
         INSTANCES.put(beanName, bean);
         InternalBean internalBean = cls.getDeclaredAnnotation(InternalBean.class);
-        BEANS.put(beanName, internalBean.type().getBuilder()
+        BEANS.put(beanName, BEAN_BUILDER_FACTORY.getBeanBuilder(internalBean.type())
                 .name(beanName)
                 .accesses(internalBean.accesses())
                 .instance(bean)
                 .beans(BEANS)
+                .reflection(REFLECTION)
                 .build());
     }
+
+    DefaultBeanLoader() {}
 
 }

@@ -2,12 +2,12 @@ package org.jvault.beanloader;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.jvault.beanreader.AnnotationBeanReader;
 import org.jvault.beanreader.BeanReader;
 import org.jvault.beans.Bean;
 import org.jvault.struct.emptyaccess.EmptyAccess;
 import org.jvault.struct.fieldInjectBean.FA;
 import org.jvault.struct.injectInInternalBean.A;
+import org.jvault.struct.injectinterface.InjectInterface;
 import org.jvault.struct.mixedconstructorandfieldinject.MixedConstructorAndFieldInject;
 import org.jvault.struct.multipleaccesses.MultipleAccesses;
 import org.jvault.struct.newinsingleton.TypeNew;
@@ -24,7 +24,7 @@ public class DefaultBeanLoaderTest {
     public void DEFAULT_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -49,7 +49,7 @@ public class DefaultBeanLoaderTest {
     public void INJECT_IN_INTERNALBEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -75,7 +75,7 @@ public class DefaultBeanLoaderTest {
     public void FIELD_INJECT_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -101,7 +101,7 @@ public class DefaultBeanLoaderTest {
     public void CYCLE_OCCURRED_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -125,7 +125,7 @@ public class DefaultBeanLoaderTest {
     public void MAKE_SELF_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -149,7 +149,7 @@ public class DefaultBeanLoaderTest {
     public void DUPLICATED_CONSTRUCTOR_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -173,7 +173,7 @@ public class DefaultBeanLoaderTest {
     public void PRIVATE_CONSTRUCTOR_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -198,7 +198,7 @@ public class DefaultBeanLoaderTest {
     public void TYPE_NEW_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -229,7 +229,7 @@ public class DefaultBeanLoaderTest {
     public void TYPE_NEW_IN_SINGLETON_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -260,7 +260,7 @@ public class DefaultBeanLoaderTest {
     public void TYPE_SINGLETON_NEW_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -292,7 +292,7 @@ public class DefaultBeanLoaderTest {
     public void MIXED_CONSTRUCTOR_AND_FIELD_INJECT_BEAN_LOADER_TEST() {
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -318,7 +318,7 @@ public class DefaultBeanLoaderTest {
     public void CAN_NOT_ACCESS_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -342,7 +342,7 @@ public class DefaultBeanLoaderTest {
     public void MULTIPLE_ACCESS_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -368,7 +368,7 @@ public class DefaultBeanLoaderTest {
     public void EMPTY_ACCESS_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -394,7 +394,7 @@ public class DefaultBeanLoaderTest {
     public void UNDERBAR_IN_PACKAGE_SRC_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        AnnotationBeanReader beanReader = new AnnotationBeanReader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
             public String getRootPackage() {
@@ -414,6 +414,56 @@ public class DefaultBeanLoaderTest {
 
         // then
         Assertions.assertEquals(Can_Read_Underbar.class.getSimpleName(), can_read_underbar.toString());
+    }
+
+    @Test
+    public void INJECT_INTERFACE_BEAN_LOADER_TEST(){
+        // given
+        DefaultBeanLoader beanLoader = new DefaultBeanLoader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
+        BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
+            @Override
+            public String getRootPackage() {
+                return "org.jvault.struct.injectinterface";
+            }
+
+            @Override
+            public String[] getExcludePackages() {
+                return new String[0];
+            }
+        };
+
+        // when
+        List<Class<?>> classes = beanReader.read(location);
+        Map<String, Bean> beans = beanLoader.load(classes);
+        InjectInterface injectInterface = beans.get("injectInterface").load();
+
+        // then
+        Assertions.assertEquals("InjectInterfaceInterfaceImplB", injectInterface.hello());
+    }
+
+    @Test
+    public void EXCLUDE_PACKAGE_BEAN_LOADER_TEST(){
+        // given
+        DefaultBeanLoader beanLoader = new DefaultBeanLoader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
+        BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
+            @Override
+            public String getRootPackage() {
+                return "org.jvault.struct.excludepackage";
+            }
+
+            @Override
+            public String[] getExcludePackages() {
+                return new String[]{"org.jvault.struct.excludepackage.exclude"};
+            }
+        };
+
+        // when
+        List<Class<?>> classes = beanReader.read(location);
+
+        // then
+        Assertions.assertThrows(IllegalStateException.class, ()-> beanLoader.load(classes));
     }
 
 }

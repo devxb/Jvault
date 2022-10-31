@@ -10,6 +10,14 @@ import java.util.List;
 
 public final class PackageReader {
 
+    private final static PackageReader INSTANCE = new PackageReader();
+
+    private PackageReader(){}
+
+    static PackageReader getInstance(){
+        return INSTANCE;
+    }
+
     public List<String> findDirectories(String pkg){
         String pkgSrc = pkg.replace(".", "/");
         List<String> directories = new ArrayList<>();

@@ -1,7 +1,5 @@
 package org.jvault.beans;
 
-import java.util.Set;
-
 public final class SingletonBean implements Bean {
 
     private final String NAME;
