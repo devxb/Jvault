@@ -3,7 +3,7 @@ package org.jvault.struct.mixedconstructorandfieldinject;
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 
-@InternalBean(accesses = "org.jvault")
+@InternalBean(accesses = "org.jvault.*")
 public final class MixedConstructorAndFieldInject {
 
     @Inject("mixedA")

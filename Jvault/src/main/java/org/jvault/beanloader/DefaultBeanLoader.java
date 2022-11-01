@@ -98,7 +98,7 @@ public final class DefaultBeanLoader implements BeanLoader{
            }
            Bean bean = BEANS.get(value);
            if(!bean.isInjectable(cls))
-               throw new IllegalStateException("Can not inject Bean named \"" + value + "\" cause bean did not allow access package \"" + cls.getPackageName() + "\"");
+               throw new IllegalStateException("Can not inject bean named \"" + value + "\" cause bean did not allow access package \"" + cls.getPackageName() + "\"");
            instancedParameters.add(INSTANCES.get(value));
         }
         try {
@@ -135,7 +135,7 @@ public final class DefaultBeanLoader implements BeanLoader{
                 loadBean(LAZY_LOAD_BEANS.get(value));
             }
             if(!BEANS.get(value).isInjectable(cls))
-                throw new IllegalStateException("Can not inject Bean named \"" + value + "\" cause bean did not allow access package \"" + cls.getPackageName() + "\"");
+                throw new IllegalStateException("Can not inject bean named \"" + value + "\" cause bean did not allow access package \"" + cls.getPackageName() + "\"");
             try {
                 field.set(bean, INSTANCES.get(value));
             }catch(IllegalAccessException IAE){

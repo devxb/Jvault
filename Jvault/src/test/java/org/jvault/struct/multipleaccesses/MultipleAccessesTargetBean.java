@@ -2,10 +2,10 @@ package org.jvault.struct.multipleaccesses;
 
 import org.jvault.annotation.InternalBean;
 
-@InternalBean(accesses = {"java.lang",
+@InternalBean(accesses = {"java.lang.*",
         "org.jvault",
         "org.jvault.struct",
-        "org.jvault.struct.multiplaccesses"})
+        "org.jvault.struct.multipleaccesses"})
 public class MultipleAccessesTargetBean {
 
     public String hello(){

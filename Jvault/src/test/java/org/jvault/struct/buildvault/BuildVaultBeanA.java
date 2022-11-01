@@ -2,7 +2,7 @@ package org.jvault.struct.buildvault;
 
 import org.jvault.annotation.InternalBean;
 
-@InternalBean(accesses = "org.jvault.struct.buildvault")
+@InternalBean(accesses = "org.jvault.struct.buildvault.*")
 public class BuildVaultBeanA implements BuildVaultBean{
     @Override
     public String imBean() {

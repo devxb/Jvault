@@ -4,7 +4,7 @@ import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 import org.jvault.beans.Type;
 
-@InternalBean(type = Type.SINGLETON, accesses = "org.jvault")
+@InternalBean(type = Type.SINGLETON, accesses = "org.jvault.*")
 public final class TypeSingleton {
 
     private final TypeNewInSingleton TYPE_NEW_IN_SINGLETON;

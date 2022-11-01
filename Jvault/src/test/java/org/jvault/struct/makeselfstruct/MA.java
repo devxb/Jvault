@@ -3,7 +3,7 @@ package org.jvault.struct.makeselfstruct;
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 
-@InternalBean(accesses = "org.jvault")
+@InternalBean(accesses = "org.jvault.*")
 public class MA {
 
     MA MA;

@@ -3,8 +3,6 @@ package org.jvault.beans;
 import org.jvault.util.PackageReader;
 import org.jvault.util.Reflection;
 
-import java.io.File;
-import java.net.URL;
 import java.util.*;
 
 public interface Bean {
@@ -14,7 +12,7 @@ public interface Bean {
     abstract class Builder<S extends Bean>{
 
         String name;
-        String[] accesses = new String[0];
+        String[] accesses;
         Object instance;
         Reflection reflection;
         Map<String, Bean> beans;

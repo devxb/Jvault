@@ -2,21 +2,13 @@ package org.jvault.vault;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.jvault.beanloader.BeanLoader;
-import org.jvault.beanloader.DefaultBeanLoader;
-import org.jvault.beanreader.AnnotationBeanReader;
 import org.jvault.beanreader.BeanReader;
-import org.jvault.beans.Bean;
 import org.jvault.factory.ClassVaultFactory;
-import org.jvault.factory.VaultFactory;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
 import org.jvault.factory.buildinfo.VaultFactoryBuildInfo;
 import org.jvault.struct.buildvault.BuildVault;
 import org.jvault.struct.buildvaultcannotinjectbean.BuildVaultCannotInjectBean;
 import org.jvault.struct.buildvaultcannotinjectclass.BuildVaultCannotInjectClass;
-
-import java.util.List;
-import java.util.Map;
 
 public class ClassVaultTest {
 
@@ -34,8 +26,8 @@ public class ClassVaultTest {
             public BeanReader.BeanLocation getBeanLocation() {
                 return new BeanReader.BeanLocation(){
                     @Override
-                    public String getRootPackage() {
-                        return "org.jvault.struct.buildvault";
+                    public String[] getRootPackage() {
+                        return new String[]{"org.jvault.struct.buildvault.*"};
                     }
 
                     @Override
@@ -68,8 +60,8 @@ public class ClassVaultTest {
             public BeanReader.BeanLocation getBeanLocation() {
                 return new BeanReader.BeanLocation(){
                     @Override
-                    public String getRootPackage() {
-                        return "org.jvault.struct.buildvaultcannotinjectclass";
+                    public String[] getRootPackage() {
+                        return new String[]{"org.jvault.struct.buildvaultcannotinjectclass.*"};
                     }
 
                     @Override
@@ -101,8 +93,8 @@ public class ClassVaultTest {
             public BeanReader.BeanLocation getBeanLocation() {
                 return new BeanReader.BeanLocation(){
                     @Override
-                    public String getRootPackage() {
-                        return "org.jvault.struct.buildvaultcannotinjectbean";
+                    public String[] getRootPackage() {
+                        return new String[]{"org.jvault.struct.buildvaultcannotinjectbean.*"};
                     }
 
                     @Override

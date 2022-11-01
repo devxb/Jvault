@@ -4,7 +4,7 @@ import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 import org.jvault.beans.Type;
 
-@InternalBean(type = Type.SINGLETON, accesses = {"org.jvault.struct.injectinterface"})
+@InternalBean(type = Type.SINGLETON, accesses = {"org.jvault.struct.injectinterface.*"})
 public class InjectInterface {
 
     private final SomeInterface SOME_INTERFACE;

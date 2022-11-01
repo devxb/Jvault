@@ -4,7 +4,7 @@ import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 import org.jvault.beans.Type;
 
-@InternalBean(type = Type.NEW, accesses = "org.jvault")
+@InternalBean(type = Type.NEW, accesses = "org.jvault.*")
 final class TypeNewB {
 
     private final TypeNewC TYPE_NEW_C;

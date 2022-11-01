@@ -1,7 +1,6 @@
 package org.jvault.vault;
 
 import org.jvault.beans.Bean;
-import org.jvault.util.PackageReader;
 
 import java.util.*;
 

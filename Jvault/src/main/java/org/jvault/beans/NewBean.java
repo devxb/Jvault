@@ -32,10 +32,19 @@ public final class NewBean implements Bean{
         if(ACCESSES.length == 0) return true;
         String clsSrc = cls.getPackageName();
         for(String access : ACCESSES){
-            if(access.length() > clsSrc.length()) continue;
-            if(clsSrc.contains(access)) return true;
+            if(isContainSelectAllRegex(access)) {
+                String substring = access.substring(0, access.length()-2);
+                if (substring.length() > clsSrc.length()) continue;
+                if (clsSrc.contains(substring)) return true;
+                continue;
+            }
+            if(access.equals(clsSrc)) return true;
         }
         return false;
+    }
+
+    private boolean isContainSelectAllRegex(String pkg){
+        return pkg.startsWith(".*", pkg.length()-2);
     }
 
     @Override
