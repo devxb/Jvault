@@ -4,8 +4,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.jvault.beanreader.BeanReader;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
+import org.jvault.factory.buildinfo.PropertiesVaultFactoryBuildInfo;
 import org.jvault.factory.buildinfo.VaultFactoryBuildInfo;
 import org.jvault.struct.beanwithfactory.BeanWithFactoryInjectTarget;
+import org.jvault.struct.scanwithproperties.ScanProperties;
+import org.jvault.vault.ClassVault;
 import org.jvault.vault.Vault;
 
 public class ClassVaultFactoryTest {
@@ -43,6 +46,20 @@ public class ClassVaultFactoryTest {
         // then
         Assertions.assertEquals("BeanWithFactoryBeanWithFactoryBeanABeanWithFactoryBeanBBeanWithFactoryBeanC"
                 , injectTarget.hello());
+    }
+
+    @Test
+    public void READ_WITH_PROPERTIES_TEST(){
+        // given
+        ClassVaultFactory vaultFactory = ClassVaultFactory.getInstance();
+        VaultFactoryBuildInfo buildInfo = new PropertiesVaultFactoryBuildInfo("/Users/devxb/develop/Jvault/Jvault/Jvault/src/test/java/org/jvault/factory/buildinfo.properties");
+
+        // when
+        Vault<Class<?>> vault = vaultFactory.get(buildInfo);
+        ScanProperties scanProperties = vault.inject(ScanProperties.class);
+
+        // then
+        Assertions.assertEquals("ScanPropertiesPropertiesBean1PropertiesBean2", scanProperties.hello());
     }
 
 }

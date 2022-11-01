@@ -36,6 +36,11 @@ public class ClassVaultTest {
                     }
                 };
             }
+
+            @Override
+            public String[] getInjectAccesses(){
+                return new String[]{"org.jvault.struct.buildvault"};
+            }
         };
 
         // when
