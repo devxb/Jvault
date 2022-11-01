@@ -3,7 +3,7 @@ package org.jvault.struct.privateconstructor;
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 
-@InternalBean(accesses = "org.jvault")
+@InternalBean(accesses = "org.jvault.*")
 final class PrivateConstructor {
 
     private final PrivateBean PRIVATE_BEAN;

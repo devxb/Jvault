@@ -2,10 +2,8 @@ package org.jvault.beanreader;
 
 import org.jvault.util.PackageReader;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.logging.Logger;
 
 public final class AnnotationBeanReader implements BeanReader{
 
@@ -17,9 +15,38 @@ public final class AnnotationBeanReader implements BeanReader{
 
     @Override
     public List<Class<?>> read(BeanLocation beanLocation) {
-        String pkg = beanLocation.getRootPackage();
-        Set<String> excludePackages = new HashSet<>(Arrays.asList(beanLocation.getExcludePackages()));
-        return findClasses(pkg, excludePackages);
+        String[] pakages = beanLocation.getRootPackage();
+        Set<String> excludePackages = initExcludePackages(beanLocation.getExcludePackages());
+        List<Class<?>> classes = new ArrayList<>();
+        for(String pkg : pakages){
+            if(isContainSelectAllRegex(pkg)) {
+                classes.addAll(findClasses(pkg.substring(0, pkg.length()-2), excludePackages));
+                continue;
+            }
+            if(excludePackages.contains(pkg)) continue;
+            classes.addAll(PACKAGE_READER.findClasses(pkg));
+        }
+        return classes;
+    }
+
+    private Set<String> initExcludePackages(String[] excludePackages){
+        Set<String> excludedPackages = new HashSet<>();
+        for(String excludePackage : excludePackages){
+            if(isContainSelectAllRegex(excludePackage)) excludedPackages.addAll(findExcludedPackages(excludePackage.substring(0, excludePackage.length()-2)));
+            else excludedPackages.add(excludePackage);
+        }
+        return excludedPackages;
+    }
+
+    private boolean isContainSelectAllRegex(String pkg){
+        return pkg.startsWith(".*", pkg.length()-2);
+    }
+
+    private List<String> findExcludedPackages(String pkg){
+        List<String> excludePackages = new ArrayList<>(List.of(pkg));
+        List<String> directories = PACKAGE_READER.findDirectories(pkg);
+        for(String directory : directories) excludePackages.addAll(findExcludedPackages(pkg + "." + directory));
+        return excludePackages;
     }
 
     private List<Class<?>> findClasses(String pkg, Set<String> excludePackages){

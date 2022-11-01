@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.jvault.beanreader.BeanReader;
 import org.jvault.beans.Bean;
+import org.jvault.struct.beanregex.BeanRegex;
 import org.jvault.struct.emptyaccess.EmptyAccess;
 import org.jvault.struct.fieldInjectBean.FA;
 import org.jvault.struct.injectInInternalBean.A;
@@ -27,8 +28,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.defaultstruct";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.defaultstruct.*"};
             }
 
             @Override
@@ -52,8 +53,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.injectInInternalBean";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.injectInInternalBean.*"};
             }
 
             @Override
@@ -78,8 +79,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.fieldInjectBean";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.fieldInjectBean.*"};
             }
 
             @Override
@@ -104,8 +105,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.cyclestruct";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.cyclestruct.*"};
             }
 
             @Override
@@ -128,8 +129,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.makeselfstruct";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.makeselfstruct.*"};
             }
 
             @Override
@@ -152,8 +153,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.duplicateconstructor";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.duplicateconstructor.*"};
             }
 
             @Override
@@ -176,8 +177,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.privateconstructor";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.privateconstructor.*"};
             }
 
             @Override
@@ -201,8 +202,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.typenew";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.typenew.*"};
             }
 
             @Override
@@ -232,8 +233,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.singletoninnew";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.singletoninnew.*"};
             }
 
             @Override
@@ -263,8 +264,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.newinsingleton";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.newinsingleton.*"};
             }
 
             @Override
@@ -295,8 +296,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.mixedconstructorandfieldinject";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.mixedconstructorandfieldinject.*"};
             }
 
             @Override
@@ -321,8 +322,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.cannotaccess";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.cannotaccess.*"};
             }
 
             @Override
@@ -345,8 +346,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.multipleaccesses";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.multipleaccesses.*"};
             }
 
             @Override
@@ -371,8 +372,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.emptyaccess";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.emptyaccess.*"};
             }
 
             @Override
@@ -397,8 +398,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.underbar_in_package_src";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.underbar_in_package_src.*"};
             }
 
             @Override
@@ -423,8 +424,8 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.injectinterface";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.injectinterface.*"};
             }
 
             @Override
@@ -449,13 +450,63 @@ public class DefaultBeanLoaderTest {
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
             @Override
-            public String getRootPackage() {
-                return "org.jvault.struct.excludepackage";
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.excludepackage.*"};
             }
 
             @Override
             public String[] getExcludePackages() {
                 return new String[]{"org.jvault.struct.excludepackage.exclude"};
+            }
+        };
+
+        // when
+        List<Class<?>> classes = beanReader.read(location);
+
+        // then
+        Assertions.assertThrows(IllegalStateException.class, ()-> beanLoader.load(classes));
+    }
+
+    @Test
+    public void BEAN_REGEX_BEAN_LOADER_TEST(){
+        // given
+        DefaultBeanLoader beanLoader = new DefaultBeanLoader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
+        BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
+            @Override
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.beanregex"};
+            }
+
+            @Override
+            public String[] getExcludePackages() {
+                return new String[0];
+            }
+        };
+
+        // when
+        List<Class<?>> classes = beanReader.read(location);
+        Map<String, Bean> beans = beanLoader.load(classes);
+        BeanRegex beanRegex = beans.get("beanRegex").load();
+
+        // then
+        Assertions.assertEquals("BeanRegexInjectableBeanRegexInjectableBean", beanRegex.hello());
+    }
+
+    @Test
+    public void FAIL_BEAN_REGEX_BEAN_LOADER_TEST(){
+        // given
+        DefaultBeanLoader beanLoader = new DefaultBeanLoader();
+        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
+        BeanReader.BeanLocation location = new BeanReader.BeanLocation() {
+            @Override
+            public String[] getRootPackage() {
+                return new String[]{"org.jvault.struct.failbeanregex"};
+            }
+
+            @Override
+            public String[] getExcludePackages() {
+                return new String[0];
             }
         };
 

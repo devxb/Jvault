@@ -3,7 +3,7 @@ package org.jvault.struct.fieldInjectBean;
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 
-@InternalBean(accesses = "org.jvault")
+@InternalBean(accesses = "org.jvault.*")
 public class FA {
 
     @Inject("fB")
