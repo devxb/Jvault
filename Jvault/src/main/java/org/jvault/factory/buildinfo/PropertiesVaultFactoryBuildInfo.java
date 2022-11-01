@@ -48,8 +48,8 @@ public final class PropertiesVaultFactoryBuildInfo implements VaultFactoryBuildI
         return new BeanReader.BeanLocation(){
 
             @Override
-            public String[] getRootPackage() {
-                String[] packages = properties.getProperty("org.jvault.reader.scan.packages", "").split(",");
+            public String[] getPackages() {
+                String[] packages = properties.getProperty("org.jvault.reader.packages", "").split(",");
                 for(int i = 0; i < packages.length; i++) packages[i] = packages[i].strip();
                 for(int i = 0; i < packages.length; i++) System.out.println(packages[i]);
                 return packages;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.jvault.vault.ClassVaultTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2022-11-01T10:56:48" hostname="xb-apple.local" time="0.002">
+<testsuite name="org.jvault.vault.ClassVaultTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2022-11-01T11:04:59" hostname="xb-apple.local" time="0.001">
   <properties/>
-  <testcase name="BUILD_VAULT_CREATE_VAULT_TEST()" classname="org.jvault.vault.ClassVaultTest" time="0.001"/>
+  <testcase name="BUILD_VAULT_CREATE_VAULT_TEST()" classname="org.jvault.vault.ClassVaultTest" time="0.0"/>
   <testcase name="BUILD_VAULT_CANNOT_INJECT_BEAN_CREATE_VAULT_TEST()" classname="org.jvault.vault.ClassVaultTest" time="0.001"/>
   <testcase name="BUILD_VAULT_CANNOT_INJECT_CLASS_CREATE_VAULT_TEST()" classname="org.jvault.vault.ClassVaultTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>

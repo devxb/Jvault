@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.jvault.beanreader.AnnotationBeanReaderTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2022-11-01T10:56:48" hostname="xb-apple.local" time="0.005">
+<testsuite name="org.jvault.beanreader.AnnotationBeanReaderTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2022-11-01T11:04:59" hostname="xb-apple.local" time="0.004">
   <properties/>
   <testcase name="EXCLUDE_PACKAGE_BEAN_LEADER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.001"/>
-  <testcase name="REGEX_TEST_EXCLUDE_SON2_EACH_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.001"/>
+  <testcase name="REGEX_TEST_EXCLUDE_SON2_EACH_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.0"/>
   <testcase name="UNDER_BAR_IN_PACKAGE_SRC_BEAN_LEADER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.0"/>
-  <testcase name="ANNOTATION_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.001"/>
-  <testcase name="REGEX_TEST_EXCLUDE_SON2_WITH_REGEX_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.0"/>
-  <testcase name="REGEX_TEST_READ_ALL_EACH_PACKAGE_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.001"/>
-  <testcase name="FILED_INJECT_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.0"/>
-  <testcase name="REGEX_TEST_READ_ALL_WITH_REGEX_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.001"/>
+  <testcase name="ANNOTATION_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.0"/>
+  <testcase name="REGEX_TEST_EXCLUDE_SON2_WITH_REGEX_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.001"/>
+  <testcase name="REGEX_TEST_READ_ALL_EACH_PACKAGE_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.0"/>
+  <testcase name="FILED_INJECT_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.001"/>
+  <testcase name="REGEX_TEST_READ_ALL_WITH_REGEX_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

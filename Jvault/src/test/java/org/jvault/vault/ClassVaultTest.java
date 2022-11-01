@@ -26,7 +26,7 @@ public class ClassVaultTest {
             public BeanReader.BeanLocation getBeanLocation() {
                 return new BeanReader.BeanLocation(){
                     @Override
-                    public String[] getRootPackage() {
+                    public String[] getPackages() {
                         return new String[]{"org.jvault.struct.buildvault.*"};
                     }
 
@@ -65,7 +65,7 @@ public class ClassVaultTest {
             public BeanReader.BeanLocation getBeanLocation() {
                 return new BeanReader.BeanLocation(){
                     @Override
-                    public String[] getRootPackage() {
+                    public String[] getPackages() {
                         return new String[]{"org.jvault.struct.buildvaultcannotinjectclass.*"};
                     }
 
@@ -98,7 +98,7 @@ public class ClassVaultTest {
             public BeanReader.BeanLocation getBeanLocation() {
                 return new BeanReader.BeanLocation(){
                     @Override
-                    public String[] getRootPackage() {
+                    public String[] getPackages() {
                         return new String[]{"org.jvault.struct.buildvaultcannotinjectbean.*"};
                     }
 

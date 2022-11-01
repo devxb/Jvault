@@ -15,7 +15,7 @@ public final class AnnotationBeanReader implements BeanReader{
 
     @Override
     public List<Class<?>> read(BeanLocation beanLocation) {
-        String[] pakages = beanLocation.getRootPackage();
+        String[] pakages = beanLocation.getPackages();
         Set<String> excludePackages = initExcludePackages(beanLocation.getExcludePackages());
         List<Class<?>> classes = new ArrayList<>();
         for(String pkg : pakages){

@@ -7,7 +7,7 @@ public interface BeanReader {
     List<Class<?>> read(BeanLocation beanLocation);
 
      interface BeanLocation{
-        String[] getRootPackage();
+        String[] getPackages();
         String[] getExcludePackages();
     }
 

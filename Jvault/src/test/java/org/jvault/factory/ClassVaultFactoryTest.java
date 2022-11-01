@@ -27,7 +27,7 @@ public class ClassVaultFactoryTest {
             public BeanReader.BeanLocation getBeanLocation() {
                 return new BeanReader.BeanLocation(){
                     @Override
-                    public String[] getRootPackage() {
+                    public String[] getPackages() {
                         return new String[]{"org.jvault.struct.beanwithfactory.*"};
                     }
 
