@@ -38,13 +38,21 @@ public final class ClassVault implements Vault<Class<?>>{
     }
 
     private boolean isVaultAccessible(Class<?> cls){
-        String src = cls.getPackageName();
         if(INJECT_ACCESSES.length == 0) return true;
+        String src = cls.getPackageName();
         for(String vaultAccess : INJECT_ACCESSES){
-            if(vaultAccess.length() > src.length()) continue;
-            if(src.contains(vaultAccess)) return true;
+            if(isContainSelectAllRegex(vaultAccess)){
+                String substring = vaultAccess.substring(0, vaultAccess.length()-2);
+                if(substring.length() > src.length()) continue;
+                if(src.contains(substring)) return true;
+            }
+            if(vaultAccess.equals(src)) return true;
         }
         return false;
+    }
+
+    private boolean isContainSelectAllRegex(String pkg){
+        return pkg.startsWith(".*", pkg.length()-2);
     }
 
     private Object loadBeanFromConstructor(Class<?> cls, Constructor<?> constructor) {
