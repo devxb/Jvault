@@ -1,6 +1,7 @@
 package org.jvault.beans;
 
 import org.jvault.annotation.Inject;
+import org.jvault.exceptions.NoDefinedInternalBeanException;
 import org.jvault.util.Reflection;
 
 import java.lang.reflect.Constructor;
@@ -63,14 +64,14 @@ public final class NewBean implements Bean{
             Inject inject = parameter.getDeclaredAnnotation(Inject.class);
             if(inject == null || inject.value().equals("")) throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
             String value = inject.value();
-            if(!BEANS.containsKey(value)) throw new IllegalStateException("Can not find bean name \"" + value + "\"");
+            if(!BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
             instancedParameters.add(BEANS.get(value).load());
         }
         try{
             constructor.setAccessible(true);
             return constructor.newInstance(instancedParameters.toArray());
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("Can not call \"newInstance(params)\" of bean \"" + NAME + "\"");
         }
     }
 
@@ -81,13 +82,13 @@ public final class NewBean implements Bean{
             constructor.setAccessible(true);
             bean = constructor.newInstance();
         }catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            throw new IllegalStateException("Can not find default constructor in this class \"" + cls.getSimpleName() + "\"");
+            throw new IllegalStateException("Can not find default constructor in this class \"" + NAME + "\"");
         }
         for(Field field : fields){
             field.setAccessible(true);
             String value = field.getName();
             if(!field.getAnnotation(Inject.class).value().equals("")) value = field.getAnnotation(Inject.class).value();
-            if(!BEANS.containsKey(value)) throw new IllegalStateException("Can not find bean named \"" + value + "\"");
+            if(!BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
             Object instance = BEANS.get(value).load();
             try{
                 field.set(bean, instance);

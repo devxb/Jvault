@@ -2,6 +2,8 @@ package org.jvault.vault;
 
 import org.jvault.annotation.Inject;
 import org.jvault.beans.Bean;
+import org.jvault.exceptions.DisallowedAccessPackageException;
+import org.jvault.exceptions.NoDefinedInternalBeanException;
 import org.jvault.util.Reflection;
 
 import java.lang.reflect.Constructor;
@@ -12,8 +14,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Receive the Class type as a parameter and returns the corresponding instance.
+ * <br>
+ * <br>
+ * ClassVault can only be instantiated in the org.jvault.* package,<br>
+ * and actually you can't force instantiation of Vault without using Reflection.<br>
+ * This means that you should not instantiate ClassVault using Reflection.<br>
+ * To obtain ClassVault, see the {@link org.jvault.factory.ClassVaultFactory} class.
+ *
+ * @see org.jvault.factory.ClassVaultFactory
+ * @see org.jvault.vault.Vault
+ * @see org.jvault.annotation.Inject
+ * @see org.jvault.annotation.InternalBean
+ *
+ * @author devxb
+ * @since 0.1
+ */
+
 public final class ClassVault implements Vault<Class<?>>{
 
+    private final String NAME;
     private final String[] INJECT_ACCESSES;
     private final Map<String, Bean> BEANS;
     private final Reflection REFLECTION;
@@ -22,7 +43,8 @@ public final class ClassVault implements Vault<Class<?>>{
         throw new UnsupportedOperationException("Can not invoke constructor \"ClassVault()\"");
     }
 
-    private ClassVault(Vault.Builder<ClassVault> builder){
+    ClassVault(Vault.Builder<ClassVault> builder){
+        NAME = builder.name;
         INJECT_ACCESSES = builder.injectAccesses;
         BEANS = builder.BEANS;
         REFLECTION = Accessors.UtilAccessor.getAccessor().getReflection();
@@ -30,7 +52,7 @@ public final class ClassVault implements Vault<Class<?>>{
 
     @Override
     public <R> R inject(Class<?> param) {
-        if(!isVaultAccessible(param)) throw new IllegalStateException("Can not access vault from this package \"" + param.getPackageName() + "\"");
+        if(!isVaultAccessible(param)) throw new DisallowedAccessPackageException(NAME, param.getPackageName());
         Constructor<?> constructor = REFLECTION.findConstructor(param);
         if(constructor != null) return (R) loadBeanFromConstructor(param, constructor);
         List<Field> fields = REFLECTION.findFields(param);
@@ -62,8 +84,8 @@ public final class ClassVault implements Vault<Class<?>>{
             Inject inject = parameter.getDeclaredAnnotation(Inject.class);
             if(inject == null || inject.value().equals("")) throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
             String value = inject.value();
-            if(!BEANS.containsKey(value)) throw new IllegalStateException("Can not find bean name \"" + value + "\"");
-            if(!BEANS.get(value).isInjectable(cls)) throw new IllegalStateException("Can not inject Bean \"" + value + "\" at package \"" + cls.getPackageName() + "\"");
+            if(!BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
+            if(!BEANS.get(value).isInjectable(cls)) throw new DisallowedAccessPackageException(value, cls.getPackageName());
             instancedParameters.add(BEANS.get(value).load());
         }
         try{
@@ -87,8 +109,8 @@ public final class ClassVault implements Vault<Class<?>>{
             field.setAccessible(true);
             String value = field.getName();
             if(!field.getAnnotation(Inject.class).value().equals("")) value = field.getAnnotation(Inject.class).value();
-            if(!BEANS.containsKey(value)) throw new IllegalStateException("Can not find bean named \"" + value + "\"");
-            if(!BEANS.get(value).isInjectable(cls)) throw new IllegalStateException("Can not inject Bean \"" + value + "\" at package \"" + cls.getPackageName() + "\"");
+            if(!BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
+            if(!BEANS.get(value).isInjectable(cls)) throw new DisallowedAccessPackageException(value, cls.getPackageName());
             Object instance = BEANS.get(value).load();
             try{
                 field.set(bean, instance);
@@ -97,15 +119,6 @@ public final class ClassVault implements Vault<Class<?>>{
             }
         }
         return bean;
-    }
-
-    public static Vault.Builder<ClassVault> getBuilder(){
-        return new Builder<>() {
-            @Override
-            public ClassVault build() {
-                return new ClassVault(this);
-            }
-        };
     }
 
 }
