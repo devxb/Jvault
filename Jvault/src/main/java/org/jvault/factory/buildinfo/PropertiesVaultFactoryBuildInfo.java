@@ -13,21 +13,21 @@ import java.util.Properties;
  * <br><br>
  *
  * org.jvault.vault.name = SOME_VAULT_NAME <br>
- * "getVaultName()" method returns a value of org.jvault.vault.name,
+ * - "getVaultName()" method returns a value of org.jvault.vault.name,
  * which will be the name of the vault that was created.
  * <br><br>
  *
  * org.jvault.vault.inject.accesses = org.jvault.factory, org.jvault.util.* <br>
- * "getInjectAccesses()" method returns a vaule of org.jvault.vault.inject.accesses,
+ * - "getInjectAccesses()" method returns a vaule of org.jvault.vault.inject.accesses,
  * which will be specified range of packages that Vault Can inject.
  * <br><br>
  *
  * org.jvault.reader.packages = org.jvault, org.jvault.struct.scanwithproperties, org.jvault.* <br>
- * The package path where the beans located. <br>
+ * - The package path where the beans located. <br>
  * When you use an ".*" expression, it find beans in all child directories and descendant directories to leaf directories, including the path before the expression.
  * <br>
  * org.jvault.reader.exclude.packages = org.jvault.factory, org.jvault.beans.* <br>
- * The path of the package to exclude from the scan. <br>
+ * - The path of the package to exclude from the scan. <br>
  * When you use an ".*" expression, it find beans in all child directories and descendant directories to leaf directories, including the path before the expression.
  * <br>
  * "getBeanLocation()" method returns a vaule of BeanLocation object created based on the above two information.
