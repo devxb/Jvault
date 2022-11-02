@@ -36,14 +36,18 @@ public final class ClassVaultFactory implements VaultFactory <ClassVault>{
 
     @Override
     public ClassVault get(VaultFactoryBuildInfo buildInfo) {
-
         if(VAULTS.containsKey(buildInfo.getVaultName())) return VAULTS.get(buildInfo.getVaultName());
+
         List<Class<?>> classes = BEAN_READER.read(buildInfo.getBeanLocation());
         Map<String, Bean> beans = BEAN_LOADER.load(classes);
+
         ClassVault classVault = ClassVault.getBuilder()
+                .name(buildInfo.getVaultName())
                 .injectAccesses(buildInfo.getInjectAccesses())
                 .beans(beans).build();
+
         VAULTS.put(buildInfo.getVaultName(), classVault);
+
         return classVault;
     }
 

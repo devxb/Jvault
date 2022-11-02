@@ -9,10 +9,16 @@ public interface Vault<P> {
 
     abstract class Builder<S>{
 
+        String name;
         String[] injectAccesses = new String[0];
         final Map<String, Bean> BEANS;
         {
             BEANS = new HashMap<>();
+        }
+
+        public Builder<S> name(String name){
+            this.name = name;
+            return this;
         }
 
         public Builder<S> injectAccesses(String... packages){

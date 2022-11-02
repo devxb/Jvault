@@ -3,7 +3,6 @@ package org.jvault.beanreader;
 import org.jvault.util.PackageReader;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 public final class AnnotationBeanReader implements BeanReader{
 
