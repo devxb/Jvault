@@ -1,6 +1,6 @@
 package org.jvault.factory.buildinfo;
 
-import org.jvault.beanreader.BeanReader;
+import org.jvault.beanreader.BeanLocation;
 
 import java.io.*;
 import java.util.Properties;
@@ -30,11 +30,11 @@ import java.util.Properties;
  * The path of the package to exclude from the scan. <br/>
  * When you use an ".*" expression, it find beans in all child directories and descendant directories to leaf directories, including the path before the expression.
  * <br/>
- * "getBeanLocation()" method returns a vaule of BeanReader.BeanLocation object created based on the above two information.
+ * "getBeanLocation()" method returns a vaule of BeanLocation object created based on the above two information.
  * <br/>
  * <hr/>
  * @see org.jvault.factory.VaultFactory
- * @see org.jvault.beanreader.BeanReader.BeanLocation
+ * @see org.jvault.beanreader.BeanLocation
  *
  * @author devxb
  * @since 0.1
@@ -42,7 +42,7 @@ import java.util.Properties;
 public final class PropertiesVaultFactoryBuildInfo implements VaultFactoryBuildInfo{
 
     private final String VAULT_NAME;
-    private final BeanReader.BeanLocation BEAN_LOCATION;
+    private final BeanLocation BEAN_LOCATION;
     private final String[] INJECT_ACCESSES;
 
     @Override
@@ -51,7 +51,7 @@ public final class PropertiesVaultFactoryBuildInfo implements VaultFactoryBuildI
     }
 
     @Override
-    public BeanReader.BeanLocation getBeanLocation() {
+    public BeanLocation getBeanLocation() {
         return BEAN_LOCATION;
     }
 
@@ -83,8 +83,8 @@ public final class PropertiesVaultFactoryBuildInfo implements VaultFactoryBuildI
         return vaultName;
     }
 
-    private BeanReader.BeanLocation getBeanLocation(Properties properties){
-        return new BeanReader.BeanLocation(){
+    private BeanLocation getBeanLocation(Properties properties){
+        return new BeanLocation(){
 
             @Override
             public String[] getPackages() {

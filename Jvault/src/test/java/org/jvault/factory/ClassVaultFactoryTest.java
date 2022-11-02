@@ -2,13 +2,12 @@ package org.jvault.factory;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.jvault.beanreader.BeanReader;
+import org.jvault.beanreader.BeanLocation;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
 import org.jvault.factory.buildinfo.PropertiesVaultFactoryBuildInfo;
 import org.jvault.factory.buildinfo.VaultFactoryBuildInfo;
 import org.jvault.struct.beanwithfactory.BeanWithFactoryInjectTarget;
 import org.jvault.struct.scanwithproperties.ScanProperties;
-import org.jvault.vault.ClassVault;
 import org.jvault.vault.Vault;
 
 public class ClassVaultFactoryTest {
@@ -24,8 +23,8 @@ public class ClassVaultFactoryTest {
             }
 
             @Override
-            public BeanReader.BeanLocation getBeanLocation() {
-                return new BeanReader.BeanLocation(){
+            public BeanLocation getBeanLocation() {
+                return new BeanLocation(){
                     @Override
                     public String[] getPackages() {
                         return new String[]{"org.jvault.struct.beanwithfactory.*"};

@@ -2,7 +2,7 @@ package org.jvault.vault;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.jvault.beanreader.BeanReader;
+import org.jvault.beanreader.BeanLocation;
 import org.jvault.exceptions.DisallowedAccessPackageException;
 import org.jvault.factory.ClassVaultFactory;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
@@ -24,8 +24,8 @@ public class ClassVaultTest {
             }
 
             @Override
-            public BeanReader.BeanLocation getBeanLocation() {
-                return new BeanReader.BeanLocation(){
+            public BeanLocation getBeanLocation() {
+                return new BeanLocation(){
                     @Override
                     public String[] getPackages() {
                         return new String[]{"org.jvault.struct.buildvault.*"};
@@ -63,8 +63,8 @@ public class ClassVaultTest {
             }
 
             @Override
-            public BeanReader.BeanLocation getBeanLocation() {
-                return new BeanReader.BeanLocation(){
+            public BeanLocation getBeanLocation() {
+                return new BeanLocation(){
                     @Override
                     public String[] getPackages() {
                         return new String[]{"org.jvault.struct.buildvaultcannotinjectclass.*"};
@@ -96,8 +96,8 @@ public class ClassVaultTest {
             }
 
             @Override
-            public BeanReader.BeanLocation getBeanLocation() {
-                return new BeanReader.BeanLocation(){
+            public BeanLocation getBeanLocation() {
+                return new BeanLocation(){
                     @Override
                     public String[] getPackages() {
                         return new String[]{"org.jvault.struct.buildvaultcannotinjectbean.*"};

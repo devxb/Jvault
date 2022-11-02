@@ -6,9 +6,4 @@ public interface BeanReader {
 
     List<Class<?>> read(BeanLocation beanLocation);
 
-     interface BeanLocation{
-        String[] getPackages();
-        String[] getExcludePackages();
-    }
-
 }

@@ -2,6 +2,7 @@ package org.jvault.util;
 
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
+import org.jvault.exceptions.DuplicateInjectConstructorException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -24,7 +25,7 @@ public final class Reflection {
         for(Constructor<?> constructor : constructors){
             constructor.setAccessible(true);
             if(constructor.getDeclaredAnnotation(Inject.class) == null) continue;
-            if(ans != null) throw new IllegalStateException("Duplicate @Inject annotation marked on constructor at \"" + cls.getName() + "\"");
+            if(ans != null) throw new DuplicateInjectConstructorException(cls.getName());
             ans = constructor;
         }
         return ans;

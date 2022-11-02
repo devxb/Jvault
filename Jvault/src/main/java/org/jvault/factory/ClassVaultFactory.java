@@ -5,7 +5,6 @@ import org.jvault.beanreader.BeanReader;
 import org.jvault.beans.Bean;
 import org.jvault.factory.buildinfo.VaultFactoryBuildInfo;
 import org.jvault.vault.ClassVault;
-import org.jvault.vault.Vault;
 import org.jvault.vault.VaultType;
 
 import java.util.HashMap;
