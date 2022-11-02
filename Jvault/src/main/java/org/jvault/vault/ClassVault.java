@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Receive the Class<?> type as a parameter and returns the corresponding instance.
- * <br/>
- * <br/>
- * ClassVault can only be instantiated in the org.jvault.* package,<br/>
- * and actually you can't force instantiation of Vault without using Reflection.<br/>
- * This means that you should not instantiate ClassVault using Reflection.<br/>
+ * Receive the Class type as a parameter and returns the corresponding instance.
+ * <br>
+ * <br>
+ * ClassVault can only be instantiated in the org.jvault.* package,<br>
+ * and actually you can't force instantiation of Vault without using Reflection.<br>
+ * This means that you should not instantiate ClassVault using Reflection.<br>
  * To obtain ClassVault, see the {@link org.jvault.factory.ClassVaultFactory} class.
  *
  * @see org.jvault.factory.ClassVaultFactory

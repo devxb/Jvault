@@ -6,59 +6,41 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to inject the corresponding Bean. <br/><br/>
+ * Annotation to inject the corresponding Bean. <br>
  *
- * There are two ways to inject Bean.<br/><br/>
+ * Here is two ways to inject Bean.<br><br>
  *
- * FIRST. FIELD INJECTION <br/>
+ * FIRST. FIELD INJECTION
  * <pre>
- * {@code
- *     public class HelloWorld{
- *          @Inject
- *          private HelloToo helloToo;
- *     }
- * }
+ * {@code @Inject
+ * private HelloToo helloToo;}
  * </pre>
- * In this case, inject bean based on the name of the field. <br/>
+ * In this case, inject bean based on the name of the field. <br>
  * Alternatively, you can search for bean by entering the bean name as follows.
  *
  * <pre>
- * {@code
- *     public class HelloWorld{
- *          @Inject("customNamedHelloToo")
- *          private HelloToo helloToo;
- *     }
- * }
+ * {@code @Inject("customNamedHelloToo")
+ * private HelloToo helloToo;}
  * </pre>
- * <br/><br/>
+ * <br>
  *
- * SECOND. CONSTRUCTOR INJECTION <br/>
+ * SECOND. CONSTRUCTOR INJECTION
  * <pre>
- * {@code
- *     public class HelloWorld{
- *
- *         private final HelloToo HELLO_TOO;
- *
- *         @Inject
- *         private HelloWorld(@Inject("helloToo") HelloToo helloToo){
- *             this.HELLO_TOO = helloToo;
- *         }
- *
- *     }
- * }
+ * {@code @Inject
+ * private HelloWorld(@Inject("helloToo") HelloToo helloToo){}}
  * </pre>
  *
- * In this case, @Inject annotation should be marked on the constructor to be used for injection,<br/>
- * and @Inject annotation should be marked on the constructor parameter to be injected.<br/>
- * Also, always input the value of @Inject of the marked parameter. <br/> <br/>
+ * In this case, @Inject annotation should be marked on the constructor to be used for injection,<br>
+ * and @Inject annotation should be marked on the constructor parameter to be injected.<br>
+ * Also, always input the value of @Inject of the marked parameter. <br> <br>
  *
- * If the @Inject-marked parameter of the constructor <br/>
- * marked with @Inject does not have a value, {@link org.jvault.exceptions.NoDefinedInternalBeanException} is thrown.<br/><br/>
+ * If the @Inject-marked parameter of the constructor <br>
+ * marked with @Inject does not have a value, {@link org.jvault.exceptions.NoDefinedInternalBeanException} is thrown.<br>
  *
- * A class must have at most one constructor marked with @Inject annotation,<br/>
- * and if two or more constructors marked with @Inject annotation are found, {@link org.jvault.exceptions.DuplicateInjectConstructorException} is thrown.<br/><br/>
+ * A class must have at most one constructor marked with @Inject annotation,<br>
+ * and if two or more constructors marked with @Inject annotation are found, {@link org.jvault.exceptions.DuplicateInjectConstructorException} is thrown.<br>
  *
- * If CONSTRUCTOR INJECTION and FIELD INJECTION coexist, <br/>
+ * If CONSTRUCTOR INJECTION and FIELD INJECTION coexist, <br>
  * CONSTRUCTOR INJECTION is selected, and Bean injection proceeds in constructor injection method.
  *
  * @see InternalBean

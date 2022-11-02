@@ -2,7 +2,7 @@ package org.jvault.exceptions;
 
 
 /**
- * Thrown when, a package that is not included in @InternalBean's accesses tries to receive bean injection,<br/>
+ * Thrown when, a package that is not included in @InternalBean's accesses tries to receive bean injection,<br>
  * or when a package that is not included in Vault's accesses is passed as a parameter of the Vault.
  *
  * @author devxb

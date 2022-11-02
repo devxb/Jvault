@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * receives VaultFactoryBuildInfo or String (the name of the Vault if the Vault already exists) value as an input,<br/>
+ * receives VaultFactoryBuildInfo or String (the name of the Vault if the Vault already exists) value as an input,<br>
  * and returns {@link org.jvault.vault.ClassVault}.
  *
  * @see org.jvault.vault.ClassVault
