@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.jvault.beanreader.BeanReader;
 import org.jvault.beans.Bean;
+import org.jvault.exceptions.BeanCycledException;
+import org.jvault.exceptions.DisallowedAccessPackageException;
+import org.jvault.exceptions.NoDefinedInternalBeanException;
 import org.jvault.struct.beanregex.BeanRegex;
 import org.jvault.struct.emptyaccess.EmptyAccess;
 import org.jvault.struct.fieldInjectBean.FA;
@@ -119,7 +122,7 @@ public class DefaultBeanLoaderTest {
         List<Class<?>> classes = beanReader.read(location);
 
         // then
-        Assertions.assertThrows(IllegalStateException.class, ()-> beanLoader.load(classes));
+        Assertions.assertThrows(NoDefinedInternalBeanException.class, ()-> beanLoader.load(classes));
     }
 
     @Test
@@ -143,7 +146,7 @@ public class DefaultBeanLoaderTest {
         List<Class<?>> classes = beanReader.read(location);
 
         // then
-        Assertions.assertThrows(IllegalStateException.class, ()-> beanLoader.load(classes));
+        Assertions.assertThrows(BeanCycledException.class, ()-> beanLoader.load(classes));
     }
 
     @Test
@@ -336,7 +339,7 @@ public class DefaultBeanLoaderTest {
         List<Class<?>> classes = beanReader.read(location);
 
         // then
-        Assertions.assertThrows(IllegalStateException.class, ()-> beanLoader.load(classes));
+        Assertions.assertThrows(DisallowedAccessPackageException.class, ()-> beanLoader.load(classes));
     }
 
     @Test
@@ -464,7 +467,7 @@ public class DefaultBeanLoaderTest {
         List<Class<?>> classes = beanReader.read(location);
 
         // then
-        Assertions.assertThrows(IllegalStateException.class, ()-> beanLoader.load(classes));
+        Assertions.assertThrows(NoDefinedInternalBeanException.class, ()-> beanLoader.load(classes));
     }
 
     @Test
@@ -514,7 +517,7 @@ public class DefaultBeanLoaderTest {
         List<Class<?>> classes = beanReader.read(location);
 
         // then
-        Assertions.assertThrows(IllegalStateException.class, ()-> beanLoader.load(classes));
+        Assertions.assertThrows(DisallowedAccessPackageException.class, ()-> beanLoader.load(classes));
     }
 
 }
