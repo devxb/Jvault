@@ -1,6 +1,5 @@
 package org.jvault.beans;
 
-import org.jvault.util.PackageReader;
 import org.jvault.util.Reflection;
 
 import java.util.*;

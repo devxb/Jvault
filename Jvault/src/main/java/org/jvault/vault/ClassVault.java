@@ -14,6 +14,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Receive the Class<?> type as a parameter and returns the corresponding instance.
+ * <br/>
+ * <br/>
+ * ClassVault can only be instantiated in the org.jvault.* package,<br/>
+ * and actually you can't force instantiation of Vault without using Reflection.<br/>
+ * This means that you should not instantiate ClassVault using Reflection.<br/>
+ * To obtain ClassVault, see the {@link org.jvault.factory.ClassVaultFactory} class.
+ *
+ * @see org.jvault.factory.ClassVaultFactory
+ * @see org.jvault.vault.Vault
+ * @see org.jvault.annotation.Inject
+ * @see org.jvault.annotation.InternalBean
+ *
+ * @author devxb
+ * @since 0.1
+ */
+
 public final class ClassVault implements Vault<Class<?>>{
 
     private final String NAME;
@@ -25,7 +43,7 @@ public final class ClassVault implements Vault<Class<?>>{
         throw new UnsupportedOperationException("Can not invoke constructor \"ClassVault()\"");
     }
 
-    private ClassVault(Vault.Builder<ClassVault> builder){
+    ClassVault(Vault.Builder<ClassVault> builder){
         NAME = builder.name;
         INJECT_ACCESSES = builder.injectAccesses;
         BEANS = builder.BEANS;
@@ -101,15 +119,6 @@ public final class ClassVault implements Vault<Class<?>>{
             }
         }
         return bean;
-    }
-
-    public static Vault.Builder<ClassVault> getBuilder(){
-        return new Builder<>() {
-            @Override
-            public ClassVault build() {
-                return new ClassVault(this);
-            }
-        };
     }
 
 }

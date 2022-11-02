@@ -52,7 +52,7 @@ public class ClassVaultFactoryTest {
     public void READ_WITH_PROPERTIES_TEST(){
         // given
         ClassVaultFactory vaultFactory = ClassVaultFactory.getInstance();
-        VaultFactoryBuildInfo buildInfo = new PropertiesVaultFactoryBuildInfo("/Users/devxb/develop/Jvault/Jvault/Jvault/src/test/java/org/jvault/factory/buildinfo.properties");
+        PropertiesVaultFactoryBuildInfo buildInfo = new PropertiesVaultFactoryBuildInfo("/Users/devxb/develop/Jvault/Jvault/Jvault/src/test/java/org/jvault/factory/buildinfo.properties");
 
         // when
         Vault<Class<?>> vault = vaultFactory.get(buildInfo);
