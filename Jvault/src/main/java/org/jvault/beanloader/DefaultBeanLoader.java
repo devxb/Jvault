@@ -39,6 +39,7 @@ public final class DefaultBeanLoader implements BeanLoader{
 
     @Override
     public Map<String, Bean> load(List<Class<?>> classes) {
+        throwIfClassesContainedNotBean(classes);
         initLazyLoadBeans(classes);
         if(classes.isEmpty()) return BEANS;
         for(Class<?> cls : classes){
@@ -48,6 +49,12 @@ public final class DefaultBeanLoader implements BeanLoader{
         }
         loadBean(classes.get(0));
         return BEANS;
+    }
+
+    private void throwIfClassesContainedNotBean(List<Class<?>> classes){
+        for(Class<?> cls : classes)
+            if(cls.getDeclaredAnnotation(InternalBean.class) == null)
+                throw new NoDefinedInternalBeanException(cls.getSimpleName());
     }
 
     private void initLazyLoadBeans(List<Class<?>> classes) {
@@ -74,7 +81,8 @@ public final class DefaultBeanLoader implements BeanLoader{
     private String getBeanName(Class<?> cls){
         String beanName = cls.getSimpleName();
         beanName = beanName.substring(0, 1).toLowerCase() + beanName.subSequence(1, beanName.length());
-        if(!cls.getDeclaredAnnotation(InternalBean.class).name().equals("")) beanName = cls.getDeclaredAnnotation(InternalBean.class).name();
+        InternalBean internalBean = cls.getDeclaredAnnotation(InternalBean.class);
+        if(!internalBean.name().equals("")) beanName = internalBean.name();
         return beanName;
     }
 

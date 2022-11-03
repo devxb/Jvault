@@ -2,8 +2,13 @@ package org.jvault.factory.buildinfo;
 
 import org.jvault.beanreader.BeanLocation;
 
+import java.util.List;
+
 /**
- * One of the parameters that {@link org.jvault.factory.VaultFactory} receives.
+ * One of the parameters that {@link org.jvault.factory.VaultFactory} receives. <br>
+ * This interface returns the name of the vault to be created,<br>
+ * location information of beans,<br>
+ * and package information that can use the vault.
  *
  * @see org.jvault.factory.buildinfo.PropertiesVaultFactoryBuildInfo
  * @see org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo
@@ -21,20 +26,20 @@ public interface VaultFactoryBuildInfo {
      * @return String - Name of the vault to be created
      *
      * @author devxb
-     * @since 0.
+     * @since 0.1
      */
     String getVaultName();
 
     /**
-     * Method that returns {@link BeanLocation} containing information about Bean to be scanned. <br>
+     * Method that returns class that convert and register to Beans <br>
      * The {@link org.jvault.factory.VaultFactory} generates beans based on the return value of this method.
      *
-     * @return {@link BeanLocation}
+     * @return {@link List}
      *
      * @author devxb
      * @since 0.1
      */
-    BeanLocation getBeanLocation();
+    List<Class<?>> getClasses();
 
     /**
      * Method that returns the accessible package paths to which {@link org.jvault.vault.Vault} created by {@link org.jvault.factory.VaultFactory} <br>

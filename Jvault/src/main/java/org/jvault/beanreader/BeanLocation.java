@@ -17,7 +17,7 @@ package org.jvault.beanreader;
 public interface BeanLocation {
     /**
      * This method must return package paths that contain beans to scan.<br>
-     * If an expression is used, scan the Bean of all leaf package paths, including those package paths;<br>
+     * If an expression is used, scan the Bean of all leaf package paths, including those package paths.<br>
      * If not, examine only the Bean contained in those package paths.<br><br>
      *
      * If Empty, No Bean is scanned.
@@ -30,8 +30,8 @@ public interface BeanLocation {
     String[] getPackages();
 
     /**
-     * This method must return the package path of the beans to be excluded from the scan.
-     * If an expression is used, exclude the Bean of all leaf package paths, including those package paths;<br>
+     * This method must return the package path of the beans to be excluded from the scan.<br>
+     * If an expression is used, exclude the Bean of all leaf package paths, including those package paths.<br>
      * If not, exclude only the Bean contained in those package paths.<br><br>
      *
      * If Empty, No Bean is Excluded.

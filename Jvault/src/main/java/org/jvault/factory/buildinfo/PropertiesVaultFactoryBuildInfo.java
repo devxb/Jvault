@@ -1,7 +1,5 @@
 package org.jvault.factory.buildinfo;
 
-import org.jvault.beanreader.BeanLocation;
-
 import java.io.*;
 import java.util.Properties;
 
@@ -30,19 +28,17 @@ import java.util.Properties;
  * - The path of the package to exclude from the scan. <br>
  * When you use an ".*" expression, it find beans in all child directories and descendant directories to leaf directories, including the path before the expression.
  * <br>
- * "getBeanLocation()" method returns a vaule of BeanLocation object created based on the above two information.
- * <br>
  * <hr>
  * @see org.jvault.factory.VaultFactory
- * @see org.jvault.beanreader.BeanLocation
  *
  * @author devxb
  * @since 0.1
  */
-public final class PropertiesVaultFactoryBuildInfo implements VaultFactoryBuildInfo{
+public final class PropertiesVaultFactoryBuildInfo extends AbstractVaultFactoryBuildInfo{
 
     private final String VAULT_NAME;
-    private final BeanLocation BEAN_LOCATION;
+    private final String[] SCANNING_PACKAGES;
+    private final String[] EXCLUDE_SCANNING_PACKAGES;
     private final String[] INJECT_ACCESSES;
 
     @Override
@@ -51,13 +47,18 @@ public final class PropertiesVaultFactoryBuildInfo implements VaultFactoryBuildI
     }
 
     @Override
-    public BeanLocation getBeanLocation() {
-        return BEAN_LOCATION;
+    public String[] getInjectAccesses() {
+        return INJECT_ACCESSES;
     }
 
     @Override
-    public String[] getInjectAccesses() {
-        return INJECT_ACCESSES;
+    protected String[] getPackagesImpl() {
+        return SCANNING_PACKAGES;
+    }
+
+    @Override
+    protected String[] getExcludePackagesImpl() {
+        return EXCLUDE_SCANNING_PACKAGES;
     }
 
     /**
@@ -70,7 +71,8 @@ public final class PropertiesVaultFactoryBuildInfo implements VaultFactoryBuildI
             Properties properties = new Properties();
             properties.load(input);
             VAULT_NAME = getVaultName(propertiesSrc, properties);
-            BEAN_LOCATION = getBeanLocation(properties);
+            SCANNING_PACKAGES = getScanningPackages(properties);
+            EXCLUDE_SCANNING_PACKAGES = getExcludeScanningPackages(properties);
             INJECT_ACCESSES = getInjectAccesses(properties);
         } catch (IOException e) {
             throw new IllegalArgumentException("Cant not find properties located at \"" + propertiesSrc + "\"");
@@ -83,23 +85,16 @@ public final class PropertiesVaultFactoryBuildInfo implements VaultFactoryBuildI
         return vaultName;
     }
 
-    private BeanLocation getBeanLocation(Properties properties){
-        return new BeanLocation(){
+    private String[] getScanningPackages(Properties properties){
+        String[] packages = properties.getProperty("org.jvault.reader.packages", "").split(",");
+        for(int i = 0; i < packages.length; i++) packages[i] = packages[i].strip();
+        return packages;
+    }
 
-            @Override
-            public String[] getPackages() {
-                String[] packages = properties.getProperty("org.jvault.reader.packages", "").split(",");
-                for(int i = 0; i < packages.length; i++) packages[i] = packages[i].strip();
-                return packages;
-            }
-
-            @Override
-            public String[] getExcludePackages() {
-                String[] packages = properties.getProperty("org.jvault.reader.exclude.packages", "").split(",");
-                for(int i = 0; i < packages.length; i++) packages[i] = packages[i].strip();
-                return packages;
-            }
-        };
+    private String[] getExcludeScanningPackages(Properties properties){
+        String[] packages = properties.getProperty("org.jvault.reader.exclude.packages", "").split(",");
+        for(int i = 0; i < packages.length; i++) packages[i] = packages[i].strip();
+        return packages;
     }
 
     private String[] getInjectAccesses(Properties properties){

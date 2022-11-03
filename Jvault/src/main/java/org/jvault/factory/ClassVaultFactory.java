@@ -7,9 +7,9 @@ import org.jvault.factory.buildinfo.VaultFactoryBuildInfo;
 import org.jvault.vault.ClassVault;
 import org.jvault.vault.VaultType;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * receives VaultFactoryBuildInfo or String (the name of the Vault if the Vault already exists) value as an input,<br>
@@ -24,13 +24,11 @@ import java.util.Map;
  */
 public final class ClassVaultFactory implements VaultFactory <ClassVault>{
 
-    private final Map<String, ClassVault> VAULTS;
-    private final BeanReader BEAN_READER;
+    private final ConcurrentMap<String, ClassVault> VAULTS;
     private final BeanLoader BEAN_LOADER;
     private static final ClassVaultFactory INSTANCE = new ClassVaultFactory();
     {
-        VAULTS = new HashMap<>();
-        BEAN_READER = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
+        VAULTS = new ConcurrentHashMap<>();
         BEAN_LOADER = Accessors.BeanLoaderAccessor.getAccessor().getBeanLoader();
     }
 
@@ -71,9 +69,12 @@ public final class ClassVaultFactory implements VaultFactory <ClassVault>{
     @Override
     public ClassVault get(VaultFactoryBuildInfo buildInfo) {
         if(VAULTS.containsKey(buildInfo.getVaultName())) return VAULTS.get(buildInfo.getVaultName());
+        return registerClassVault(buildInfo);
+    }
 
-        List<Class<?>> classes = BEAN_READER.read(buildInfo.getBeanLocation());
-        Map<String, Bean> beans = BEAN_LOADER.load(classes);
+    private synchronized ClassVault registerClassVault(VaultFactoryBuildInfo buildInfo){
+        if(VAULTS.containsKey(buildInfo.getVaultName())) return VAULTS.get(buildInfo.getVaultName());
+        Map<String, Bean> beans = BEAN_LOADER.load(buildInfo.getClasses());
 
         ClassVault classVault = Accessors.VaultAccessor.getAccessor().getBuilder(VaultType.CLASS, ClassVault.class)
                 .name(buildInfo.getVaultName())
