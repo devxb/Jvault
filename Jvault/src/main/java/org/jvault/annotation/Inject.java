@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to inject the corresponding Bean. <br>
+ * Annotation to inject the corresponding Bean.<br>
  *
  * Here is two ways to inject Bean.<br><br>
  *
@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
  * {@code @Inject
  * private HelloToo helloToo;}
  * </pre>
- * In this case, inject bean based on the name of the field. <br>
+ * In this case, inject bean based on the name of the field.<br>
  * Alternatively, you can search for bean by entering the bean name as follows.
  *
  * <pre>

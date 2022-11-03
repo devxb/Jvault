@@ -24,18 +24,13 @@ public class ClassVaultTest {
             }
 
             @Override
-            public BeanLocation getBeanLocation() {
-                return new BeanLocation(){
-                    @Override
-                    public String[] getPackages() {
-                        return new String[]{"org.jvault.struct.buildvault.*"};
-                    }
+            protected String[] getPackagesImpl() {
+                return new String[]{"org.jvault.struct.buildvault.*"};
+            }
 
-                    @Override
-                    public String[] getExcludePackages() {
-                        return new String[0];
-                    }
-                };
+            @Override
+            protected String[] getExcludePackagesImpl() {
+                return new String[0];
             }
 
             @Override
@@ -63,18 +58,13 @@ public class ClassVaultTest {
             }
 
             @Override
-            public BeanLocation getBeanLocation() {
-                return new BeanLocation(){
-                    @Override
-                    public String[] getPackages() {
-                        return new String[]{"org.jvault.struct.buildvaultcannotinjectclass.*"};
-                    }
+            protected String[] getPackagesImpl() {
+                return new String[]{"org.jvault.struct.buildvaultcannotinjectclass.*"};
+            }
 
-                    @Override
-                    public String[] getExcludePackages() {
-                        return new String[0];
-                    }
-                };
+            @Override
+            protected String[] getExcludePackagesImpl() {
+                return new String[0];
             }
         };
 
@@ -96,19 +86,15 @@ public class ClassVaultTest {
             }
 
             @Override
-            public BeanLocation getBeanLocation() {
-                return new BeanLocation(){
-                    @Override
-                    public String[] getPackages() {
-                        return new String[]{"org.jvault.struct.buildvaultcannotinjectbean.*"};
-                    }
-
-                    @Override
-                    public String[] getExcludePackages() {
-                        return new String[0];
-                    }
-                };
+            protected String[] getPackagesImpl() {
+                return new String[]{"org.jvault.struct.buildvaultcannotinjectbean.*"};
             }
+
+            @Override
+            protected String[] getExcludePackagesImpl() {
+                return new String[0];
+            }
+
         };
 
         // when

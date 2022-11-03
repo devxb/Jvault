@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.jvault.beanreader.AnnotationBeanReaderTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2022-11-02T10:31:26" hostname="xb-apple.local" time="0.005">
+<testsuite name="org.jvault.beanreader.AnnotationBeanReaderTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2022-11-03T05:56:31" hostname="xb-apple.local" time="0.005">
   <properties/>
   <testcase name="EXCLUDE_PACKAGE_BEAN_LEADER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.001"/>
   <testcase name="REGEX_TEST_EXCLUDE_SON2_EACH_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotationBeanReaderTest" time="0.001"/>
