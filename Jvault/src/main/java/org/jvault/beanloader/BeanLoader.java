@@ -7,6 +7,6 @@ import java.util.Map;
 
 public interface BeanLoader {
 
-    Map<String, Bean> load(List<Class<?>> classes);
+    Map<String, Bean> load(List<BeanLoadable> beanLoadables);
 
 }

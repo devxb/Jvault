@@ -74,7 +74,7 @@ public final class ClassVaultFactory implements VaultFactory <ClassVault>{
 
     private synchronized ClassVault registerClassVault(VaultFactoryBuildInfo buildInfo){
         if(VAULTS.containsKey(buildInfo.getVaultName())) return VAULTS.get(buildInfo.getVaultName());
-        Map<String, Bean> beans = BEAN_LOADER.load(buildInfo.getClasses());
+        Map<String, Bean> beans = BEAN_LOADER.load(buildInfo.getBeanLoadables());
 
         ClassVault classVault = Accessors.VaultAccessor.getAccessor().getBuilder(VaultType.CLASS, ClassVault.class)
                 .name(buildInfo.getVaultName())

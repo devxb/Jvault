@@ -1,6 +1,5 @@
 package org.jvault.beanloader;
 
-import org.jvault.beanreader.BeanReader;
 import org.jvault.beans.BeanBuilderFactory;
 import org.jvault.util.Reflection;
 
@@ -55,32 +54,6 @@ public final class Accessors {
         }
 
         protected abstract BeanBuilderFactory getBeanBuilderFactory();
-
-    }
-
-    public abstract static class BeanReaderAccessor{
-        // this class only used for test
-        private static BeanReaderAccessor accessor;
-        private final static Class<?> init = init();
-
-        private static Class<?> init(){
-            try{
-                return Class.forName("org.jvault.beanreader.BeanReaderAccessorImplOnLoaderSide");
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        public static void registerAccessor(BeanReaderAccessor accessor){
-            if(BeanReaderAccessor.accessor != null) throw new IllegalStateException();
-            BeanReaderAccessor.accessor = accessor;
-        }
-
-        static BeanReaderAccessor getAccessor(){
-            return accessor;
-        }
-
-        protected abstract BeanReader getBeanReader();
 
     }
 

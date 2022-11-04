@@ -52,7 +52,7 @@ public final class ClassVault implements Vault<Class<?>>{
 
     @Override
     public <R> R inject(Class<?> param) {
-        if(!isVaultAccessible(param)) throw new DisallowedAccessPackageException(NAME, param.getPackageName());
+        if(!isVaultAccessible(param)) throw new DisallowedAccessPackageException(NAME, param.getPackage().getName());
         Constructor<?> constructor = REFLECTION.findConstructor(param);
         if(constructor != null) return (R) loadBeanFromConstructor(param, constructor);
         List<Field> fields = REFLECTION.findFields(param);
@@ -61,7 +61,7 @@ public final class ClassVault implements Vault<Class<?>>{
 
     private boolean isVaultAccessible(Class<?> cls){
         if(INJECT_ACCESSES.length == 0) return true;
-        String src = cls.getPackageName();
+        String src = cls.getPackage().getName();
         for(String vaultAccess : INJECT_ACCESSES){
             if(isContainSelectAllRegex(vaultAccess)){
                 String substring = vaultAccess.substring(0, vaultAccess.length()-2);
@@ -85,7 +85,7 @@ public final class ClassVault implements Vault<Class<?>>{
             if(inject == null || inject.value().equals("")) throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
             String value = inject.value();
             if(!BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
-            if(!BEANS.get(value).isInjectable(cls)) throw new DisallowedAccessPackageException(value, cls.getPackageName());
+            if(!BEANS.get(value).isInjectable(cls)) throw new DisallowedAccessPackageException(value, cls.getPackage().getName());
             instancedParameters.add(BEANS.get(value).load());
         }
         try{
@@ -110,7 +110,7 @@ public final class ClassVault implements Vault<Class<?>>{
             String value = field.getName();
             if(!field.getAnnotation(Inject.class).value().equals("")) value = field.getAnnotation(Inject.class).value();
             if(!BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
-            if(!BEANS.get(value).isInjectable(cls)) throw new DisallowedAccessPackageException(value, cls.getPackageName());
+            if(!BEANS.get(value).isInjectable(cls)) throw new DisallowedAccessPackageException(value, cls.getPackage().getName());
             Object instance = BEANS.get(value).load();
             try{
                 field.set(bean, instance);

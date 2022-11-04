@@ -31,7 +31,7 @@ public final class NewBean implements Bean{
     @Override
     public boolean isInjectable(Class<?> cls) {
         if(ACCESSES.length == 0) return true;
-        String clsSrc = cls.getPackageName();
+        String clsSrc = cls.getPackage().getName();
         for(String access : ACCESSES){
             if(isContainSelectAllRegex(access)) {
                 String substring = access.substring(0, access.length()-2);
@@ -100,7 +100,7 @@ public final class NewBean implements Bean{
     }
 
     static Builder<NewBean> getBuilder(){
-        return new Builder<>() {
+        return new Builder<NewBean>() {
             @Override
             protected NewBean create() {
                 return new NewBean(this);

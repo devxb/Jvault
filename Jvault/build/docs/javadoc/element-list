@@ -1,0 +1,9 @@
+org.jvault.annotation
+org.jvault.beanloader
+org.jvault.beanreader
+org.jvault.beans
+org.jvault.exceptions
+org.jvault.factory
+org.jvault.factory.buildinfo
+org.jvault.util
+org.jvault.vault

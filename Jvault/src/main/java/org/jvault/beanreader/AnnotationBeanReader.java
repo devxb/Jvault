@@ -14,10 +14,10 @@ public final class AnnotationBeanReader implements BeanReader{
 
     @Override
     public List<Class<?>> read(BeanLocation beanLocation) {
-        String[] pakages = beanLocation.getPackages();
+        String[] packages = beanLocation.getPackages();
         Set<String> excludePackages = initExcludePackages(beanLocation.getExcludePackages());
         List<Class<?>> classes = new ArrayList<>();
-        for(String pkg : pakages){
+        for(String pkg : packages){
             if(isContainSelectAllRegex(pkg)) {
                 classes.addAll(findClasses(pkg.substring(0, pkg.length()-2), excludePackages));
                 continue;
@@ -42,7 +42,8 @@ public final class AnnotationBeanReader implements BeanReader{
     }
 
     private List<String> findExcludedPackages(String pkg){
-        List<String> excludePackages = new ArrayList<>(List.of(pkg));
+        List<String> excludePackages = new ArrayList<>();
+        excludePackages.add(pkg);
         List<String> directories = PACKAGE_READER.findDirectories(pkg);
         for(String directory : directories) excludePackages.addAll(findExcludedPackages(pkg + "." + directory));
         return excludePackages;
@@ -52,7 +53,7 @@ public final class AnnotationBeanReader implements BeanReader{
         List<Class<?>> classes = PACKAGE_READER.findClasses(pkg);
         List<String> directories = PACKAGE_READER.findDirectories(pkg);
         for(String directory : directories) classes.addAll(findClasses(pkg + "." + directory, excludePackages));
-        if(excludePackages.contains(pkg)) return List.of();
+        if(excludePackages.contains(pkg)) return new ArrayList<>();
         return classes;
     }
 

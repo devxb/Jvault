@@ -2,7 +2,6 @@ package org.jvault.vault;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.jvault.beanreader.BeanLocation;
 import org.jvault.exceptions.DisallowedAccessPackageException;
 import org.jvault.factory.ClassVaultFactory;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;

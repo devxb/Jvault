@@ -15,7 +15,7 @@ public final class SingletonBean implements Bean {
     @Override
     public boolean isInjectable(Class<?> cls) {
         if(ACCESSES.length == 0) return true;
-        String clsSrc = cls.getPackageName();
+        String clsSrc = cls.getPackage().getName();
         for(String access : ACCESSES){
             if(isContainSelectAllRegex(access)) {
                 String substring = access.substring(0, access.length()-2);
@@ -38,7 +38,7 @@ public final class SingletonBean implements Bean {
     }
 
     static Builder<SingletonBean> getBuilder(){
-        return new Builder<>() {
+        return new Builder<SingletonBean>() {
             @Override
             protected SingletonBean create() {
                 return new SingletonBean(this);
