@@ -2,13 +2,12 @@ package org.jvault.beanloader;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.jvault.beanreader.BeanReader;
-import org.jvault.beanreader.BeanLocation;
 import org.jvault.beans.Bean;
 import org.jvault.exceptions.BeanCycledException;
 import org.jvault.exceptions.DisallowedAccessPackageException;
 import org.jvault.exceptions.DuplicateInjectConstructorException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
+import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
 import org.jvault.struct.beanregex.BeanRegex;
 import org.jvault.struct.emptyaccess.EmptyAccess;
 import org.jvault.struct.fieldInjectBean.FA;
@@ -21,7 +20,6 @@ import org.jvault.struct.singletoninnew.TypeSingleton;
 import org.jvault.struct.typenew.TypeNewA;
 import org.jvault.struct.underbar_in_package_src.Can_Read_Underbar;
 
-import java.util.List;
 import java.util.Map;
 
 public class DefaultBeanLoaderTest {
@@ -30,22 +28,25 @@ public class DefaultBeanLoaderTest {
     public void DEFAULT_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "DEFAULT_BEAN_LOADER_TEST";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.defaultstruct.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
         // when
-        List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
 
         // then
         Assertions.assertEquals(4, beans.size());
@@ -55,22 +56,25 @@ public class DefaultBeanLoaderTest {
     public void INJECT_IN_INTERNALBEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "INJECT_IN_INTERNALBEAN_LOADER_TEST";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.injectInInternalBean.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
         // when
-        List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
 
         // then
         A a = beans.get("A").load();
@@ -81,22 +85,26 @@ public class DefaultBeanLoaderTest {
     public void FIELD_INJECT_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.fieldInjectBean.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
         // when
-        List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
 
         // then
         FA fa = beans.get("fA").load();
@@ -107,94 +115,101 @@ public class DefaultBeanLoaderTest {
     public void CYCLE_OCCURRED_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.cyclestruct.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
-        // when
-        List<Class<?>> classes = beanReader.read(location);
-
         // then
-        Assertions.assertThrows(NoDefinedInternalBeanException.class, ()-> beanLoader.load(classes));
+        Assertions.assertThrows(NoDefinedInternalBeanException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
     }
 
     @Test
     public void MAKE_SELF_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.makeselfstruct.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
-        // when
-        List<Class<?>> classes = beanReader.read(location);
-
         // then
-        Assertions.assertThrows(BeanCycledException.class, ()-> beanLoader.load(classes));
+        Assertions.assertThrows(BeanCycledException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
     }
 
     @Test
     public void DUPLICATED_CONSTRUCTOR_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.duplicateconstructor.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
-        // when
-        List<Class<?>> classes = beanReader.read(location);
-
         // then
-        Assertions.assertThrows(DuplicateInjectConstructorException.class, ()-> beanLoader.load(classes));
+        Assertions.assertThrows(DuplicateInjectConstructorException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
     }
 
     @Test
     public void PRIVATE_CONSTRUCTOR_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.privateconstructor.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
         // when
-        List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
 
         // then
         Assertions.assertEquals("private-bean", beans.get("privateConstructor").load().toString());
@@ -204,22 +219,25 @@ public class DefaultBeanLoaderTest {
     public void TYPE_NEW_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.typenew.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
         // when
-        List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
         TypeNewA typeNewA = beans.get("typeNewA").load();
         TypeNewA difTypeNewA = beans.get("typeNewA").load();
 
@@ -235,22 +253,25 @@ public class DefaultBeanLoaderTest {
     public void TYPE_NEW_IN_SINGLETON_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.singletoninnew.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
         // when
-        List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
         TypeSingleton singleton = beans.get("typeSingleton").load();
         TypeSingleton sameSingleton = beans.get("typeSingleton").load();
 
@@ -266,22 +287,25 @@ public class DefaultBeanLoaderTest {
     public void TYPE_SINGLETON_NEW_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.newinsingleton.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
         // when
-        List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
         TypeNew newInstance = beans.get("typeNew").load();
         TypeNew difNewInstance = beans.get("typeNew").load();
 
@@ -298,22 +322,25 @@ public class DefaultBeanLoaderTest {
     public void MIXED_CONSTRUCTOR_AND_FIELD_INJECT_BEAN_LOADER_TEST() {
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.mixedconstructorandfieldinject.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
         // when
-        List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
         MixedConstructorAndFieldInject result = beans.get("mixedConstructorAndFieldInject").load();
 
         // then
@@ -324,46 +351,50 @@ public class DefaultBeanLoaderTest {
     public void CAN_NOT_ACCESS_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.cannotaccess.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
-        // when
-        List<Class<?>> classes = beanReader.read(location);
-
         // then
-        Assertions.assertThrows(DisallowedAccessPackageException.class, ()-> beanLoader.load(classes));
+        Assertions.assertThrows(DisallowedAccessPackageException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
     }
 
     @Test
     public void MULTIPLE_ACCESS_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.multipleaccesses.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
         // when
-        List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
         MultipleAccesses result = beans.get("multipleAccesses").load();
 
         // then
@@ -374,22 +405,25 @@ public class DefaultBeanLoaderTest {
     public void EMPTY_ACCESS_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.emptyaccess.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
         // when
-        List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
         EmptyAccess result = beans.get("emptyAccess").load();
 
         // then
@@ -400,22 +434,25 @@ public class DefaultBeanLoaderTest {
     public void UNDERBAR_IN_PACKAGE_SRC_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.underbar_in_package_src.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
         // when
-        List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
         Can_Read_Underbar can_read_underbar = beans.get("can_Read_Underbar").load();
 
         // then
@@ -426,22 +463,25 @@ public class DefaultBeanLoaderTest {
     public void INJECT_INTERFACE_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.injectinterface.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
         // when
-        List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
         InjectInterface injectInterface = beans.get("injectInterface").load();
 
         // then
@@ -452,46 +492,50 @@ public class DefaultBeanLoaderTest {
     public void EXCLUDE_PACKAGE_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.excludepackage.*"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[]{"org.jvault.struct.excludepackage.exclude"};
             }
         };
 
-        // when
-        List<Class<?>> classes = beanReader.read(location);
-
         // then
-        Assertions.assertThrows(NoDefinedInternalBeanException.class, ()-> beanLoader.load(classes));
+        Assertions.assertThrows(NoDefinedInternalBeanException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
     }
 
     @Test
     public void BEAN_REGEX_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.beanregex"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
         // when
-        List<Class<?>> classes = beanReader.read(location);
-        Map<String, Bean> beans = beanLoader.load(classes);
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
         BeanRegex beanRegex = beans.get("beanRegex").load();
 
         // then
@@ -502,24 +546,25 @@ public class DefaultBeanLoaderTest {
     public void FAIL_BEAN_REGEX_BEAN_LOADER_TEST(){
         // given
         DefaultBeanLoader beanLoader = new DefaultBeanLoader();
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        BeanLocation location = new BeanLocation() {
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
-            public String[] getPackages() {
+            public String getVaultName() {
+                return "TEST_ABSTRACT_FACTORY_BUILD_INFO";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
                 return new String[]{"org.jvault.struct.failbeanregex"};
             }
 
             @Override
-            public String[] getExcludePackages() {
+            protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
         };
 
-        // when
-        List<Class<?>> classes = beanReader.read(location);
-
         // then
-        Assertions.assertThrows(DisallowedAccessPackageException.class, ()-> beanLoader.load(classes));
+        Assertions.assertThrows(DisallowedAccessPackageException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
     }
 
 }

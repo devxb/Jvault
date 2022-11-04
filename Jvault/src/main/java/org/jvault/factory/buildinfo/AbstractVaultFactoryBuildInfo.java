@@ -1,8 +1,13 @@
 package org.jvault.factory.buildinfo;
 
+import org.jvault.annotation.InternalBean;
+import org.jvault.beanloader.BeanLoadable;
 import org.jvault.beanreader.BeanLocation;
 import org.jvault.beanreader.BeanReader;
+import org.jvault.beans.Type;
+import org.jvault.exceptions.NoDefinedInternalBeanException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,12 +22,13 @@ import java.util.List;
  */
 public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuildInfo {
 
+    @Override
     public abstract String getVaultName();
 
-    public List<Class<?>> getClasses(){
+    @Override
+    public List<BeanLoadable> getBeanLoadables(){
         BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        return beanReader.read(new BeanLocation(){
-
+        List<Class<?>> classes = beanReader.read(new BeanLocation(){
             @Override
             public String[] getPackages() {
                 return getPackagesImpl();
@@ -33,6 +39,28 @@ public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuild
                 return getExcludePackagesImpl();
             }
         });
+
+        return convertToBeanLoadables(classes);
+    }
+
+    private List<BeanLoadable> convertToBeanLoadables(List<Class<?>> classes){
+        List<BeanLoadable> beanLoadables = new ArrayList<>();
+        for(Class<?> cls : classes){
+            InternalBean internalBean = cls.getDeclaredAnnotation(InternalBean.class);
+            if(internalBean == null) throw new NoDefinedInternalBeanException(cls.getSimpleName());
+            String name = convertToBeanName(cls.getSimpleName());
+            if(!internalBean.name().equals("")) name = internalBean.name();
+            Type type = internalBean.type();
+            String[] accesses = internalBean.accesses();
+            beanLoadables.add(
+                    Accessors.BeanLoaderAccessor.getAccessor().getBeanLoadable(name, type, accesses, cls)
+            );
+        }
+        return beanLoadables;
+    }
+
+    private String convertToBeanName(String name){
+        return name.substring(0, 1).toLowerCase() + name.subSequence(1, name.length());
     }
 
     /**

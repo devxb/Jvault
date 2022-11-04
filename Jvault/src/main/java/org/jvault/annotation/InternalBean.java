@@ -35,7 +35,7 @@ import java.lang.annotation.Target;
  * @since 0.1
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ElementType.TYPE, ElementType.METHOD})
 public @interface InternalBean {
 
     /**

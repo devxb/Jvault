@@ -3,7 +3,13 @@ plugins {
 }
 
 group 'org.jvault'
-version '1.0-SNAPSHOT'
+version '1.0-BETA'
+sourceCompatibility = 8
+targetCompatibility = 8
+
+java{
+    withJavadocJar()
+}
 
 repositories {
     mavenCentral()

@@ -87,20 +87,20 @@ public final class PropertiesVaultFactoryBuildInfo extends AbstractVaultFactoryB
 
     private String[] getScanningPackages(Properties properties){
         String[] packages = properties.getProperty("org.jvault.reader.packages", "").split(",");
-        for(int i = 0; i < packages.length; i++) packages[i] = packages[i].strip();
+        for(int i = 0; i < packages.length; i++) packages[i] = packages[i].trim();
         return packages;
     }
 
     private String[] getExcludeScanningPackages(Properties properties){
         String[] packages = properties.getProperty("org.jvault.reader.exclude.packages", "").split(",");
-        for(int i = 0; i < packages.length; i++) packages[i] = packages[i].strip();
+        for(int i = 0; i < packages.length; i++) packages[i] = packages[i].trim();
         return packages;
     }
 
     private String[] getInjectAccesses(Properties properties){
         String[] injectAccesses = properties.getProperty("org.jvault.vault.inject.accesses", "").split(",");
         for(int i = 0; i < injectAccesses.length; i++)
-            injectAccesses[i] = injectAccesses[i].strip();
+            injectAccesses[i] = injectAccesses[i].trim();
         return injectAccesses;
     }
 
