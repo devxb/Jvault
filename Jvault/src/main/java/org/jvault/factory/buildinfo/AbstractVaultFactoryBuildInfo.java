@@ -38,6 +38,9 @@ public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuild
             public String[] getExcludePackages() {
                 return getExcludePackagesImpl();
             }
+
+            @Override
+            public String[] getClasses(){return getClassesImpl();}
         });
 
         return convertToBeanLoadables(classes);
@@ -51,9 +54,10 @@ public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuild
             String name = convertToBeanName(cls.getSimpleName());
             if(!internalBean.name().equals("")) name = internalBean.name();
             Type type = internalBean.type();
-            String[] accesses = internalBean.accesses();
+            String[] packageAccesses = internalBean.accessPackages();
+            String[] classAccesses = internalBean.accessClasses();
             beanLoadables.add(
-                    Accessors.BeanLoaderAccessor.getAccessor().getBeanLoadable(name, type, accesses, cls)
+                    Accessors.BeanLoaderAccessor.getAccessor().getBeanLoadable(name, type, packageAccesses, classAccesses, cls)
             );
         }
         return beanLoadables;
@@ -85,8 +89,20 @@ public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuild
      */
     protected abstract String[] getExcludePackagesImpl();
 
+    /**
+     * The implementation of this method should return the path and package of the class.<br>
+     * The bean of the returned information will be registered in the Vault.
+     *
+     * @return String[] Class name with package
+     */
+    protected abstract String[] getClassesImpl();
 
-    public String[] getInjectAccesses(){
+
+    public String[] getVaultAccessPackages(){
+        return new String[0];
+    }
+
+    public String[] getVaultAccessClasses(){
         return new String[0];
     }
 

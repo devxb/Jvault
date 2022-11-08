@@ -3,7 +3,7 @@ package org.jvault.struct.beanwithfactory;
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 
-@InternalBean(accesses = "org.jvault.struct.beanwithfactory.*")
+@InternalBean(accessPackages = "org.jvault.struct.beanwithfactory.*")
 final class BeanWithFactory {
 
     private final BeanWithFactoryBean BEAN_WITH_FACTORY_BEAN_A;

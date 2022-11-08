@@ -1,6 +1,7 @@
 package org.jvault.vault;
 
 import org.jvault.beans.Bean;
+import org.jvault.exceptions.DisallowedAccessException;
 
 import java.util.*;
 
@@ -44,12 +45,12 @@ public interface Vault<P> {
      * @param param The type of target to be injected beans, Vault will inject beans into the param.
      * @return Returns an instance of the type received param.
      *
-     * @throws org.jvault.exceptions.DisallowedAccessPackageException - Occurs when the package in param is a package that does not have access to Vault,
+     * @throws DisallowedAccessException Occurs when the package in param is a package that does not have access to Vault,
      * or the Beans to be injected into param cannot be injected into the package in Param.
      *
      * @see org.jvault.annotation.Inject
      * @see org.jvault.annotation.InternalBean
-     * @see org.jvault.exceptions.DisallowedAccessPackageException
+     * @see DisallowedAccessException
      *
      * @author devxb
      * @since 0.1
@@ -59,7 +60,8 @@ public interface Vault<P> {
     abstract class Builder<S>{
 
         String name;
-        String[] injectAccesses = new String[0];
+        String[] accessPackages = new String[0];
+        String[] accessClasses = new String[0];
         final Map<String, Bean> BEANS;
         {
             BEANS = new HashMap<>();
@@ -70,8 +72,13 @@ public interface Vault<P> {
             return this;
         }
 
-        public Builder<S> injectAccesses(String... packages){
-            injectAccesses = packages;
+        public Builder<S> accessPackages(String... packages){
+            accessPackages = packages;
+            return this;
+        }
+
+        public Builder<S> accessClasses(String... classes){
+            accessClasses = classes;
             return this;
         }
 

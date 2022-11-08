@@ -84,7 +84,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Retention.html" title="class or interface in java.lang.annotation" class="external-link">@Retention</a>(<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/RetentionPolicy.html#RUNTIME" title="class or interface in java.lang.annotation" class="external-link">RUNTIME</a>)
-<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Target.html" title="class or interface in java.lang.annotation" class="external-link">@Target</a>(<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/ElementType.html#TYPE" title="class or interface in java.lang.annotation" class="external-link">TYPE</a>)
+<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Target.html" title="class or interface in java.lang.annotation" class="external-link">@Target</a>({<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/ElementType.html#TYPE" title="class or interface in java.lang.annotation" class="external-link">TYPE</a>,<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/ElementType.html#METHOD" title="class or interface in java.lang.annotation" class="external-link">METHOD</a>})
 </span><span class="modifiers">public @interface </span><span class="element-name type-name-label">InternalBean</span></div>
 <div class="block">An annotation that registers the object as Bean in <a href="../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a>.<br><br>
 
@@ -129,22 +129,25 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Optional Element</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second even-row-color"><code><a href="#accesses()" class="member-name-link">accesses</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-second even-row-color"><code><a href="#accessClasses()" class="member-name-link">accessClasses</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second odd-row-color"><code><a href="#accessPackages()" class="member-name-link">accessPackages</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Specifies the package path into which this bean can be injected.<br><br>
 
  If .* expression is used,<br>
  this bean can be injected up to the leaf directory of all children including the preceding path.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#name()" class="member-name-link">name</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#name()" class="member-name-link">name</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Specifies the name of the bean to be created.<br>
  When this bean is injected, you need to write the name you specified here.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../beans/Type.html" title="enum class in org.jvault.beans">Type</a></code></div>
-<div class="col-second even-row-color"><code><a href="#type()" class="member-name-link">type</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="../beans/Type.html" title="enum class in org.jvault.beans">Type</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#type()" class="member-name-link">type</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Specifies the type of bean to be created.</div>
 </div>
 </div>
@@ -199,9 +202,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="accesses()">
-<h3>accesses</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">accesses</span></div>
+<section class="detail" id="accessPackages()">
+<h3>accessPackages</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">accessPackages</span></div>
 <div class="block">Specifies the package path into which this bean can be injected.<br><br>
 
  If .* expression is used,<br>
@@ -213,13 +216,23 @@ loadScripts(document, 'script');</script>
  example2 : org.jvault.bean <br>
  Only objects included in the org.jvault.bean package can receive this bean injection.
  <hr>
- Default accesses : Set to Empty String[] by default. In this case, this Bean can be injected from all packages</div>
+ Set to Empty String[] by default. In this case, this Bean can be injected from all packages</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>String[]</dd>
 <dt>Since:</dt>
 <dd>0.1</dd>
 </dl>
+<dl class="notes">
+<dt>Default:</dt>
+<dd>{}</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="accessClasses()">
+<h3>accessClasses</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">accessClasses</span></div>
 <dl class="notes">
 <dt>Default:</dt>
 <dd>{}</dd>

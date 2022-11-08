@@ -2,7 +2,7 @@ package org.jvault.vault;
 
 import org.jvault.annotation.Inject;
 import org.jvault.beans.Bean;
-import org.jvault.exceptions.DisallowedAccessPackageException;
+import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
 import org.jvault.util.Reflection;
 
@@ -35,7 +35,8 @@ import java.util.Map;
 public final class ClassVault implements Vault<Class<?>>{
 
     private final String NAME;
-    private final String[] INJECT_ACCESSES;
+    private final String[] ACCESS_PACKAGES;
+    private final String[] ACCESS_CLASSES;
     private final Map<String, Bean> BEANS;
     private final Reflection REFLECTION;
 
@@ -45,14 +46,23 @@ public final class ClassVault implements Vault<Class<?>>{
 
     ClassVault(Vault.Builder<ClassVault> builder){
         NAME = builder.name;
-        INJECT_ACCESSES = builder.injectAccesses;
+        ACCESS_PACKAGES = builder.accessPackages;
+        ACCESS_CLASSES = builder.accessClasses;
         BEANS = builder.BEANS;
         REFLECTION = Accessors.UtilAccessor.getAccessor().getReflection();
     }
 
+    /**
+     * @throws DisallowedAccessException Occurs when the package in param is a package that does not have access to Vault,
+     *      * or the Beans to be injected into param cannot be injected into the package in Param.
+     *
+     * @param <R> the type of return instance
+     * @param param The type of target to be injected beans, Vault will inject beans into the param.
+     * @return Returns an instance of the type received param.
+     */
     @Override
     public <R> R inject(Class<?> param) {
-        if(!isVaultAccessible(param)) throw new DisallowedAccessPackageException(NAME, param.getPackage().getName());
+        if(!isVaultAccessible(param)) throw new DisallowedAccessException(NAME, param.getPackage().getName());
         Constructor<?> constructor = REFLECTION.findConstructor(param);
         if(constructor != null) return (R) loadBeanFromConstructor(param, constructor);
         List<Field> fields = REFLECTION.findFields(param);
@@ -60,9 +70,21 @@ public final class ClassVault implements Vault<Class<?>>{
     }
 
     private boolean isVaultAccessible(Class<?> cls){
-        if(INJECT_ACCESSES.length == 0) return true;
+        if(ACCESS_CLASSES.length == 0 && ACCESS_PACKAGES.length == 0) return true;
+        if(isVaultAccessibleClass(cls)) return true;
+        return isVaultAccessiblePackage(cls);
+    }
+
+    private boolean isVaultAccessibleClass(Class<?> cls){
+        String name = cls.getName().replace("$", ".");
+        for(String access : ACCESS_CLASSES)
+            if(access.equals(name)) return true;
+        return false;
+    }
+
+    private boolean isVaultAccessiblePackage(Class<?> cls){
         String src = cls.getPackage().getName();
-        for(String vaultAccess : INJECT_ACCESSES){
+        for(String vaultAccess : ACCESS_PACKAGES){
             if(isContainSelectAllRegex(vaultAccess)){
                 String substring = vaultAccess.substring(0, vaultAccess.length()-2);
                 if(substring.length() > src.length()) continue;
@@ -85,7 +107,7 @@ public final class ClassVault implements Vault<Class<?>>{
             if(inject == null || inject.value().equals("")) throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
             String value = inject.value();
             if(!BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
-            if(!BEANS.get(value).isInjectable(cls)) throw new DisallowedAccessPackageException(value, cls.getPackage().getName());
+            if(!BEANS.get(value).isInjectable(cls)) throw new DisallowedAccessException(value, cls.getPackage().getName());
             instancedParameters.add(BEANS.get(value).load());
         }
         try{
@@ -97,20 +119,13 @@ public final class ClassVault implements Vault<Class<?>>{
     }
 
     private Object loadBeanFromField(Class<?> cls, List<Field> fields){
-        Object bean = null;
-        try{
-            Constructor<?> constructor = cls.getDeclaredConstructor();
-            constructor.setAccessible(true);
-            bean = constructor.newInstance();
-        }catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            throw new IllegalStateException("Can not find default constructor of \"" + cls.getSimpleName() + "\"");
-        }
+        Object bean = loadBeanFromDefaultConstructor(cls);
         for(Field field : fields){
             field.setAccessible(true);
             String value = field.getName();
             if(!field.getAnnotation(Inject.class).value().equals("")) value = field.getAnnotation(Inject.class).value();
             if(!BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
-            if(!BEANS.get(value).isInjectable(cls)) throw new DisallowedAccessPackageException(value, cls.getPackage().getName());
+            if(!BEANS.get(value).isInjectable(cls)) throw new DisallowedAccessException(value, cls.getPackage().getName());
             Object instance = BEANS.get(value).load();
             try{
                 field.set(bean, instance);
@@ -119,6 +134,16 @@ public final class ClassVault implements Vault<Class<?>>{
             }
         }
         return bean;
+    }
+
+    private Object loadBeanFromDefaultConstructor(Class<?> cls){
+        try{
+            Constructor<?> constructor = cls.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            return constructor.newInstance();
+        }catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+            throw new IllegalStateException("Can not find default constructor of \"" + cls.getSimpleName() + "\"");
+        }
     }
 
 }

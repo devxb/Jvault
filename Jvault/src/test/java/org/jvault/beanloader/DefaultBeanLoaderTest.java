@@ -4,11 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.jvault.beans.Bean;
 import org.jvault.exceptions.BeanCycledException;
-import org.jvault.exceptions.DisallowedAccessPackageException;
+import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.exceptions.DuplicateInjectConstructorException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
 import org.jvault.struct.beanregex.BeanRegex;
+import org.jvault.struct.classaccess.ClassAccess;
 import org.jvault.struct.emptyaccess.EmptyAccess;
 import org.jvault.struct.fieldInjectBean.FA;
 import org.jvault.struct.injectInInternalBean.A;
@@ -16,6 +17,7 @@ import org.jvault.struct.injectinterface.InjectInterface;
 import org.jvault.struct.mixedconstructorandfieldinject.MixedConstructorAndFieldInject;
 import org.jvault.struct.multipleaccesses.MultipleAccesses;
 import org.jvault.struct.newinsingleton.TypeNew;
+import org.jvault.struct.readfromclass.ReadFromClass;
 import org.jvault.struct.singletoninnew.TypeSingleton;
 import org.jvault.struct.typenew.TypeNewA;
 import org.jvault.struct.underbar_in_package_src.Can_Read_Underbar;
@@ -41,6 +43,11 @@ public class DefaultBeanLoaderTest {
 
             @Override
             protected String[] getExcludePackagesImpl() {
+                return new String[0];
+            }
+
+            @Override
+            protected String[] getClassesImpl() {
                 return new String[0];
             }
         };
@@ -69,6 +76,11 @@ public class DefaultBeanLoaderTest {
 
             @Override
             protected String[] getExcludePackagesImpl() {
+                return new String[0];
+            }
+
+            @Override
+            protected String[] getClassesImpl() {
                 return new String[0];
             }
         };
@@ -101,6 +113,11 @@ public class DefaultBeanLoaderTest {
             protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
         };
 
         // when
@@ -130,6 +147,11 @@ public class DefaultBeanLoaderTest {
             protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
         };
 
         // then
@@ -153,6 +175,11 @@ public class DefaultBeanLoaderTest {
 
             @Override
             protected String[] getExcludePackagesImpl() {
+                return new String[0];
+            }
+
+            @Override
+            protected String[] getClassesImpl() {
                 return new String[0];
             }
         };
@@ -181,6 +208,11 @@ public class DefaultBeanLoaderTest {
             protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
         };
 
         // then
@@ -204,6 +236,11 @@ public class DefaultBeanLoaderTest {
 
             @Override
             protected String[] getExcludePackagesImpl() {
+                return new String[0];
+            }
+
+            @Override
+            protected String[] getClassesImpl() {
                 return new String[0];
             }
         };
@@ -232,6 +269,11 @@ public class DefaultBeanLoaderTest {
 
             @Override
             protected String[] getExcludePackagesImpl() {
+                return new String[0];
+            }
+
+            @Override
+            protected String[] getClassesImpl() {
                 return new String[0];
             }
         };
@@ -268,6 +310,11 @@ public class DefaultBeanLoaderTest {
             protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
         };
 
         // when
@@ -300,6 +347,11 @@ public class DefaultBeanLoaderTest {
 
             @Override
             protected String[] getExcludePackagesImpl() {
+                return new String[0];
+            }
+
+            @Override
+            protected String[] getClassesImpl() {
                 return new String[0];
             }
         };
@@ -337,6 +389,11 @@ public class DefaultBeanLoaderTest {
             protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
         };
 
         // when
@@ -366,10 +423,15 @@ public class DefaultBeanLoaderTest {
             protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
         };
 
         // then
-        Assertions.assertThrows(DisallowedAccessPackageException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
+        Assertions.assertThrows(DisallowedAccessException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
     }
 
     @Test
@@ -389,6 +451,11 @@ public class DefaultBeanLoaderTest {
 
             @Override
             protected String[] getExcludePackagesImpl() {
+                return new String[0];
+            }
+
+            @Override
+            protected String[] getClassesImpl() {
                 return new String[0];
             }
         };
@@ -420,6 +487,11 @@ public class DefaultBeanLoaderTest {
             protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
         };
 
         // when
@@ -447,6 +519,11 @@ public class DefaultBeanLoaderTest {
 
             @Override
             protected String[] getExcludePackagesImpl() {
+                return new String[0];
+            }
+
+            @Override
+            protected String[] getClassesImpl() {
                 return new String[0];
             }
         };
@@ -478,6 +555,11 @@ public class DefaultBeanLoaderTest {
             protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
         };
 
         // when
@@ -507,6 +589,11 @@ public class DefaultBeanLoaderTest {
             protected String[] getExcludePackagesImpl() {
                 return new String[]{"org.jvault.struct.excludepackage.exclude"};
             }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
         };
 
         // then
@@ -530,6 +617,11 @@ public class DefaultBeanLoaderTest {
 
             @Override
             protected String[] getExcludePackagesImpl() {
+                return new String[0];
+            }
+
+            @Override
+            protected String[] getClassesImpl() {
                 return new String[0];
             }
         };
@@ -561,10 +653,83 @@ public class DefaultBeanLoaderTest {
             protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
         };
 
         // then
-        Assertions.assertThrows(DisallowedAccessPackageException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
+        Assertions.assertThrows(DisallowedAccessException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
+    }
+
+    @Test
+    public void READ_FROM_CLASS_BEAN_LOADER_TEST(){
+        // given
+        DefaultBeanLoader beanLoader = new DefaultBeanLoader();
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
+            @Override
+            public String getVaultName() {
+                return "READ_FROM_CLASS_BEAN_LOADER_TEST";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
+                return new String[0];
+            }
+
+            @Override
+            protected String[] getExcludePackagesImpl() {
+                return new String[0];
+            }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[]{"org.jvault.struct.readfromclass.ReadFromClass", "org.jvault.struct.readfromclass.ReadFromClassBean"};
+            }
+        };
+
+        // when
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        ReadFromClass readFromClass = beans.get("readFromClass").load();
+
+        // then
+        Assertions.assertEquals("ReadFromClassReadFromClassBean", readFromClass.hello());
+    }
+
+    @Test
+    public void CLASS_ACCESS_BEAN_LOADER_TEST(){
+        // given
+        DefaultBeanLoader beanLoader = new DefaultBeanLoader();
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
+            @Override
+            public String getVaultName() {
+                return "CLASS_ACCESS_BEAN_LOADER_TEST";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
+                return new String[]{"org.jvault.struct.classaccess"};
+            }
+
+            @Override
+            protected String[] getExcludePackagesImpl() {
+                return new String[0];
+            }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
+        };
+
+        // when
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        ClassAccess classAccess = beans.get("classAccess").load();
+
+        // then
+        Assertions.assertEquals("ClassAccessClassAccessBean", classAccess.hello());
     }
 
 }

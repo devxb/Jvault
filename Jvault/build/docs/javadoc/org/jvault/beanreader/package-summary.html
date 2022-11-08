@@ -94,17 +94,15 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Accessors.UtilAccessor.html" title="class in org.jvault.beanreader">Accessors.UtilAccessor</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AnnotationBeanReader.html" title="class in org.jvault.beanreader">AnnotationBeanReader</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AnnotatedBeanReader.html" title="class in org.jvault.beanreader">AnnotatedBeanReader</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="BeanLocation.html" title="interface in org.jvault.beanreader">BeanLocation</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">Interface that returns the package path where Bean is located.<br><br>
-
- In the getPackages() method, type the package path of the beans to scanned,<br>
- and in getExcludePackages() method, type the package path of the bin to exclude from Scan.<br><br>
+<div class="block">Interface that returns the package and class path where Bean is located.<br><br>
 
  When specifying a package path, the .* expression is available, and if the .* expression is attached to the end of the package path,<br>
- all Beans are scanned up or excluded to the leaf directory of the child package path that contains the package path.<br><br>
+ all Beans are scanned up or excluded to the leaf directory of the child package path that contains the package path.<br>
+ (The class path does not allow .* expressions.)<br><br>
 
  If .* expression is not used, import Bean contained in that folder.</div>
 </div>

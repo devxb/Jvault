@@ -21,13 +21,15 @@ import java.lang.annotation.Target;
  * <pre>
  * {@code @InternalBean(name = "example",
  *               type = Type.NEW,
- *               accesses = {"org.jvault.beans", "org.jvault.factory.*"})
+ *               accessPackages = {"org.jvault.beans", "org.jvault.factory.*"},
+ *               accessClasses = {"org.beanreader.AnnotatedBeanReader"})
  * public Class HelloWorld{}}
  * </pre>
- * then this Class will register bean as <br>
- * name : "example", <br>
- * type = Type.NEW, <br>
- * accesses = {"org.jvault.beans", "org.jvault.factory.*"}
+ * then this Class will be registered bean as below info <br>
+ * name : "example" <br>
+ * type = Type.NEW <br>
+ * accessPackages = {"org.jvault.beans", "org.jvault.factory.*"} <br>
+ * accessClasses = {"org.beanreader.AnnotatedBeanReader"} <br><br>
  *
  * @see Inject
  *
@@ -64,7 +66,8 @@ public @interface InternalBean {
     Type type() default Type.SINGLETON;
 
     /**
-     * Specifies the package path into which this bean can be injected.<br><br>
+     * Specifies the package path into which this bean can be injected.<br>
+     * This bean can be injected into all classes in the package.<br><br>
      *
      * If .* expression is used,<br>
      * this bean can be injected up to the leaf directory of all children including the preceding path. <br><br>
@@ -75,12 +78,27 @@ public @interface InternalBean {
      * example2 : org.jvault.bean <br>
      * Only objects included in the org.jvault.bean package can receive this bean injection.
      * <hr>
-     * Default accesses : Set to Empty String[] by default. In this case, this Bean can be injected from all packages
+     * Set to Empty String[] by default.<br>
+     * If both accessPackages() and accessClasses() are empty, this bean is accessible by all classes and packages.
      *
-     * @return String[]
+     * @return String[] Packages that can inject this bean
      *
      * @author devxb
      * @since 0.1
      */
-    String[] accesses() default {};
+    String[] accessPackages() default {};
+
+    /**
+     * Specifies the Class name with path into which this bean can be injected.<br>
+     * This bean can be injected into only class. <br><br>
+     *
+     * .* expression is not allowed. <br><br>
+     *
+     * Set to Empty String[] by default. <br>
+     * If both accessPackages() and accessClasses() are empty, this bean is accessible by all classes and packages.
+     *
+     * @return String[] Class name with path that can inject this bean
+     */
+    String[] accessClasses() default {};
+
 }

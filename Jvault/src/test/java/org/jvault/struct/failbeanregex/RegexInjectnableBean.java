@@ -2,6 +2,6 @@ package org.jvault.struct.failbeanregex;
 
 import org.jvault.annotation.InternalBean;
 
-@InternalBean(accesses = "org.jvault.*")
+@InternalBean(accessPackages = "org.jvault.*")
 public class RegexInjectnableBean {
 }

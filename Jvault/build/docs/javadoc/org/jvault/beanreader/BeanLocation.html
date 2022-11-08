@@ -92,13 +92,11 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">BeanLocation</span></div>
-<div class="block">Interface that returns the package path where Bean is located.<br><br>
-
- In the getPackages() method, type the package path of the beans to scanned,<br>
- and in getExcludePackages() method, type the package path of the bin to exclude from Scan.<br><br>
+<div class="block">Interface that returns the package and class path where Bean is located.<br><br>
 
  When specifying a package path, the .* expression is available, and if the .* expression is attached to the end of the package path,<br>
- all Beans are scanned up or excluded to the leaf directory of the child package path that contains the package path.<br><br>
+ all Beans are scanned up or excluded to the leaf directory of the child package path that contains the package path.<br>
+ (The class path does not allow .* expressions.)<br><br>
 
  If .* expression is not used, import Bean contained in that folder.</div>
 <dl class="notes">
@@ -120,17 +118,22 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getExcludePackages()" class="member-name-link">getExcludePackages</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getClasses()" class="member-name-link">getClasses</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">This method must return the class name with package.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getExcludePackages()" class="member-name-link">getExcludePackages</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">This method must return the package path of the beans to be excluded from the scan.<br>
  If an expression is used, exclude the Bean of all leaf package paths, including those package paths.<br>
  If not, exclude only the Bean contained in those package paths.<br><br>
 
  If Empty, No Bean is Excluded.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPackages()" class="member-name-link">getPackages</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPackages()" class="member-name-link">getPackages</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">This method must return package paths that contain beans to scan.<br>
  If an expression is used, scan the Bean of all leaf package paths, including those package paths.<br>
  If not, examine only the Bean contained in those package paths.<br><br>
@@ -180,6 +183,21 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>String[] Package paths excluding Bean to scan.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getClasses()">
+<h3>getClasses</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getClasses</span>()</div>
+<div class="block">This method must return the class name with package. <br>
+ The class of the return value of this method will be registered as a bean.<br>
+ <br>
+ If the class cannot be found, or there is no @InternalBean annotation in the founded class,<br>
+ <a href="../exceptions/NoDefinedInternalBeanException.html" title="class in org.jvault.exceptions"><code>NoDefinedInternalBeanException</code></a> is thrown.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>String[] Class package with name</dd>
 </dl>
 </section>
 </li>

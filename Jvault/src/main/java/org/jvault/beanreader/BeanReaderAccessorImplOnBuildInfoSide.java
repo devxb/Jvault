@@ -6,7 +6,7 @@ final class BeanReaderAccessorImplOnBuildInfoSide extends Accessors.BeanReaderAc
 
     @Override
     protected BeanReader getBeanReader() {
-        return AnnotationBeanReader.getInstance();
+        return AnnotatedBeanReader.getInstance();
     }
 
     static{

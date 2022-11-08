@@ -4,7 +4,7 @@ import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 import org.jvault.beans.Type;
 
-@InternalBean(name = "B", type = Type.SINGLETON, accesses = "org.jvault.*")
+@InternalBean(name = "B", type = Type.SINGLETON, accessPackages = "org.jvault.*")
 public class B {
 
     private final C C;

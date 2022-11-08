@@ -2,10 +2,13 @@ package org.jvault.vault;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.jvault.exceptions.DisallowedAccessPackageException;
+import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.factory.ClassVaultFactory;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
+import org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo;
 import org.jvault.factory.buildinfo.VaultFactoryBuildInfo;
+import org.jvault.struct.annotationconfigwithclass.AnnotationConfig;
+import org.jvault.struct.annotationconfigwithclass.AnnotationConfigWithClass;
 import org.jvault.struct.buildvault.BuildVault;
 import org.jvault.struct.buildvaultcannotinjectbean.BuildVaultCannotInjectBean;
 import org.jvault.struct.buildvaultcannotinjectclass.BuildVaultCannotInjectClass;
@@ -33,8 +36,13 @@ public class ClassVaultTest {
             }
 
             @Override
-            public String[] getInjectAccesses(){
+            public String[] getVaultAccessPackages(){
                 return new String[]{"org.jvault.struct.buildvault"};
+            }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
             }
         };
 
@@ -65,13 +73,18 @@ public class ClassVaultTest {
             protected String[] getExcludePackagesImpl() {
                 return new String[0];
             }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
         };
 
         // when
         Vault<Class<?>> classVault = factory.get(buildInfo);
 
         // then
-        Assertions.assertThrows(DisallowedAccessPackageException.class, ()-> classVault.inject(BuildVaultCannotInjectClass.class));
+        Assertions.assertThrows(DisallowedAccessException.class, ()-> classVault.inject(BuildVaultCannotInjectClass.class));
     }
 
     @Test
@@ -94,13 +107,31 @@ public class ClassVaultTest {
                 return new String[0];
             }
 
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
         };
 
         // when
         ClassVault classVault = factory.get(buildInfo);
 
         // then
-        Assertions.assertThrows(DisallowedAccessPackageException.class, ()-> classVault.inject(BuildVaultCannotInjectBean.class));
+        Assertions.assertThrows(DisallowedAccessException.class, ()-> classVault.inject(BuildVaultCannotInjectBean.class));
+    }
+
+    @Test
+    public void ANNOTATION_CONFIG_WITH_CLASS_CREATE_VAULT_TEST(){
+        // given
+        ClassVaultFactory vaultFactory = ClassVaultFactory.getInstance();
+        AnnotationVaultFactoryBuildInfo annotationVaultFactoryBuildInfo = new AnnotationVaultFactoryBuildInfo(org.jvault.struct.annotationconfigwithclass.AnnotationConfig.class);
+
+        // when
+        Vault<Class<?>> vault = vaultFactory.get(annotationVaultFactoryBuildInfo);
+        AnnotationConfigWithClass bean = vault.inject(AnnotationConfigWithClass.class);
+
+        // then
+        Assertions.assertEquals("AnnotationConfigWithClassAnnotationConfigWithClassBean", bean.hello());
     }
 
 }

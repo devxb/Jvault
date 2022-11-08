@@ -1,13 +1,11 @@
 package org.jvault.beanreader;
 
 /**
- * Interface that returns the package path where Bean is located.<br><br>
- *
- * In the getPackages() method, type the package path of the beans to scanned,<br>
- * and in getExcludePackages() method, type the package path of the bin to exclude from Scan.<br><br>
+ * Interface that returns the package and class path where Bean is located.<br><br>
  *
  * When specifying a package path, the .* expression is available, and if the .* expression is attached to the end of the package path,<br>
- * all Beans are scanned up or excluded to the leaf directory of the child package path that contains the package path.<br><br>
+ * all Beans are scanned up or excluded to the leaf directory of the child package path that contains the package path.<br>
+ * (The class path does not allow .* expressions.)<br><br>
  *
  * If .* expression is not used, import Bean contained in that folder.
  *
@@ -39,4 +37,16 @@ public interface BeanLocation {
      * @return String[] Package paths excluding Bean to scan.
      */
     String[] getExcludePackages();
+
+    /**
+     * This method must return the class name with package. <br>
+     * The class of the return value of this method will be registered as a bean.<br>
+     * <br>
+     * If the class cannot be found, or there is no @InternalBean annotation in the founded class,<br>
+     * {@link org.jvault.exceptions.NoDefinedInternalBeanException} is thrown.
+     *
+     * @return String[] Class package with name
+     */
+    String[] getClasses();
+
 }
