@@ -35,10 +35,12 @@ import java.lang.annotation.Target;
  * Also, always input the value of @Inject of the marked parameter. <br> <br>
  *
  * If the @Inject-marked parameter of the constructor <br>
- * marked with @Inject does not have a value, {@link org.jvault.exceptions.NoDefinedInternalBeanException} is thrown.<br>
+ * marked with @Inject does not have a value, {@link org.jvault.exceptions.NoDefinedInternalBeanException} is thrown.<br><br>
  *
  * A class must have at most one constructor marked with @Inject annotation,<br>
- * and if two or more constructors marked with @Inject annotation are found, {@link org.jvault.exceptions.DuplicateInjectConstructorException} is thrown.<br>
+ * and if two or more constructors marked with @Inject annotation are found, {@link org.jvault.exceptions.DuplicateInjectConstructorException} is thrown.<br><br>
+ *
+ * If try to inject bean using @Inject from a class or package that @InternalBean does not allow, a {@link org.jvault.exceptions.DisallowedAccessException} is thrown.<br><br>
  *
  * If CONSTRUCTOR INJECTION and FIELD INJECTION coexist, <br>
  * CONSTRUCTOR INJECTION is selected, and Bean injection proceeds in constructor injection method.

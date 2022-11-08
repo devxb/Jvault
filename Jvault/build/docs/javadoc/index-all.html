@@ -58,19 +58,14 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/jvault/factory/buildinfo/AbstractVaultFactoryBuildInfo.html#%3Cinit%3E()" class="member-name-link">AbstractVaultFactoryBuildInfo()</a> - Constructor for class org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/AbstractVaultFactoryBuildInfo.html" title="class in org.jvault.factory.buildinfo">AbstractVaultFactoryBuildInfo</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/jvault/annotation/InternalBean.html#accessClasses()" class="member-name-link">accessClasses()</a> - Element in annotation interface org.jvault.annotation.<a href="org/jvault/annotation/InternalBean.html" title="annotation interface in org.jvault.annotation">InternalBean</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/jvault/beans/Bean.Builder.html#accessClasses(java.lang.String...)" class="member-name-link">accessClasses(String...)</a> - Method in class org.jvault.beans.<a href="org/jvault/beans/Bean.Builder.html" title="class in org.jvault.beans">Bean.Builder</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/jvault/annotation/BeanArea.html#accesses()" class="member-name-link">accesses()</a> - Element in annotation interface org.jvault.annotation.<a href="org/jvault/annotation/BeanArea.html" title="annotation interface in org.jvault.annotation">BeanArea</a></dt>
 <dd>
 <div class="block">Returns the paths of packages that can be passed as parameters of the <a href="org/jvault/vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a></div>
 </dd>
-<dt><a href="org/jvault/annotation/InternalBean.html#accesses()" class="member-name-link">accesses()</a> - Element in annotation interface org.jvault.annotation.<a href="org/jvault/annotation/InternalBean.html" title="annotation interface in org.jvault.annotation">InternalBean</a></dt>
-<dd>
-<div class="block">Specifies the package path into which this bean can be injected.<br><br>
-
- If .* expression is used,<br>
- this bean can be injected up to the leaf directory of all children including the preceding path.</div>
-</dd>
-<dt><a href="org/jvault/beans/Bean.Builder.html#accesses(java.lang.String...)" class="member-name-link">accesses(String...)</a> - Method in class org.jvault.beans.<a href="org/jvault/beans/Bean.Builder.html" title="class in org.jvault.beans">Bean.Builder</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="org/jvault/beanloader/Accessors.html" class="type-name-link" title="class in org.jvault.beanloader">Accessors</a> - Class in <a href="org/jvault/beanloader/package-summary.html">org.jvault.beanloader</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/beanreader/Accessors.html" class="type-name-link" title="class in org.jvault.beanreader">Accessors</a> - Class in <a href="org/jvault/beanreader/package-summary.html">org.jvault.beanreader</a></dt>
@@ -93,7 +88,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/factory/Accessors.BeanLoaderAccessor.html" class="type-name-link" title="class in org.jvault.factory">Accessors.BeanLoaderAccessor</a> - Class in <a href="org/jvault/factory/package-summary.html">org.jvault.factory</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/jvault/beanloader/Accessors.BeanReaderAccessor.html" class="type-name-link" title="class in org.jvault.beanloader">Accessors.BeanReaderAccessor</a> - Class in <a href="org/jvault/beanloader/package-summary.html">org.jvault.beanloader</a></dt>
+<dt><a href="org/jvault/factory/buildinfo/Accessors.BeanLoaderAccessor.html" class="type-name-link" title="class in org.jvault.factory.buildinfo">Accessors.BeanLoaderAccessor</a> - Class in <a href="org/jvault/factory/buildinfo/package-summary.html">org.jvault.factory.buildinfo</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/factory/buildinfo/Accessors.BeanReaderAccessor.html" class="type-name-link" title="class in org.jvault.factory.buildinfo">Accessors.BeanReaderAccessor</a> - Class in <a href="org/jvault/factory/buildinfo/package-summary.html">org.jvault.factory.buildinfo</a></dt>
 <dd>&nbsp;</dd>
@@ -107,7 +102,16 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/factory/Accessors.VaultAccessor.html" class="type-name-link" title="class in org.jvault.factory">Accessors.VaultAccessor</a> - Class in <a href="org/jvault/factory/package-summary.html">org.jvault.factory</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/jvault/beanreader/AnnotationBeanReader.html" class="type-name-link" title="class in org.jvault.beanreader">AnnotationBeanReader</a> - Class in <a href="org/jvault/beanreader/package-summary.html">org.jvault.beanreader</a></dt>
+<dt><a href="org/jvault/annotation/InternalBean.html#accessPackages()" class="member-name-link">accessPackages()</a> - Element in annotation interface org.jvault.annotation.<a href="org/jvault/annotation/InternalBean.html" title="annotation interface in org.jvault.annotation">InternalBean</a></dt>
+<dd>
+<div class="block">Specifies the package path into which this bean can be injected.<br><br>
+
+ If .* expression is used,<br>
+ this bean can be injected up to the leaf directory of all children including the preceding path.</div>
+</dd>
+<dt><a href="org/jvault/beans/Bean.Builder.html#accessPackages(java.lang.String...)" class="member-name-link">accessPackages(String...)</a> - Method in class org.jvault.beans.<a href="org/jvault/beans/Bean.Builder.html" title="class in org.jvault.beans">Bean.Builder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/jvault/beanreader/AnnotatedBeanReader.html" class="type-name-link" title="class in org.jvault.beanreader">AnnotatedBeanReader</a> - Class in <a href="org/jvault/beanreader/package-summary.html">org.jvault.beanreader</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/factory/buildinfo/AnnotationVaultFactoryBuildInfo.html" class="type-name-link" title="class in org.jvault.factory.buildinfo">AnnotationVaultFactoryBuildInfo</a> - Class in <a href="org/jvault/factory/buildinfo/package-summary.html">org.jvault.factory.buildinfo</a></dt>
 <dd>
@@ -138,25 +142,25 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/jvault/exceptions/BeanCycledException.html#%3Cinit%3E()" class="member-name-link">BeanCycledException()</a> - Constructor for exception class org.jvault.exceptions.<a href="org/jvault/exceptions/BeanCycledException.html" title="class in org.jvault.exceptions">BeanCycledException</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/jvault/beanloader/BeanLoadable.html" class="type-name-link" title="class in org.jvault.beanloader">BeanLoadable</a> - Class in <a href="org/jvault/beanloader/package-summary.html">org.jvault.beanloader</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/jvault/beanloader/BeanLoader.html" class="type-name-link" title="interface in org.jvault.beanloader">BeanLoader</a> - Interface in <a href="org/jvault/beanloader/package-summary.html">org.jvault.beanloader</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/factory/Accessors.BeanLoaderAccessor.html#%3Cinit%3E()" class="member-name-link">BeanLoaderAccessor()</a> - Constructor for class org.jvault.factory.<a href="org/jvault/factory/Accessors.BeanLoaderAccessor.html" title="class in org.jvault.factory">Accessors.BeanLoaderAccessor</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/jvault/factory/buildinfo/Accessors.BeanLoaderAccessor.html#%3Cinit%3E()" class="member-name-link">BeanLoaderAccessor()</a> - Constructor for class org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/Accessors.BeanLoaderAccessor.html" title="class in org.jvault.factory.buildinfo">Accessors.BeanLoaderAccessor</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/jvault/beanreader/BeanLocation.html" class="type-name-link" title="interface in org.jvault.beanreader">BeanLocation</a> - Interface in <a href="org/jvault/beanreader/package-summary.html">org.jvault.beanreader</a></dt>
 <dd>
-<div class="block">Interface that returns the package path where Bean is located.<br><br>
-
- In the getPackages() method, type the package path of the beans to scanned,<br>
- and in getExcludePackages() method, type the package path of the bin to exclude from Scan.<br><br>
+<div class="block">Interface that returns the package and class path where Bean is located.<br><br>
 
  When specifying a package path, the .* expression is available, and if the .* expression is attached to the end of the package path,<br>
- all Beans are scanned up or excluded to the leaf directory of the child package path that contains the package path.<br><br>
+ all Beans are scanned up or excluded to the leaf directory of the child package path that contains the package path.<br>
+ (The class path does not allow .* expressions.)<br><br>
 
  If .* expression is not used, import Bean contained in that folder.</div>
 </dd>
 <dt><a href="org/jvault/beanreader/BeanReader.html" class="type-name-link" title="interface in org.jvault.beanreader">BeanReader</a> - Interface in <a href="org/jvault/beanreader/package-summary.html">org.jvault.beanreader</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="org/jvault/beanloader/Accessors.BeanReaderAccessor.html#%3Cinit%3E()" class="member-name-link">BeanReaderAccessor()</a> - Constructor for class org.jvault.beanloader.<a href="org/jvault/beanloader/Accessors.BeanReaderAccessor.html" title="class in org.jvault.beanloader">Accessors.BeanReaderAccessor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/factory/buildinfo/Accessors.BeanReaderAccessor.html#%3Cinit%3E()" class="member-name-link">BeanReaderAccessor()</a> - Constructor for class org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/Accessors.BeanReaderAccessor.html" title="class in org.jvault.factory.buildinfo">Accessors.BeanReaderAccessor</a></dt>
 <dd>&nbsp;</dd>
@@ -250,23 +254,34 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/beanloader/Accessors.BeansAccessor.html#getBeanBuilderFactory()" class="member-name-link">getBeanBuilderFactory()</a> - Method in class org.jvault.beanloader.<a href="org/jvault/beanloader/Accessors.BeansAccessor.html" title="class in org.jvault.beanloader">Accessors.BeansAccessor</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/jvault/factory/Accessors.BeanLoaderAccessor.html#getBeanLoader()" class="member-name-link">getBeanLoader()</a> - Method in class org.jvault.factory.<a href="org/jvault/factory/Accessors.BeanLoaderAccessor.html" title="class in org.jvault.factory">Accessors.BeanLoaderAccessor</a></dt>
+<dt><a href="org/jvault/factory/buildinfo/Accessors.BeanLoaderAccessor.html#getBeanLoadable(java.lang.String,org.jvault.beans.Type,java.lang.String%5B%5D,java.lang.String%5B%5D,java.lang.Class)" class="member-name-link">getBeanLoadable(String, Type, String[], String[], Class&lt;?&gt;)</a> - Method in class org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/Accessors.BeanLoaderAccessor.html" title="class in org.jvault.factory.buildinfo">Accessors.BeanLoaderAccessor</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/jvault/beanloader/Accessors.BeanReaderAccessor.html#getBeanReader()" class="member-name-link">getBeanReader()</a> - Method in class org.jvault.beanloader.<a href="org/jvault/beanloader/Accessors.BeanReaderAccessor.html" title="class in org.jvault.beanloader">Accessors.BeanReaderAccessor</a></dt>
+<dt><a href="org/jvault/factory/buildinfo/AbstractVaultFactoryBuildInfo.html#getBeanLoadables()" class="member-name-link">getBeanLoadables()</a> - Method in class org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/AbstractVaultFactoryBuildInfo.html" title="class in org.jvault.factory.buildinfo">AbstractVaultFactoryBuildInfo</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/jvault/factory/buildinfo/AnnotationVaultFactoryBuildInfo.html#getBeanLoadables()" class="member-name-link">getBeanLoadables()</a> - Method in class org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/AnnotationVaultFactoryBuildInfo.html" title="class in org.jvault.factory.buildinfo">AnnotationVaultFactoryBuildInfo</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/jvault/factory/buildinfo/VaultFactoryBuildInfo.html#getBeanLoadables()" class="member-name-link">getBeanLoadables()</a> - Method in interface org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo">VaultFactoryBuildInfo</a></dt>
+<dd>
+<div class="block">Method that returns bean-info that convert and register to Beans <br>
+ The <a href="org/jvault/factory/VaultFactory.html" title="interface in org.jvault.factory"><code>VaultFactory</code></a> generates beans based on the return value of this method.</div>
+</dd>
+<dt><a href="org/jvault/factory/Accessors.BeanLoaderAccessor.html#getBeanLoader()" class="member-name-link">getBeanLoader()</a> - Method in class org.jvault.factory.<a href="org/jvault/factory/Accessors.BeanLoaderAccessor.html" title="class in org.jvault.factory">Accessors.BeanLoaderAccessor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/factory/buildinfo/Accessors.BeanReaderAccessor.html#getBeanReader()" class="member-name-link">getBeanReader()</a> - Method in class org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/Accessors.BeanReaderAccessor.html" title="class in org.jvault.factory.buildinfo">Accessors.BeanReaderAccessor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/factory/Accessors.VaultAccessor.html#getBuilder(org.jvault.vault.VaultType,java.lang.Class)" class="member-name-link">getBuilder(VaultType, Class&lt;S&gt;)</a> - Method in class org.jvault.factory.<a href="org/jvault/factory/Accessors.VaultAccessor.html" title="class in org.jvault.factory">Accessors.VaultAccessor</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/jvault/factory/buildinfo/AbstractVaultFactoryBuildInfo.html#getClasses()" class="member-name-link">getClasses()</a> - Method in class org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/AbstractVaultFactoryBuildInfo.html" title="class in org.jvault.factory.buildinfo">AbstractVaultFactoryBuildInfo</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="org/jvault/factory/buildinfo/AnnotationVaultFactoryBuildInfo.html#getClasses()" class="member-name-link">getClasses()</a> - Method in class org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/AnnotationVaultFactoryBuildInfo.html" title="class in org.jvault.factory.buildinfo">AnnotationVaultFactoryBuildInfo</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="org/jvault/factory/buildinfo/VaultFactoryBuildInfo.html#getClasses()" class="member-name-link">getClasses()</a> - Method in interface org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo">VaultFactoryBuildInfo</a></dt>
+<dt><a href="org/jvault/beanreader/BeanLocation.html#getClasses()" class="member-name-link">getClasses()</a> - Method in interface org.jvault.beanreader.<a href="org/jvault/beanreader/BeanLocation.html" title="interface in org.jvault.beanreader">BeanLocation</a></dt>
 <dd>
-<div class="block">Method that returns class that convert and register to Beans <br>
- The <a href="org/jvault/factory/VaultFactory.html" title="interface in org.jvault.factory"><code>VaultFactory</code></a> generates beans based on the return value of this method.</div>
+<div class="block">This method must return the class name with package.</div>
 </dd>
+<dt><a href="org/jvault/factory/buildinfo/AbstractVaultFactoryBuildInfo.html#getClassesImpl()" class="member-name-link">getClassesImpl()</a> - Method in class org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/AbstractVaultFactoryBuildInfo.html" title="class in org.jvault.factory.buildinfo">AbstractVaultFactoryBuildInfo</a></dt>
+<dd>
+<div class="block">The implementation of this method should return the path and package of the class.<br>
+ The bean of the returned information will be registered in the Vault.</div>
+</dd>
+<dt><a href="org/jvault/factory/buildinfo/PropertiesVaultFactoryBuildInfo.html#getClassesImpl()" class="member-name-link">getClassesImpl()</a> - Method in class org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/PropertiesVaultFactoryBuildInfo.html" title="class in org.jvault.factory.buildinfo">PropertiesVaultFactoryBuildInfo</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/jvault/beanreader/BeanLocation.html#getExcludePackages()" class="member-name-link">getExcludePackages()</a> - Method in interface org.jvault.beanreader.<a href="org/jvault/beanreader/BeanLocation.html" title="interface in org.jvault.beanreader">BeanLocation</a></dt>
 <dd>
 <div class="block">This method must return the package path of the beans to be excluded from the scan.<br>
@@ -385,9 +400,9 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/beans/SingletonBean.html#load()" class="member-name-link">load()</a> - Method in class org.jvault.beans.<a href="org/jvault/beans/SingletonBean.html" title="class in org.jvault.beans">SingletonBean</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/jvault/beanloader/BeanLoader.html#load(java.util.List)" class="member-name-link">load(List&lt;Class&lt;?&gt;&gt;)</a> - Method in interface org.jvault.beanloader.<a href="org/jvault/beanloader/BeanLoader.html" title="interface in org.jvault.beanloader">BeanLoader</a></dt>
+<dt><a href="org/jvault/beanloader/BeanLoader.html#load(java.util.List)" class="member-name-link">load(List&lt;BeanLoadable&gt;)</a> - Method in interface org.jvault.beanloader.<a href="org/jvault/beanloader/BeanLoader.html" title="interface in org.jvault.beanloader">BeanLoader</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/jvault/beanloader/DefaultBeanLoader.html#load(java.util.List)" class="member-name-link">load(List&lt;Class&lt;?&gt;&gt;)</a> - Method in class org.jvault.beanloader.<a href="org/jvault/beanloader/DefaultBeanLoader.html" title="class in org.jvault.beanloader">DefaultBeanLoader</a></dt>
+<dt><a href="org/jvault/beanloader/DefaultBeanLoader.html#load(java.util.List)" class="member-name-link">load(List&lt;BeanLoadable&gt;)</a> - Method in class org.jvault.beanloader.<a href="org/jvault/beanloader/DefaultBeanLoader.html" title="class in org.jvault.beanloader">DefaultBeanLoader</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:N">N</h2>
@@ -472,15 +487,13 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:R">R</h2>
 <dl class="index">
-<dt><a href="org/jvault/beanreader/AnnotationBeanReader.html#read(org.jvault.beanreader.BeanLocation)" class="member-name-link">read(BeanLocation)</a> - Method in class org.jvault.beanreader.<a href="org/jvault/beanreader/AnnotationBeanReader.html" title="class in org.jvault.beanreader">AnnotationBeanReader</a></dt>
+<dt><a href="org/jvault/beanreader/AnnotatedBeanReader.html#read(org.jvault.beanreader.BeanLocation)" class="member-name-link">read(BeanLocation)</a> - Method in class org.jvault.beanreader.<a href="org/jvault/beanreader/AnnotatedBeanReader.html" title="class in org.jvault.beanreader">AnnotatedBeanReader</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/beanreader/BeanReader.html#read(org.jvault.beanreader.BeanLocation)" class="member-name-link">read(BeanLocation)</a> - Method in interface org.jvault.beanreader.<a href="org/jvault/beanreader/BeanReader.html" title="interface in org.jvault.beanreader">BeanReader</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/beans/Bean.Builder.html#reflection(org.jvault.util.Reflection)" class="member-name-link">reflection(Reflection)</a> - Method in class org.jvault.beans.<a href="org/jvault/beans/Bean.Builder.html" title="class in org.jvault.beans">Bean.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/util/Reflection.html" class="type-name-link" title="class in org.jvault.util">Reflection</a> - Class in <a href="org/jvault/util/package-summary.html">org.jvault.util</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="org/jvault/beanloader/Accessors.BeanReaderAccessor.html#registerAccessor(org.jvault.beanloader.Accessors.BeanReaderAccessor)" class="member-name-link">registerAccessor(Accessors.BeanReaderAccessor)</a> - Static method in class org.jvault.beanloader.<a href="org/jvault/beanloader/Accessors.BeanReaderAccessor.html" title="class in org.jvault.beanloader">Accessors.BeanReaderAccessor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/beanloader/Accessors.BeansAccessor.html#registerAccessor(org.jvault.beanloader.Accessors.BeansAccessor)" class="member-name-link">registerAccessor(Accessors.BeansAccessor)</a> - Static method in class org.jvault.beanloader.<a href="org/jvault/beanloader/Accessors.BeansAccessor.html" title="class in org.jvault.beanloader">Accessors.BeansAccessor</a></dt>
 <dd>&nbsp;</dd>
@@ -491,6 +504,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/jvault/factory/Accessors.BeanLoaderAccessor.html#registerAccessor(org.jvault.factory.Accessors.BeanLoaderAccessor)" class="member-name-link">registerAccessor(Accessors.BeanLoaderAccessor)</a> - Static method in class org.jvault.factory.<a href="org/jvault/factory/Accessors.BeanLoaderAccessor.html" title="class in org.jvault.factory">Accessors.BeanLoaderAccessor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/factory/Accessors.VaultAccessor.html#registerAccessor(org.jvault.factory.Accessors.VaultAccessor)" class="member-name-link">registerAccessor(Accessors.VaultAccessor)</a> - Static method in class org.jvault.factory.<a href="org/jvault/factory/Accessors.VaultAccessor.html" title="class in org.jvault.factory">Accessors.VaultAccessor</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/jvault/factory/buildinfo/Accessors.BeanLoaderAccessor.html#registerAccessor(org.jvault.factory.buildinfo.Accessors.BeanLoaderAccessor)" class="member-name-link">registerAccessor(Accessors.BeanLoaderAccessor)</a> - Static method in class org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/Accessors.BeanLoaderAccessor.html" title="class in org.jvault.factory.buildinfo">Accessors.BeanLoaderAccessor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/jvault/factory/buildinfo/Accessors.BeanReaderAccessor.html#registerAccessor(org.jvault.factory.buildinfo.Accessors.BeanReaderAccessor)" class="member-name-link">registerAccessor(Accessors.BeanReaderAccessor)</a> - Static method in class org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/Accessors.BeanReaderAccessor.html" title="class in org.jvault.factory.buildinfo">Accessors.BeanReaderAccessor</a></dt>
 <dd>&nbsp;</dd>

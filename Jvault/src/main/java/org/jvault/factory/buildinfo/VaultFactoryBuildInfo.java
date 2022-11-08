@@ -1,7 +1,6 @@
 package org.jvault.factory.buildinfo;
 
 import org.jvault.beanloader.BeanLoadable;
-import org.jvault.beanreader.BeanLocation;
 
 import java.util.List;
 
@@ -44,13 +43,26 @@ public interface VaultFactoryBuildInfo {
 
     /**
      * Method that returns the accessible package paths to which {@link org.jvault.vault.Vault} created by {@link org.jvault.factory.VaultFactory} <br>
-     * If it's empty, it can be accessed from any package.
+     * Only the path of the class specified here can be passed as a parameter of the vault. <br>
+     * If empty, any class can be passed as a parameter.<br>
      *
-     * @return String[]
+     * @return String[] Packages of classes that can be passed as parameters to the {@link org.jvault.vault.Vault}
      *
      * @author devxb
      * @since 0.1
      */
-    String[] getInjectAccesses();
+    String[] getVaultAccessPackages();
+
+    /**
+     * Method that returns the accessible class name with path to which {@link org.jvault.vault.Vault} created by {@link org.jvault.factory.VaultFactory} <br>
+     * Only the path of the class specified here can be passed as a parameter of the vault.<br>
+     * If empty, any class can be passed as a parameter.<br>
+     *
+     * @return String[] The name with path of the class that can be passed as parameters to the {@link org.jvault.vault.Vault}
+     *
+     * @author devxb
+     * @since 0.1
+     */
+    String[] getVaultAccessClasses();
 
 }

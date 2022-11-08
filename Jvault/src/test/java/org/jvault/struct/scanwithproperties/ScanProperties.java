@@ -5,7 +5,7 @@ import org.jvault.annotation.InternalBean;
 import org.jvault.struct.scanwithproperties.propertiesbeans.PropertiesBean1;
 import org.jvault.struct.scanwithproperties.propertiesbeans.PropertiesBean2;
 
-@InternalBean(accesses = "org.jvault.struct.scanwithproperties")
+@InternalBean(accessPackages = "org.jvault.struct.scanwithproperties")
 public class ScanProperties {
 
     @Inject

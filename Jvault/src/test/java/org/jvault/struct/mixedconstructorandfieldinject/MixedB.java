@@ -2,7 +2,7 @@ package org.jvault.struct.mixedconstructorandfieldinject;
 
 import org.jvault.annotation.InternalBean;
 
-@InternalBean(accesses = "org.jvault.*")
+@InternalBean(accessPackages = "org.jvault.*")
 final class MixedB implements Mixed{
 
     @Override

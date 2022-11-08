@@ -1,11 +1,10 @@
 package org.jvault.beanloader;
 
 import org.jvault.annotation.Inject;
-import org.jvault.annotation.InternalBean;
 import org.jvault.beans.Bean;
 import org.jvault.beans.BeanBuilderFactory;
 import org.jvault.exceptions.BeanCycledException;
-import org.jvault.exceptions.DisallowedAccessPackageException;
+import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.exceptions.DuplicateBeanNameException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
 import org.jvault.util.Reflection;
@@ -85,7 +84,7 @@ public final class DefaultBeanLoader implements BeanLoader{
         List<Object> instancedParameters = new ArrayList<>();
         for(Parameter parameter : parameters){
            Inject inject = parameter.getDeclaredAnnotation(Inject.class);
-           if(inject == null || inject.value().equals("")) throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
+           throwIfInjectNotHasValue(inject);
            String value = inject.value();
            if(!BEANS.containsKey(value)) {
                if(!LAZY_LOAD_BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
@@ -93,7 +92,7 @@ public final class DefaultBeanLoader implements BeanLoader{
            }
            Bean bean = BEANS.get(value);
            if(!bean.isInjectable(beanLoadable.BEAN_CLASS))
-               throw new DisallowedAccessPackageException(value, beanLoadable.BEAN_CLASS.getPackage().getName());
+               throw new DisallowedAccessException(value, beanLoadable.BEAN_CLASS.getPackage().getName());
            instancedParameters.add(INSTANCES.get(value));
         }
         try {
@@ -103,12 +102,17 @@ public final class DefaultBeanLoader implements BeanLoader{
                     BEAN_BUILDER_FACTORY.getBeanBuilder(beanLoadable.BEAN_TYPE)
                             .name(beanLoadable.BEAN_NAME)
                             .beans(BEANS)
-                            .accesses(beanLoadable.ACCESSES)
+                            .accessPackages(beanLoadable.PACKAGE_ACCESSES)
+                            .accessClasses(beanLoadable.CLASS_ACCSSES)
                             .reflection(REFLECTION)
                             .instance(INSTANCES.get(beanLoadable.BEAN_NAME)).build());
         }catch(InvocationTargetException | InstantiationException | IllegalAccessException IE){
             throw new IllegalStateException("Can not call \"newInstance(params)\" of bean \"" + beanLoadable.BEAN_NAME + "\"");
         }
+    }
+
+    private void throwIfInjectNotHasValue(Inject inject){
+        if(inject == null || inject.value().equals("")) throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
     }
 
     private void registerBeanFromField(BeanLoadable beanLoadable, List<Field> fields){
@@ -129,7 +133,7 @@ public final class DefaultBeanLoader implements BeanLoader{
                 loadBean(LAZY_LOAD_BEANS.get(value));
             }
             if(!BEANS.get(value).isInjectable(beanLoadable.BEAN_CLASS))
-                throw new DisallowedAccessPackageException(value, beanLoadable.BEAN_CLASS.getPackage().getName());
+                throw new DisallowedAccessException(value, beanLoadable.BEAN_CLASS.getPackage().getName());
             try {
                 field.set(bean, INSTANCES.get(value));
             }catch(IllegalAccessException IAE){
@@ -139,7 +143,8 @@ public final class DefaultBeanLoader implements BeanLoader{
         INSTANCES.put(beanLoadable.BEAN_NAME, bean);
         BEANS.put(beanLoadable.BEAN_NAME, BEAN_BUILDER_FACTORY.getBeanBuilder(beanLoadable.BEAN_TYPE)
                 .name(beanLoadable.BEAN_NAME)
-                .accesses(beanLoadable.ACCESSES)
+                .accessPackages(beanLoadable.PACKAGE_ACCESSES)
+                .accessClasses(beanLoadable.CLASS_ACCSSES)
                 .instance(bean)
                 .beans(BEANS)
                 .reflection(REFLECTION)

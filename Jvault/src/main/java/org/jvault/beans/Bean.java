@@ -11,7 +11,8 @@ public interface Bean {
     abstract class Builder<S extends Bean>{
 
         String name;
-        String[] accesses;
+        String[] accessPackages;
+        String[] accessClasses;
         Object instance;
         Reflection reflection;
         Map<String, Bean> beans;
@@ -21,8 +22,13 @@ public interface Bean {
             return this;
         }
 
-        public Builder<S> accesses(String... accesses){
-            this.accesses = accesses;
+        public Builder<S> accessPackages(String... accessPackages){
+            this.accessPackages = accessPackages;
+            return this;
+        }
+
+        public Builder<S> accessClasses(String... accessClasses){
+            this.accessClasses = accessClasses;
             return this;
         }
 

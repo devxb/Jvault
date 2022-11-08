@@ -2,7 +2,7 @@ package org.jvault.struct.multipleaccesses;
 
 import org.jvault.annotation.InternalBean;
 
-@InternalBean(accesses = {"java.lang.*",
+@InternalBean(accessPackages = {"java.lang.*",
         "org.jvault",
         "org.jvault.struct",
         "org.jvault.struct.multipleaccesses"})

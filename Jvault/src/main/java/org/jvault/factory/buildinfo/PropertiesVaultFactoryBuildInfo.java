@@ -1,6 +1,8 @@
 package org.jvault.factory.buildinfo;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 /**
@@ -15,9 +17,14 @@ import java.util.Properties;
  * which will be the name of the vault that was created.
  * <br><br>
  *
- * org.jvault.vault.inject.accesses = org.jvault.factory, org.jvault.util.* <br>
- * - "getInjectAccesses()" method returns a vaule of org.jvault.vault.inject.accesses,
- * which will be specified range of packages that Vault Can inject.
+ * org.jvault.vault.access.packages = org.jvault.factory, org.jvault.util.* <br>
+ * - "getVaultAccessPackages()" method returns a vaule of org.jvault.vault.access.packages,
+ * which will be specified range of packages that Vault can inject.
+ * <br><br>
+ *
+ * org.jvault.vault.access.classes = org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo <br>
+ * - "getVaultAccessClasses()" method returns a vaule of org.jvault.vault.access.classes,
+ * which will be specified class name with path that Vault can inject.
  * <br><br>
  *
  * org.jvault.reader.packages = org.jvault, org.jvault.struct.scanwithproperties, org.jvault.* <br>
@@ -27,6 +34,11 @@ import java.util.Properties;
  * org.jvault.reader.exclude.packages = org.jvault.factory, org.jvault.beans.* <br>
  * - The path of the package to exclude from the scan. <br>
  * When you use an ".*" expression, it find beans in all child directories and descendant directories to leaf directories, including the path before the expression.
+ * <br><br>
+ *
+ * org.jvault.reader.classes = org.jvault.factory.ClassVaultFactory, org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo <br>
+ * - The class path with class name where the bean located. <br>
+ *
  * <br>
  * <hr>
  * @see org.jvault.factory.VaultFactory
@@ -38,42 +50,31 @@ public final class PropertiesVaultFactoryBuildInfo extends AbstractVaultFactoryB
 
     private final String VAULT_NAME;
     private final String[] SCANNING_PACKAGES;
+    private final String[] SCANNING_CLASSES;
     private final String[] EXCLUDE_SCANNING_PACKAGES;
-    private final String[] INJECT_ACCESSES;
-
-    @Override
-    public String getVaultName() {
-        return VAULT_NAME;
-    }
-
-    @Override
-    public String[] getInjectAccesses() {
-        return INJECT_ACCESSES;
-    }
-
-    @Override
-    protected String[] getPackagesImpl() {
-        return SCANNING_PACKAGES;
-    }
-
-    @Override
-    protected String[] getExcludePackagesImpl() {
-        return EXCLUDE_SCANNING_PACKAGES;
-    }
+    private final String[] VAULT_ACCESS_PACKAGES;
+    private final String[] VAULT_ACCESS_CLASSES;
 
     /**
      * Receive the path of *.properties file and specify the return value of the {@link VaultFactoryBuildInfo} methods.
      *
+     * @throws IllegalArgumentException thrown when, can not find properties file.
+     *
      * @param propertiesSrc the path of *.properties file
+     *
+     * @author devxb
+     * @since 0.1
      */
     public PropertiesVaultFactoryBuildInfo(String propertiesSrc){
-        try(InputStream input = new FileInputStream(propertiesSrc)){
+        try(InputStream input = Files.newInputStream(Paths.get(propertiesSrc))){
             Properties properties = new Properties();
             properties.load(input);
             VAULT_NAME = getVaultName(propertiesSrc, properties);
             SCANNING_PACKAGES = getScanningPackages(properties);
+            SCANNING_CLASSES = getScanningClasses(properties);
             EXCLUDE_SCANNING_PACKAGES = getExcludeScanningPackages(properties);
-            INJECT_ACCESSES = getInjectAccesses(properties);
+            VAULT_ACCESS_PACKAGES = getVaultAccessPackages(properties);
+            VAULT_ACCESS_CLASSES = getVaultAccessClasses(properties);
         } catch (IOException e) {
             throw new IllegalArgumentException("Cant not find properties located at \"" + propertiesSrc + "\"");
         }
@@ -91,17 +92,60 @@ public final class PropertiesVaultFactoryBuildInfo extends AbstractVaultFactoryB
         return packages;
     }
 
+    private String[] getScanningClasses(Properties properties){
+        String[] classes = properties.getProperty("org.jvault.reader.classes", "").split(",");
+        for(int i = 0; i < classes.length; i++) classes[i] = classes[i].trim();
+        return classes;
+    }
+
     private String[] getExcludeScanningPackages(Properties properties){
         String[] packages = properties.getProperty("org.jvault.reader.exclude.packages", "").split(",");
         for(int i = 0; i < packages.length; i++) packages[i] = packages[i].trim();
         return packages;
     }
 
-    private String[] getInjectAccesses(Properties properties){
-        String[] injectAccesses = properties.getProperty("org.jvault.vault.inject.accesses", "").split(",");
+    private String[] getVaultAccessPackages(Properties properties){
+        String[] injectAccesses = properties.getProperty("org.jvault.vault.access.packages", "").split(",");
         for(int i = 0; i < injectAccesses.length; i++)
             injectAccesses[i] = injectAccesses[i].trim();
         return injectAccesses;
+    }
+
+    private String[] getVaultAccessClasses(Properties properties){
+        String[] injectAccesses = properties.getProperty("org.jvault.vault.access.classes", "").split(",");
+        for(int i = 0; i < injectAccesses.length; i++)
+            injectAccesses[i] = injectAccesses[i].trim();
+        return injectAccesses;
+    }
+
+    @Override
+    public String getVaultName() {
+        return VAULT_NAME;
+    }
+
+    @Override
+    public String[] getVaultAccessPackages() {
+        return VAULT_ACCESS_PACKAGES;
+    }
+
+    @Override
+    public String[] getVaultAccessClasses(){
+        return VAULT_ACCESS_CLASSES;
+    }
+
+    @Override
+    protected String[] getPackagesImpl() {
+        return SCANNING_PACKAGES;
+    }
+
+    @Override
+    protected String[] getExcludePackagesImpl() {
+        return EXCLUDE_SCANNING_PACKAGES;
+    }
+
+    @Override
+    protected String[] getClassesImpl() {
+        return SCANNING_CLASSES;
     }
 
 }

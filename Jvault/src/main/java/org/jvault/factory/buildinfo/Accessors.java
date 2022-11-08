@@ -54,7 +54,7 @@ public final class Accessors {
             return accessor;
         }
 
-        protected abstract BeanLoadable getBeanLoadable(String beanName, Type beanType, String[] accesses, Class<?> beanClass);
+        protected abstract BeanLoadable getBeanLoadable(String beanName, Type beanType, String[] packageAccesses, String[] classAccesses, Class<?> beanClass);
 
     }
 

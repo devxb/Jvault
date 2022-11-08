@@ -64,7 +64,7 @@ public final class PackageReader {
     }
 
     private boolean isInternalBean(Class<?> cls){
-        return cls.getAnnotation(InternalBean.class) != null;
+        return cls.getDeclaredAnnotation(InternalBean.class) != null;
     }
 
 }

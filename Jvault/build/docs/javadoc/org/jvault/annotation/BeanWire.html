@@ -99,12 +99,12 @@ loadScripts(document, 'script');</script>
  </pre>
  As above, if @BeanWire is marked in a class marked with @BeanArea, and the @InternalBean information of class Foo is as follows,
  <pre>
- <code>@InternalBean(name = "foo",
+ <code>@InternalBean(name = "fOO",
                       type = Type.SINGLETON,
                       accesses = {"org.jvault.*"})
  public class Foo{}</code>
  </pre>
- Bean is created with the values name = "foo", type = singleton, accesses = {"org.jvault.*"} <br> <br>
+ Bean is created with the values name = "fOO", type = singleton, accesses = {"org.jvault.*"} <br> <br>
 
  This means that the class of fields marked with @BeanWire must be marked with @InternalBean. <br>
  If not, a <a href="../exceptions/NoDefinedInternalBeanException.html" title="class in org.jvault.exceptions"><code>NoDefinedInternalBeanException</code></a> is thrown.</div>

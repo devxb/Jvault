@@ -78,7 +78,8 @@ public final class ClassVaultFactory implements VaultFactory <ClassVault>{
 
         ClassVault classVault = Accessors.VaultAccessor.getAccessor().getBuilder(VaultType.CLASS, ClassVault.class)
                 .name(buildInfo.getVaultName())
-                .injectAccesses(buildInfo.getInjectAccesses())
+                .accessPackages(buildInfo.getVaultAccessPackages())
+                .accessClasses(buildInfo.getVaultAccessClasses())
                 .beans(beans).build();
 
         VAULTS.put(buildInfo.getVaultName(), classVault);
