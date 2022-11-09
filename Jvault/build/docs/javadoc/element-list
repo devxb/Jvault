@@ -5,5 +5,8 @@ org.jvault.beans
 org.jvault.exceptions
 org.jvault.factory
 org.jvault.factory.buildinfo
+org.jvault.factory.buildinfo.extensible
+org.jvault.factory.extensible
+org.jvault.metadata
 org.jvault.util
 org.jvault.vault

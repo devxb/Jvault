@@ -1,34 +1,32 @@
 package org.jvault.factory.buildinfo;
 
-import org.jvault.annotation.InternalBean;
-import org.jvault.beanloader.BeanLoadable;
-import org.jvault.beanreader.BeanLocation;
-import org.jvault.beanreader.BeanReader;
-import org.jvault.beans.Type;
-import org.jvault.exceptions.NoDefinedInternalBeanException;
+import org.jvault.factory.buildinfo.extensible.BeanLocationExtensiblePoint;
+import org.jvault.factory.buildinfo.extensible.BeanReaderExtensiblePoint;
+import org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint;
+import org.jvault.metadata.API;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Abstract class to help implement {@link VaultFactoryBuildInfo} interface.
+ * Abstract class to help implement {@link VaultFactoryBuildInfoExtensiblePoint} interface.
  * The getInjectAccesses() method and getClasses() method is implemented.
  *
  * @see org.jvault.factory.VaultFactory
- * @see org.jvault.beanreader.BeanLocation
+ * @see BeanLocationExtensiblePoint
  *
  * @author devxb
  * @since 0.1
  */
-public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuildInfo {
+@API
+public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuildInfoExtensiblePoint {
 
     @Override
     public abstract String getVaultName();
 
     @Override
-    public List<BeanLoadable> getBeanLoadables(){
-        BeanReader beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        List<Class<?>> classes = beanReader.read(new BeanLocation(){
+    public List<Class<?>> getBeanClasses(){
+        BeanReaderExtensiblePoint beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
+        return beanReader.read(new BeanLocationExtensiblePoint(){
             @Override
             public String[] getPackages() {
                 return getPackagesImpl();
@@ -42,29 +40,6 @@ public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuild
             @Override
             public String[] getClasses(){return getClassesImpl();}
         });
-
-        return convertToBeanLoadables(classes);
-    }
-
-    private List<BeanLoadable> convertToBeanLoadables(List<Class<?>> classes){
-        List<BeanLoadable> beanLoadables = new ArrayList<>();
-        for(Class<?> cls : classes){
-            InternalBean internalBean = cls.getDeclaredAnnotation(InternalBean.class);
-            if(internalBean == null) throw new NoDefinedInternalBeanException(cls.getSimpleName());
-            String name = convertToBeanName(cls.getSimpleName());
-            if(!internalBean.name().equals("")) name = internalBean.name();
-            Type type = internalBean.type();
-            String[] packageAccesses = internalBean.accessPackages();
-            String[] classAccesses = internalBean.accessClasses();
-            beanLoadables.add(
-                    Accessors.BeanLoaderAccessor.getAccessor().getBeanLoadable(name, type, packageAccesses, classAccesses, cls)
-            );
-        }
-        return beanLoadables;
-    }
-
-    private String convertToBeanName(String name){
-        return name.substring(0, 1).toLowerCase() + name.subSequence(1, name.length());
     }
 
     /**
@@ -98,10 +73,12 @@ public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuild
     protected abstract String[] getClassesImpl();
 
 
+    @Override
     public String[] getVaultAccessPackages(){
         return new String[0];
     }
 
+    @Override
     public String[] getVaultAccessClasses(){
         return new String[0];
     }

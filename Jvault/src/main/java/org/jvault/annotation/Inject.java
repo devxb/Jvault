@@ -1,5 +1,7 @@
 package org.jvault.annotation;
 
+import org.jvault.metadata.API;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -50,6 +52,7 @@ import java.lang.annotation.Target;
  * @author devxb
  * @since 0.1
  */
+@API
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.CONSTRUCTOR})
 public @interface Inject {

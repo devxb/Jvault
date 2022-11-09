@@ -1,9 +1,12 @@
 package org.jvault.beanloader;
 
+import org.jvault.metadata.InternalAPI;
+
+@InternalAPI
 final class BeanLoaderAccessorImpl extends org.jvault.factory.Accessors.BeanLoaderAccessor {
 
     @Override
-    protected BeanLoader getBeanLoader() {
+    protected DefaultBeanLoader getBeanLoader() {
         return new DefaultBeanLoader();
     }
 

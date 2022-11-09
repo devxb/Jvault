@@ -1,5 +1,8 @@
 package org.jvault.beans;
 
+import org.jvault.metadata.InternalAPI;
+
+@InternalAPI
 public final class SingletonBean implements Bean {
 
     private final String NAME;

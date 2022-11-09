@@ -2,6 +2,7 @@ package org.jvault.beans;
 
 import org.jvault.annotation.Inject;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
+import org.jvault.metadata.InternalAPI;
 import org.jvault.util.Reflection;
 
 import java.lang.reflect.Constructor;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@InternalAPI
 public final class NewBean implements Bean{
 
     private final String NAME;
@@ -19,7 +21,10 @@ public final class NewBean implements Bean{
     private final String[] ACCESS_CLASSES;
     private final Object INSTANCE;
     private final Map<String, Bean> BEANS;
-    private final Reflection REFLECTION;
+    private static final Reflection REFLECTION;
+    static{
+        REFLECTION = Accessors.UtilAccessor.getAccessor().getReflection();
+    }
 
     private NewBean(Bean.Builder<NewBean> builder){
         NAME = builder.name;
@@ -27,7 +32,6 @@ public final class NewBean implements Bean{
         ACCESS_CLASSES = builder.accessClasses;
         INSTANCE = builder.instance;
         BEANS = builder.beans;
-        REFLECTION = builder.reflection;
     }
 
     @Override

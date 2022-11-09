@@ -6,8 +6,7 @@ import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.factory.ClassVaultFactory;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
 import org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo;
-import org.jvault.factory.buildinfo.VaultFactoryBuildInfo;
-import org.jvault.struct.annotationconfigwithclass.AnnotationConfig;
+import org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint;
 import org.jvault.struct.annotationconfigwithclass.AnnotationConfigWithClass;
 import org.jvault.struct.buildvault.BuildVault;
 import org.jvault.struct.buildvaultcannotinjectbean.BuildVaultCannotInjectBean;
@@ -19,7 +18,7 @@ public class ClassVaultTest {
     public void BUILD_VAULT_CREATE_VAULT_TEST(){
         // given
         ClassVaultFactory factory = ClassVaultFactory.getInstance();
-        VaultFactoryBuildInfo buildInfo = new AbstractVaultFactoryBuildInfo() {
+        VaultFactoryBuildInfoExtensiblePoint buildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
             public String getVaultName() {
                 return "BUILD_VAULT_CREATE_VAULT_TEST";
@@ -58,7 +57,7 @@ public class ClassVaultTest {
     public void BUILD_VAULT_CANNOT_INJECT_CLASS_CREATE_VAULT_TEST(){
         // given
         ClassVaultFactory factory = ClassVaultFactory.getInstance();
-        VaultFactoryBuildInfo buildInfo = new AbstractVaultFactoryBuildInfo() {
+        VaultFactoryBuildInfoExtensiblePoint buildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
             public String getVaultName() {
                 return "BUILD_VAULT_CREATE_VAULT_TEST";
@@ -91,7 +90,7 @@ public class ClassVaultTest {
     public void BUILD_VAULT_CANNOT_INJECT_BEAN_CREATE_VAULT_TEST(){
         // given
         ClassVaultFactory factory = ClassVaultFactory.getInstance();
-        VaultFactoryBuildInfo buildInfo = new AbstractVaultFactoryBuildInfo() {
+        VaultFactoryBuildInfoExtensiblePoint buildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
             public String getVaultName() {
                 return "BUILD_VAULT_CREATE_VAULT_TEST";

@@ -97,12 +97,13 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo">VaultFactoryBuildInfo</a></code></dd>
+<dd><code><a href="../extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible">VaultFactoryBuildInfoExtensiblePoint</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">PropertiesVaultFactoryBuildInfo</span>
+<div class="type-signature"><span class="annotations"><a href="../../metadata/API.html" title="annotation interface in org.jvault.metadata">@API</a>
+</span><span class="modifiers">public final class </span><span class="element-name type-name-label">PropertiesVaultFactoryBuildInfo</span>
 <span class="extends-implements">extends <a href="AbstractVaultFactoryBuildInfo.html" title="class in org.jvault.factory.buildinfo">AbstractVaultFactoryBuildInfo</a></span></div>
-<div class="block">Receive the path of *.properties file and specify the return value of the <a href="VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo"><code>VaultFactoryBuildInfo</code></a> methods.
+<div class="block">Receive the path of *.properties file and specify the return value of the <a href="../extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible"><code>VaultFactoryBuildInfoExtensiblePoint</code></a> methods.
 
  <hr>
  Below is examples of .properties phrases
@@ -113,9 +114,14 @@ loadScripts(document, 'script');</script>
  which will be the name of the vault that was created.
  <br><br>
 
- org.jvault.vault.inject.accesses = org.jvault.factory, org.jvault.util.* <br>
- - "getInjectAccesses()" method returns a vaule of org.jvault.vault.inject.accesses,
- which will be specified range of packages that Vault Can inject.
+ org.jvault.vault.access.packages = org.jvault.factory, org.jvault.util.* <br>
+ - "getVaultAccessPackages()" method returns a vaule of org.jvault.vault.access.packages,
+ which will be specified range of packages that Vault can inject.
+ <br><br>
+
+ org.jvault.vault.access.classes = org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo <br>
+ - "getVaultAccessClasses()" method returns a vaule of org.jvault.vault.access.classes,
+ which will be specified class name with path that Vault can inject.
  <br><br>
 
  org.jvault.reader.packages = org.jvault, org.jvault.struct.scanwithproperties, org.jvault.* <br>
@@ -155,7 +161,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">PropertiesVaultFactoryBuildInfo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertiesSrc)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Receive the path of *.properties file and specify the return value of the <a href="VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo"><code>VaultFactoryBuildInfo</code></a> methods.</div>
+<div class="block">Receive the path of *.properties file and specify the return value of the <a href="../extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible"><code>VaultFactoryBuildInfoExtensiblePoint</code></a> methods.</div>
 </div>
 </div>
 </section>
@@ -185,15 +191,9 @@ loadScripts(document, 'script');</script>
  and if a .* expression is used at the end of the package path,<br>
  the class in the last leaf directory including the path is excluded from empty scanning.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInjectAccesses()" class="member-name-link">getInjectAccesses</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPackagesImpl()" class="member-name-link">getPackagesImpl</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Method that returns the accessible package paths to which <a href="../../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a> created by <a href="../VaultFactory.html" title="interface in org.jvault.factory"><code>VaultFactory</code></a> <br>
- If it's empty, it can be accessed from any package.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPackagesImpl()" class="member-name-link">getPackagesImpl</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">This method implementation should return package paths where Beans exist.<br>
  .* expression can be used at the end of the path,<br>
  and if there is a .* expression at the end of the path,<br>
@@ -201,9 +201,22 @@ loadScripts(document, 'script');</script>
 
  BuildInfo will create a class that will be Beans based on this information.<br></div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVaultName()" class="member-name-link">getVaultName</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVaultAccessClasses()" class="member-name-link">getVaultAccessClasses</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method that returns the accessible class name with path to which <a href="../../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a> created by <a href="../VaultFactory.html" title="interface in org.jvault.factory"><code>VaultFactory</code></a> <br>
+ Only the path of the class specified here can be passed as a parameter of the vault.<br>
+ If empty, any class can be passed as a parameter.<br></div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVaultAccessPackages()" class="member-name-link">getVaultAccessPackages</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method that returns the accessible package paths to which <a href="../../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a> created by <a href="../VaultFactory.html" title="interface in org.jvault.factory"><code>VaultFactory</code></a> <br>
+ Only the path of the class specified here can be passed as a parameter of the vault.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVaultName()" class="member-name-link">getVaultName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Method that returns the name of the <a href="../../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a> to be created by <a href="../VaultFactory.html" title="interface in org.jvault.factory"><code>VaultFactory</code></a>.</div>
 </div>
 </div>
@@ -230,10 +243,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(java.lang.String)">
 <h3>PropertiesVaultFactoryBuildInfo</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PropertiesVaultFactoryBuildInfo</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertiesSrc)</span></div>
-<div class="block">Receive the path of *.properties file and specify the return value of the <a href="VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo"><code>VaultFactoryBuildInfo</code></a> methods.</div>
+<div class="block">Receive the path of *.properties file and specify the return value of the <a href="../extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible"><code>VaultFactoryBuildInfoExtensiblePoint</code></a> methods.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>propertiesSrc</code> - the path of *.properties file</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - thrown when, can not find properties file.</dd>
+<dt>Since:</dt>
+<dd>0.1</dd>
 </dl>
 </section>
 </li>
@@ -249,12 +266,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getVaultName()">
 <h3>getVaultName</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getVaultName</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="VaultFactoryBuildInfo.html#getVaultName()">VaultFactoryBuildInfo</a></code></span></div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../extensible/VaultFactoryBuildInfoExtensiblePoint.html#getVaultName()">VaultFactoryBuildInfoExtensiblePoint</a></code></span></div>
 <div class="block">Method that returns the name of the <a href="../../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a> to be created by <a href="../VaultFactory.html" title="interface in org.jvault.factory"><code>VaultFactory</code></a>. <br>
  You can find Vault from VaultFactory using this name.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="VaultFactoryBuildInfo.html#getVaultName()">getVaultName</a></code>&nbsp;in interface&nbsp;<code><a href="VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo">VaultFactoryBuildInfo</a></code></dd>
+<dd><code><a href="../extensible/VaultFactoryBuildInfoExtensiblePoint.html#getVaultName()">getVaultName</a></code>&nbsp;in interface&nbsp;<code><a href="../extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible">VaultFactoryBuildInfoExtensiblePoint</a></code></dd>
 <dt>Specified by:</dt>
 <dd><code><a href="AbstractVaultFactoryBuildInfo.html#getVaultName()">getVaultName</a></code>&nbsp;in class&nbsp;<code><a href="AbstractVaultFactoryBuildInfo.html" title="class in org.jvault.factory.buildinfo">AbstractVaultFactoryBuildInfo</a></code></dd>
 <dt>Returns:</dt>
@@ -263,19 +280,38 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getInjectAccesses()">
-<h3>getInjectAccesses</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getInjectAccesses</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="VaultFactoryBuildInfo.html#getInjectAccesses()">VaultFactoryBuildInfo</a></code></span></div>
+<section class="detail" id="getVaultAccessPackages()">
+<h3>getVaultAccessPackages</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getVaultAccessPackages</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../extensible/VaultFactoryBuildInfoExtensiblePoint.html#getVaultAccessPackages()">VaultFactoryBuildInfoExtensiblePoint</a></code></span></div>
 <div class="block">Method that returns the accessible package paths to which <a href="../../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a> created by <a href="../VaultFactory.html" title="interface in org.jvault.factory"><code>VaultFactory</code></a> <br>
- If it's empty, it can be accessed from any package.</div>
+ Only the path of the class specified here can be passed as a parameter of the vault. <br>
+ If empty, any class can be passed as a parameter.<br></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="VaultFactoryBuildInfo.html#getInjectAccesses()">getInjectAccesses</a></code>&nbsp;in interface&nbsp;<code><a href="VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo">VaultFactoryBuildInfo</a></code></dd>
+<dd><code><a href="../extensible/VaultFactoryBuildInfoExtensiblePoint.html#getVaultAccessPackages()">getVaultAccessPackages</a></code>&nbsp;in interface&nbsp;<code><a href="../extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible">VaultFactoryBuildInfoExtensiblePoint</a></code></dd>
 <dt>Overrides:</dt>
-<dd><code><a href="AbstractVaultFactoryBuildInfo.html#getInjectAccesses()">getInjectAccesses</a></code>&nbsp;in class&nbsp;<code><a href="AbstractVaultFactoryBuildInfo.html" title="class in org.jvault.factory.buildinfo">AbstractVaultFactoryBuildInfo</a></code></dd>
+<dd><code><a href="AbstractVaultFactoryBuildInfo.html#getVaultAccessPackages()">getVaultAccessPackages</a></code>&nbsp;in class&nbsp;<code><a href="AbstractVaultFactoryBuildInfo.html" title="class in org.jvault.factory.buildinfo">AbstractVaultFactoryBuildInfo</a></code></dd>
 <dt>Returns:</dt>
-<dd>String[]</dd>
+<dd>String[] Packages of classes that can be passed as parameters to the <a href="../../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getVaultAccessClasses()">
+<h3>getVaultAccessClasses</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getVaultAccessClasses</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../extensible/VaultFactoryBuildInfoExtensiblePoint.html#getVaultAccessClasses()">VaultFactoryBuildInfoExtensiblePoint</a></code></span></div>
+<div class="block">Method that returns the accessible class name with path to which <a href="../../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a> created by <a href="../VaultFactory.html" title="interface in org.jvault.factory"><code>VaultFactory</code></a> <br>
+ Only the path of the class specified here can be passed as a parameter of the vault.<br>
+ If empty, any class can be passed as a parameter.<br></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../extensible/VaultFactoryBuildInfoExtensiblePoint.html#getVaultAccessClasses()">getVaultAccessClasses</a></code>&nbsp;in interface&nbsp;<code><a href="../extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible">VaultFactoryBuildInfoExtensiblePoint</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="AbstractVaultFactoryBuildInfo.html#getVaultAccessClasses()">getVaultAccessClasses</a></code>&nbsp;in class&nbsp;<code><a href="AbstractVaultFactoryBuildInfo.html" title="class in org.jvault.factory.buildinfo">AbstractVaultFactoryBuildInfo</a></code></dd>
+<dt>Returns:</dt>
+<dd>String[] The name with path of the class that can be passed as parameters to the <a href="../../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a></dd>
 </dl>
 </section>
 </li>

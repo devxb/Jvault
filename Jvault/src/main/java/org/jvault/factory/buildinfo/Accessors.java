@@ -1,10 +1,9 @@
 package org.jvault.factory.buildinfo;
 
-import org.jvault.beanloader.BeanLoadable;
-import org.jvault.beanloader.BeanLoader;
-import org.jvault.beanreader.BeanReader;
-import org.jvault.beans.Type;
+import org.jvault.factory.buildinfo.extensible.BeanReaderExtensiblePoint;
+import org.jvault.metadata.InternalAPI;
 
+@InternalAPI
 public final class Accessors {
 
     public abstract static class BeanReaderAccessor{
@@ -29,32 +28,7 @@ public final class Accessors {
             return accessor;
         }
 
-        protected abstract BeanReader getBeanReader();
-
-    }
-
-    public abstract static class BeanLoaderAccessor{
-        private static BeanLoaderAccessor accessor;
-        private final static Class<?> init = init();
-
-        private static Class<?> init(){
-            try{
-                return Class.forName("org.jvault.beanloader.BeanLoaderAccessorImplOnBuildInfoSide");
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        public static void registerAccessor(BeanLoaderAccessor accessor){
-            if(BeanLoaderAccessor.accessor != null) throw new IllegalStateException();
-            BeanLoaderAccessor.accessor = accessor;
-        }
-
-        static BeanLoaderAccessor getAccessor(){
-            return accessor;
-        }
-
-        protected abstract BeanLoadable getBeanLoadable(String beanName, Type beanType, String[] packageAccesses, String[] classAccesses, Class<?> beanClass);
+        protected abstract BeanReaderExtensiblePoint getBeanReader();
 
     }
 

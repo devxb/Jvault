@@ -1,7 +1,9 @@
 package org.jvault.beanreader;
 
+import org.jvault.metadata.InternalAPI;
 import org.jvault.util.PackageReader;
 
+@InternalAPI
 public final class Accessors {
 
     public abstract static class UtilAccessor{

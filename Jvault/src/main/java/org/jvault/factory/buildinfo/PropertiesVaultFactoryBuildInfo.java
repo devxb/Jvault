@@ -1,12 +1,15 @@
 package org.jvault.factory.buildinfo;
 
+import org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint;
+import org.jvault.metadata.API;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
 /**
- * Receive the path of *.properties file and specify the return value of the {@link VaultFactoryBuildInfo} methods.
+ * Receive the path of *.properties file and specify the return value of the {@link VaultFactoryBuildInfoExtensiblePoint} methods.
  *
  * <hr>
  * Below is examples of .properties phrases
@@ -46,7 +49,8 @@ import java.util.Properties;
  * @author devxb
  * @since 0.1
  */
-public final class PropertiesVaultFactoryBuildInfo extends AbstractVaultFactoryBuildInfo{
+@API
+public final class PropertiesVaultFactoryBuildInfo extends AbstractVaultFactoryBuildInfo {
 
     private final String VAULT_NAME;
     private final String[] SCANNING_PACKAGES;
@@ -56,7 +60,7 @@ public final class PropertiesVaultFactoryBuildInfo extends AbstractVaultFactoryB
     private final String[] VAULT_ACCESS_CLASSES;
 
     /**
-     * Receive the path of *.properties file and specify the return value of the {@link VaultFactoryBuildInfo} methods.
+     * Receive the path of *.properties file and specify the return value of the {@link VaultFactoryBuildInfoExtensiblePoint} methods.
      *
      * @throws IllegalArgumentException thrown when, can not find properties file.
      *

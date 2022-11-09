@@ -1,5 +1,7 @@
 package org.jvault.beans;
 
+import org.jvault.metadata.API;
+
 /**
  * Enum that determines the behavior of Bean.
  *
@@ -8,6 +10,7 @@ package org.jvault.beans;
  * @author devxb
  * @since 0.1
  */
+@API
 public enum Type {
 
     /**

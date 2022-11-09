@@ -15,11 +15,7 @@
 <script type="text/javascript" src="../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="package-declaration-page">
-<script type="text/javascript">var evenRowColor = "even-row-color";
-var oddRowColor = "odd-row-color";
-var tableTab = "table-tab";
-var activeTableTab = "active-table-tab";
-var pathtoroot = "../../../";
+<script type="text/javascript">var pathtoroot = "../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
@@ -85,9 +81,8 @@ loadScripts(document, 'script');</script>
 <ul class="summary-list">
 <li>
 <div id="class-summary">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button></div>
-<div id="class-summary.tabpanel" role="tabpanel">
-<div class="summary-table two-column-summary" aria-labelledby="class-summary-tab0">
+<div class="caption"><span>Classes</span></div>
+<div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="Accessors.html" title="class in org.jvault.beanreader">Accessors</a></div>
@@ -96,19 +91,6 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="AnnotatedBeanReader.html" title="class in org.jvault.beanreader">AnnotatedBeanReader</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="BeanLocation.html" title="interface in org.jvault.beanreader">BeanLocation</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">Interface that returns the package and class path where Bean is located.<br><br>
-
- When specifying a package path, the .* expression is available, and if the .* expression is attached to the end of the package path,<br>
- all Beans are scanned up or excluded to the leaf directory of the child package path that contains the package path.<br>
- (The class path does not allow .* expressions.)<br><br>
-
- If .* expression is not used, import Bean contained in that folder.</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="BeanReader.html" title="interface in org.jvault.beanreader">BeanReader</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
-</div>
 </div>
 </div>
 </li>

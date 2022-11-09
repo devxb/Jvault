@@ -1,7 +1,9 @@
 package org.jvault.vault;
 
+import org.jvault.metadata.InternalAPI;
 import org.jvault.util.Reflection;
 
+@InternalAPI
 public final class Accessors {
 
     public abstract static class UtilAccessor{

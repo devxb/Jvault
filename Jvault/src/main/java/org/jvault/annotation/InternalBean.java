@@ -1,6 +1,7 @@
 package org.jvault.annotation;
 
 import org.jvault.beans.Type;
+import org.jvault.metadata.API;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -36,6 +37,7 @@ import java.lang.annotation.Target;
  * @author devxb
  * @since 0.1
  */
+@API
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
 public @interface InternalBean {

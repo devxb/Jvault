@@ -1,13 +1,11 @@
 package org.jvault.factory;
 
-import org.jvault.beanloader.BeanLoader;
-import org.jvault.beanreader.BeanReader;
-import org.jvault.beans.Bean;
-import org.jvault.factory.buildinfo.VaultFactoryBuildInfo;
+import org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint;
+import org.jvault.factory.extensible.BeanLoaderExtensiblePoint;
+import org.jvault.metadata.API;
 import org.jvault.vault.ClassVault;
 import org.jvault.vault.VaultType;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -17,19 +15,18 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @see org.jvault.vault.ClassVault
  * @see org.jvault.factory.VaultFactory
- * @see org.jvault.factory.buildinfo.VaultFactoryBuildInfo
+ * @see VaultFactoryBuildInfoExtensiblePoint
  *
  * @author devxb
  * @since 0.1
  */
+@API
 public final class ClassVaultFactory implements VaultFactory <ClassVault>{
 
     private final ConcurrentMap<String, ClassVault> VAULTS;
-    private final BeanLoader BEAN_LOADER;
     private static final ClassVaultFactory INSTANCE = new ClassVaultFactory();
     {
         VAULTS = new ConcurrentHashMap<>();
-        BEAN_LOADER = Accessors.BeanLoaderAccessor.getAccessor().getBeanLoader();
     }
 
     private ClassVaultFactory(){}
@@ -61,26 +58,26 @@ public final class ClassVaultFactory implements VaultFactory <ClassVault>{
      * @param buildInfo The collection of information that VaultFactory needs to create Vault.
      * @return ClassVault that implementation type of the Vault<P> interface.
      *
-     * @see org.jvault.factory.buildinfo.VaultFactoryBuildInfo
+     * @see VaultFactoryBuildInfoExtensiblePoint
      *
      * @author devxb
      * @since 0.1
      */
     @Override
-    public ClassVault get(VaultFactoryBuildInfo buildInfo) {
+    public ClassVault get(VaultFactoryBuildInfoExtensiblePoint buildInfo) {
         if(VAULTS.containsKey(buildInfo.getVaultName())) return VAULTS.get(buildInfo.getVaultName());
         return registerClassVault(buildInfo);
     }
 
-    private synchronized ClassVault registerClassVault(VaultFactoryBuildInfo buildInfo){
+    private synchronized ClassVault registerClassVault(VaultFactoryBuildInfoExtensiblePoint buildInfo){
         if(VAULTS.containsKey(buildInfo.getVaultName())) return VAULTS.get(buildInfo.getVaultName());
-        Map<String, Bean> beans = BEAN_LOADER.load(buildInfo.getBeanLoadables());
+        BeanLoaderExtensiblePoint beanLoader = Accessors.BeanLoaderAccessor.getAccessor().getBeanLoader();
 
         ClassVault classVault = Accessors.VaultAccessor.getAccessor().getBuilder(VaultType.CLASS, ClassVault.class)
                 .name(buildInfo.getVaultName())
                 .accessPackages(buildInfo.getVaultAccessPackages())
                 .accessClasses(buildInfo.getVaultAccessClasses())
-                .beans(beans).build();
+                .beans(beanLoader.load(buildInfo.getBeanClasses())).build();
 
         VAULTS.put(buildInfo.getVaultName(), classVault);
 

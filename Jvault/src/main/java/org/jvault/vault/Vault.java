@@ -2,6 +2,7 @@ package org.jvault.vault;
 
 import org.jvault.beans.Bean;
 import org.jvault.exceptions.DisallowedAccessException;
+import org.jvault.metadata.API;
 
 import java.util.*;
 
@@ -25,6 +26,7 @@ import java.util.*;
  * @author devxb
  * @since 0.1
  */
+@API
 public interface Vault<P> {
 
     /**

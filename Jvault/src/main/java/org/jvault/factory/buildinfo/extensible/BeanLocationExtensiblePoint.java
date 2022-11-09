@@ -1,7 +1,9 @@
-package org.jvault.beanreader;
+package org.jvault.factory.buildinfo.extensible;
+
+import org.jvault.metadata.ExtensiblePoint;
 
 /**
- * Interface that returns the package and class path where Bean is located.<br><br>
+ * Interface about package and class path where Bean is located.<br><br>
  *
  * When specifying a package path, the .* expression is available, and if the .* expression is attached to the end of the package path,<br>
  * all Beans are scanned up or excluded to the leaf directory of the child package path that contains the package path.<br>
@@ -12,7 +14,8 @@ package org.jvault.beanreader;
  * @author devxb
  * @since 0.1
  */
-public interface BeanLocation {
+@ExtensiblePoint
+public interface BeanLocationExtensiblePoint {
     /**
      * This method must return package paths that contain beans to scan.<br>
      * If an expression is used, scan the Bean of all leaf package paths, including those package paths.<br>
