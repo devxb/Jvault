@@ -53,7 +53,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
 
         // then
         Assertions.assertEquals(4, beans.size());
@@ -86,7 +86,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
 
         // then
         A a = beans.get("A").load();
@@ -121,7 +121,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
 
         // then
         FA fa = beans.get("fA").load();
@@ -155,7 +155,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // then
-        Assertions.assertThrows(NoDefinedInternalBeanException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
+        Assertions.assertThrows(NoDefinedInternalBeanException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses()));
     }
 
     @Test
@@ -185,7 +185,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // then
-        Assertions.assertThrows(BeanCycledException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
+        Assertions.assertThrows(BeanCycledException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses()));
     }
 
     @Test
@@ -216,7 +216,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // then
-        Assertions.assertThrows(DuplicateInjectConstructorException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
+        Assertions.assertThrows(DuplicateInjectConstructorException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses()));
     }
 
     @Test
@@ -246,7 +246,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
 
         // then
         Assertions.assertEquals("private-bean", beans.get("privateConstructor").load().toString());
@@ -279,7 +279,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
         TypeNewA typeNewA = beans.get("typeNewA").load();
         TypeNewA difTypeNewA = beans.get("typeNewA").load();
 
@@ -318,7 +318,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
         TypeSingleton singleton = beans.get("typeSingleton").load();
         TypeSingleton sameSingleton = beans.get("typeSingleton").load();
 
@@ -357,7 +357,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
         TypeNew newInstance = beans.get("typeNew").load();
         TypeNew difNewInstance = beans.get("typeNew").load();
 
@@ -397,7 +397,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
         MixedConstructorAndFieldInject result = beans.get("mixedConstructorAndFieldInject").load();
 
         // then
@@ -431,7 +431,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // then
-        Assertions.assertThrows(DisallowedAccessException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
+        Assertions.assertThrows(DisallowedAccessException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses()));
     }
 
     @Test
@@ -461,7 +461,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
         MultipleAccesses result = beans.get("multipleAccesses").load();
 
         // then
@@ -495,7 +495,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
         EmptyAccess result = beans.get("emptyAccess").load();
 
         // then
@@ -529,7 +529,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
         Can_Read_Underbar can_read_underbar = beans.get("can_Read_Underbar").load();
 
         // then
@@ -563,7 +563,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
         InjectInterface injectInterface = beans.get("injectInterface").load();
 
         // then
@@ -597,7 +597,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // then
-        Assertions.assertThrows(NoDefinedInternalBeanException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
+        Assertions.assertThrows(NoDefinedInternalBeanException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses()));
     }
 
     @Test
@@ -627,7 +627,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
         BeanRegex beanRegex = beans.get("beanRegex").load();
 
         // then
@@ -661,7 +661,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // then
-        Assertions.assertThrows(DisallowedAccessException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables()));
+        Assertions.assertThrows(DisallowedAccessException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses()));
     }
 
     @Test
@@ -691,7 +691,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
         ReadFromClass readFromClass = beans.get("readFromClass").load();
 
         // then
@@ -725,7 +725,7 @@ public class DefaultBeanLoaderTest {
         };
 
         // when
-        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanLoadables());
+        Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
         ClassAccess classAccess = beans.get("classAccess").load();
 
         // then

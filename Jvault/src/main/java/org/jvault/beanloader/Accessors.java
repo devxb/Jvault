@@ -1,8 +1,10 @@
 package org.jvault.beanloader;
 
 import org.jvault.beans.BeanBuilderFactory;
+import org.jvault.metadata.InternalAPI;
 import org.jvault.util.Reflection;
 
+@InternalAPI
 public final class Accessors {
 
     public abstract static class UtilAccessor{

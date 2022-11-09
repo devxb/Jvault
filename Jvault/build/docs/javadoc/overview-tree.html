@@ -57,6 +57,9 @@ loadScripts(document, 'script');</script>
 <li><a href="org/jvault/exceptions/package-tree.html">org.jvault.exceptions</a>, </li>
 <li><a href="org/jvault/factory/package-tree.html">org.jvault.factory</a>, </li>
 <li><a href="org/jvault/factory/buildinfo/package-tree.html">org.jvault.factory.buildinfo</a>, </li>
+<li><a href="org/jvault/factory/buildinfo/extensible/package-tree.html">org.jvault.factory.buildinfo.extensible</a>, </li>
+<li><a href="org/jvault/factory/extensible/package-tree.html">org.jvault.factory.extensible</a>, </li>
+<li><a href="org/jvault/metadata/package-tree.html">org.jvault.metadata</a>, </li>
 <li><a href="org/jvault/util/package-tree.html">org.jvault.util</a>, </li>
 <li><a href="org/jvault/vault/package-tree.html">org.jvault.vault</a></li>
 </ul>
@@ -66,13 +69,14 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/Object.html" class="type-name-link external-link" title="class or interface in java.lang">Object</a>
 <ul>
-<li class="circle">org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/AbstractVaultFactoryBuildInfo.html" class="type-name-link" title="class in org.jvault.factory.buildinfo">AbstractVaultFactoryBuildInfo</a> (implements org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo">VaultFactoryBuildInfo</a>)
+<li class="circle">org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/AbstractVaultFactoryBuildInfo.html" class="type-name-link" title="class in org.jvault.factory.buildinfo">AbstractVaultFactoryBuildInfo</a> (implements org.jvault.factory.extensible.<a href="org/jvault/factory/extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible">VaultFactoryBuildInfoExtensiblePoint</a>)
 <ul>
 <li class="circle">org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/PropertiesVaultFactoryBuildInfo.html" class="type-name-link" title="class in org.jvault.factory.buildinfo">PropertiesVaultFactoryBuildInfo</a></li>
 </ul>
 </li>
 <li class="circle">org.jvault.beanloader.<a href="org/jvault/beanloader/Accessors.html" class="type-name-link" title="class in org.jvault.beanloader">Accessors</a></li>
 <li class="circle">org.jvault.beanreader.<a href="org/jvault/beanreader/Accessors.html" class="type-name-link" title="class in org.jvault.beanreader">Accessors</a></li>
+<li class="circle">org.jvault.beans.<a href="org/jvault/beans/Accessors.html" class="type-name-link" title="class in org.jvault.beans">Accessors</a></li>
 <li class="circle">org.jvault.factory.<a href="org/jvault/factory/Accessors.html" class="type-name-link" title="class in org.jvault.factory">Accessors</a></li>
 <li class="circle">org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/Accessors.html" class="type-name-link" title="class in org.jvault.factory.buildinfo">Accessors</a></li>
 <li class="circle">org.jvault.vault.<a href="org/jvault/vault/Accessors.html" class="type-name-link" title="class in org.jvault.vault">Accessors</a></li>
@@ -82,16 +86,17 @@ loadScripts(document, 'script');</script>
 <li class="circle">org.jvault.beanloader.<a href="org/jvault/beanloader/Accessors.BeansAccessor.html" class="type-name-link" title="class in org.jvault.beanloader">Accessors.BeansAccessor</a></li>
 <li class="circle">org.jvault.beanloader.<a href="org/jvault/beanloader/Accessors.UtilAccessor.html" class="type-name-link" title="class in org.jvault.beanloader">Accessors.UtilAccessor</a></li>
 <li class="circle">org.jvault.beanreader.<a href="org/jvault/beanreader/Accessors.UtilAccessor.html" class="type-name-link" title="class in org.jvault.beanreader">Accessors.UtilAccessor</a></li>
+<li class="circle">org.jvault.beans.<a href="org/jvault/beans/Accessors.UtilAccessor.html" class="type-name-link" title="class in org.jvault.beans">Accessors.UtilAccessor</a></li>
 <li class="circle">org.jvault.vault.<a href="org/jvault/vault/Accessors.UtilAccessor.html" class="type-name-link" title="class in org.jvault.vault">Accessors.UtilAccessor</a></li>
 <li class="circle">org.jvault.factory.<a href="org/jvault/factory/Accessors.VaultAccessor.html" class="type-name-link" title="class in org.jvault.factory">Accessors.VaultAccessor</a></li>
-<li class="circle">org.jvault.beanreader.<a href="org/jvault/beanreader/AnnotatedBeanReader.html" class="type-name-link" title="class in org.jvault.beanreader">AnnotatedBeanReader</a> (implements org.jvault.beanreader.<a href="org/jvault/beanreader/BeanReader.html" title="interface in org.jvault.beanreader">BeanReader</a>)</li>
-<li class="circle">org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/AnnotationVaultFactoryBuildInfo.html" class="type-name-link" title="class in org.jvault.factory.buildinfo">AnnotationVaultFactoryBuildInfo</a> (implements org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo">VaultFactoryBuildInfo</a>)</li>
+<li class="circle">org.jvault.beanreader.<a href="org/jvault/beanreader/AnnotatedBeanReader.html" class="type-name-link" title="class in org.jvault.beanreader">AnnotatedBeanReader</a> (implements org.jvault.factory.buildinfo.extensible.<a href="org/jvault/factory/buildinfo/extensible/BeanReaderExtensiblePoint.html" title="interface in org.jvault.factory.buildinfo.extensible">BeanReaderExtensiblePoint</a>)</li>
+<li class="circle">org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/AnnotationVaultFactoryBuildInfo.html" class="type-name-link" title="class in org.jvault.factory.buildinfo">AnnotationVaultFactoryBuildInfo</a> (implements org.jvault.factory.extensible.<a href="org/jvault/factory/extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible">VaultFactoryBuildInfoExtensiblePoint</a>)</li>
 <li class="circle">org.jvault.beans.<a href="org/jvault/beans/Bean.Builder.html" class="type-name-link" title="class in org.jvault.beans">Bean.Builder</a>&lt;S&gt;</li>
 <li class="circle">org.jvault.beans.<a href="org/jvault/beans/BeanBuilderFactory.html" class="type-name-link" title="class in org.jvault.beans">BeanBuilderFactory</a></li>
-<li class="circle">org.jvault.beanloader.<a href="org/jvault/beanloader/BeanLoadable.html" class="type-name-link" title="class in org.jvault.beanloader">BeanLoadable</a></li>
+<li class="circle">org.jvault.beanloader.<a href="org/jvault/beanloader/BeanLoadable.html" class="type-name-link" title="class in org.jvault.beanloader">BeanLoadable</a> (implements org.jvault.factory.extensible.<a href="org/jvault/factory/extensible/BeanLoadableExtensiblePoint.html" title="interface in org.jvault.factory.extensible">BeanLoadableExtensiblePoint</a>)</li>
 <li class="circle">org.jvault.vault.<a href="org/jvault/vault/ClassVault.html" class="type-name-link" title="class in org.jvault.vault">ClassVault</a> (implements org.jvault.vault.<a href="org/jvault/vault/Vault.html" title="interface in org.jvault.vault">Vault</a>&lt;P&gt;)</li>
 <li class="circle">org.jvault.factory.<a href="org/jvault/factory/ClassVaultFactory.html" class="type-name-link" title="class in org.jvault.factory">ClassVaultFactory</a> (implements org.jvault.factory.<a href="org/jvault/factory/VaultFactory.html" title="interface in org.jvault.factory">VaultFactory</a>&lt;T&gt;)</li>
-<li class="circle">org.jvault.beanloader.<a href="org/jvault/beanloader/DefaultBeanLoader.html" class="type-name-link" title="class in org.jvault.beanloader">DefaultBeanLoader</a> (implements org.jvault.beanloader.<a href="org/jvault/beanloader/BeanLoader.html" title="interface in org.jvault.beanloader">BeanLoader</a>)</li>
+<li class="circle">org.jvault.beanloader.<a href="org/jvault/beanloader/DefaultBeanLoader.html" class="type-name-link" title="class in org.jvault.beanloader">DefaultBeanLoader</a> (implements org.jvault.factory.extensible.<a href="org/jvault/factory/extensible/BeanLoaderExtensiblePoint.html" title="interface in org.jvault.factory.extensible">BeanLoaderExtensiblePoint</a>)</li>
 <li class="circle">org.jvault.beans.<a href="org/jvault/beans/NewBean.html" class="type-name-link" title="class in org.jvault.beans">NewBean</a> (implements org.jvault.beans.<a href="org/jvault/beans/Bean.html" title="interface in org.jvault.beans">Bean</a>)</li>
 <li class="circle">org.jvault.util.<a href="org/jvault/util/PackageReader.html" class="type-name-link" title="class in org.jvault.util">PackageReader</a></li>
 <li class="circle">org.jvault.util.<a href="org/jvault/util/Reflection.html" class="type-name-link" title="class in org.jvault.util">Reflection</a></li>
@@ -103,7 +108,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/RuntimeException.html" class="type-name-link external-link" title="class or interface in java.lang">RuntimeException</a>
 <ul>
 <li class="circle">org.jvault.exceptions.<a href="org/jvault/exceptions/BeanCycledException.html" class="type-name-link" title="class in org.jvault.exceptions">BeanCycledException</a></li>
-<li class="circle">org.jvault.exceptions.<a href="org/jvault/exceptions/DisallowedAccessPackageException.html" class="type-name-link" title="class in org.jvault.exceptions">DisallowedAccessPackageException</a></li>
+<li class="circle">org.jvault.exceptions.<a href="org/jvault/exceptions/DisallowedAccessException.html" class="type-name-link" title="class in org.jvault.exceptions">DisallowedAccessException</a></li>
 <li class="circle">org.jvault.exceptions.<a href="org/jvault/exceptions/DuplicateBeanNameException.html" class="type-name-link" title="class in org.jvault.exceptions">DuplicateBeanNameException</a></li>
 <li class="circle">org.jvault.exceptions.<a href="org/jvault/exceptions/DuplicateInjectConstructorException.html" class="type-name-link" title="class in org.jvault.exceptions">DuplicateInjectConstructorException</a></li>
 <li class="circle">org.jvault.exceptions.<a href="org/jvault/exceptions/InvalidAnnotationConfigClassException.html" class="type-name-link" title="class in org.jvault.exceptions">InvalidAnnotationConfigClassException</a></li>
@@ -123,21 +128,26 @@ loadScripts(document, 'script');</script>
 <h2 title="Interface Hierarchy">Interface Hierarchy</h2>
 <ul>
 <li class="circle">org.jvault.beans.<a href="org/jvault/beans/Bean.html" class="type-name-link" title="interface in org.jvault.beans">Bean</a></li>
-<li class="circle">org.jvault.beanloader.<a href="org/jvault/beanloader/BeanLoader.html" class="type-name-link" title="interface in org.jvault.beanloader">BeanLoader</a></li>
-<li class="circle">org.jvault.beanreader.<a href="org/jvault/beanreader/BeanLocation.html" class="type-name-link" title="interface in org.jvault.beanreader">BeanLocation</a></li>
-<li class="circle">org.jvault.beanreader.<a href="org/jvault/beanreader/BeanReader.html" class="type-name-link" title="interface in org.jvault.beanreader">BeanReader</a></li>
+<li class="circle">org.jvault.factory.extensible.<a href="org/jvault/factory/extensible/BeanLoadableExtensiblePoint.html" class="type-name-link" title="interface in org.jvault.factory.extensible">BeanLoadableExtensiblePoint</a></li>
+<li class="circle">org.jvault.factory.extensible.<a href="org/jvault/factory/extensible/BeanLoaderExtensiblePoint.html" class="type-name-link" title="interface in org.jvault.factory.extensible">BeanLoaderExtensiblePoint</a></li>
+<li class="circle">org.jvault.factory.buildinfo.extensible.<a href="org/jvault/factory/buildinfo/extensible/BeanLocationExtensiblePoint.html" class="type-name-link" title="interface in org.jvault.factory.buildinfo.extensible">BeanLocationExtensiblePoint</a></li>
+<li class="circle">org.jvault.factory.buildinfo.extensible.<a href="org/jvault/factory/buildinfo/extensible/BeanReaderExtensiblePoint.html" class="type-name-link" title="interface in org.jvault.factory.buildinfo.extensible">BeanReaderExtensiblePoint</a></li>
 <li class="circle">org.jvault.vault.<a href="org/jvault/vault/Vault.html" class="type-name-link" title="interface in org.jvault.vault">Vault</a>&lt;P&gt;</li>
 <li class="circle">org.jvault.factory.<a href="org/jvault/factory/VaultFactory.html" class="type-name-link" title="interface in org.jvault.factory">VaultFactory</a>&lt;T&gt;</li>
-<li class="circle">org.jvault.factory.buildinfo.<a href="org/jvault/factory/buildinfo/VaultFactoryBuildInfo.html" class="type-name-link" title="interface in org.jvault.factory.buildinfo">VaultFactoryBuildInfo</a></li>
+<li class="circle">org.jvault.factory.extensible.<a href="org/jvault/factory/extensible/VaultFactoryBuildInfoExtensiblePoint.html" class="type-name-link" title="interface in org.jvault.factory.extensible">VaultFactoryBuildInfoExtensiblePoint</a></li>
 </ul>
 </section>
 <section class="hierarchy">
 <h2 title="Annotation Interface Hierarchy">Annotation Interface Hierarchy</h2>
 <ul>
+<li class="circle">org.jvault.metadata.<a href="org/jvault/metadata/API.html" class="type-name-link" title="annotation interface in org.jvault.metadata">API</a> (implements java.lang.annotation.<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>)</li>
 <li class="circle">org.jvault.annotation.<a href="org/jvault/annotation/BeanArea.html" class="type-name-link" title="annotation interface in org.jvault.annotation">BeanArea</a> (implements java.lang.annotation.<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>)</li>
 <li class="circle">org.jvault.annotation.<a href="org/jvault/annotation/BeanWire.html" class="type-name-link" title="annotation interface in org.jvault.annotation">BeanWire</a> (implements java.lang.annotation.<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>)</li>
+<li class="circle">org.jvault.metadata.<a href="org/jvault/metadata/ExtensiblePoint.html" class="type-name-link" title="annotation interface in org.jvault.metadata">ExtensiblePoint</a> (implements java.lang.annotation.<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>)</li>
 <li class="circle">org.jvault.annotation.<a href="org/jvault/annotation/Inject.html" class="type-name-link" title="annotation interface in org.jvault.annotation">Inject</a> (implements java.lang.annotation.<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>)</li>
+<li class="circle">org.jvault.metadata.<a href="org/jvault/metadata/InternalAPI.html" class="type-name-link" title="annotation interface in org.jvault.metadata">InternalAPI</a> (implements java.lang.annotation.<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>)</li>
 <li class="circle">org.jvault.annotation.<a href="org/jvault/annotation/InternalBean.html" class="type-name-link" title="annotation interface in org.jvault.annotation">InternalBean</a> (implements java.lang.annotation.<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>)</li>
+<li class="circle">org.jvault.metadata.<a href="org/jvault/metadata/InternalExtensiblePoint.html" class="type-name-link" title="annotation interface in org.jvault.metadata">InternalExtensiblePoint</a> (implements java.lang.annotation.<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>)</li>
 </ul>
 </section>
 <section class="hierarchy">

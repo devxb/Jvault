@@ -1,9 +1,10 @@
 package org.jvault.beans;
 
-import org.jvault.util.Reflection;
+import org.jvault.metadata.InternalAPI;
 
 import java.util.*;
 
+@InternalAPI
 public interface Bean {
     <R> R load();
     boolean isInjectable(Class<?> cls);
@@ -14,7 +15,6 @@ public interface Bean {
         String[] accessPackages;
         String[] accessClasses;
         Object instance;
-        Reflection reflection;
         Map<String, Bean> beans;
 
         public Builder<S> name(String name){
@@ -39,11 +39,6 @@ public interface Bean {
 
         public Builder<S> beans(Map<String, Bean> beans){
             this.beans = beans;
-            return this;
-        }
-
-        public Builder<S> reflection(Reflection reflection){
-            this.reflection = reflection;
             return this;
         }
 

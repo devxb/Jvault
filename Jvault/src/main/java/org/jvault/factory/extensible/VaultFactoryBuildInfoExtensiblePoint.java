@@ -1,6 +1,9 @@
-package org.jvault.factory.buildinfo;
+package org.jvault.factory.extensible;
 
-import org.jvault.beanloader.BeanLoadable;
+import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
+import org.jvault.factory.buildinfo.PropertiesVaultFactoryBuildInfo;
+import org.jvault.factory.buildinfo.extensible.BeanLocationExtensiblePoint;
+import org.jvault.metadata.ExtensiblePoint;
 
 import java.util.List;
 
@@ -10,14 +13,15 @@ import java.util.List;
  * location information of beans,<br>
  * and package information that can use the vault.
  *
- * @see org.jvault.factory.buildinfo.PropertiesVaultFactoryBuildInfo
- * @see org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo
- * @see org.jvault.beanreader.BeanLocation
+ * @see PropertiesVaultFactoryBuildInfo
+ * @see AbstractVaultFactoryBuildInfo
+ * @see BeanLocationExtensiblePoint
  *
  * @author devxb
  * @since 0.1
  */
-public interface VaultFactoryBuildInfo {
+@ExtensiblePoint
+public interface VaultFactoryBuildInfoExtensiblePoint {
 
     /**
      * Method that returns the name of the {@link org.jvault.vault.Vault} to be created by {@link org.jvault.factory.VaultFactory}. <br>
@@ -31,15 +35,14 @@ public interface VaultFactoryBuildInfo {
     String getVaultName();
 
     /**
-     * Method that returns bean-info that convert and register to Beans <br>
-     * The {@link org.jvault.factory.VaultFactory} generates beans based on the return value of this method.
+     * Method that returns class that convert and register to Bean <br>
      *
      * @return {@link List}
      *
      * @author devxb
      * @since 0.1
      */
-    List<BeanLoadable> getBeanLoadables();
+    List<Class<?>> getBeanClasses();
 
     /**
      * Method that returns the accessible package paths to which {@link org.jvault.vault.Vault} created by {@link org.jvault.factory.VaultFactory} <br>

@@ -1,6 +1,7 @@
 package org.jvault.util;
 
 import org.jvault.annotation.InternalBean;
+import org.jvault.metadata.InternalAPI;
 
 import java.io.File;
 import java.lang.reflect.Modifier;
@@ -8,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+@InternalAPI
 public final class PackageReader {
 
     private final static PackageReader INSTANCE = new PackageReader();

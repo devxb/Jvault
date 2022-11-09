@@ -3,12 +3,14 @@ package org.jvault.util;
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 import org.jvault.exceptions.DuplicateInjectConstructorException;
+import org.jvault.metadata.InternalAPI;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+@InternalAPI
 public final class Reflection {
 
     private final static Reflection INSTANCE = new Reflection();

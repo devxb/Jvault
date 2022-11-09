@@ -1,5 +1,8 @@
 package org.jvault.beans;
 
+import org.jvault.metadata.InternalAPI;
+
+@InternalAPI
 final class BeansAccessorImpl extends org.jvault.beanloader.Accessors.BeansAccessor {
 
     @Override

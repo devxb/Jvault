@@ -99,7 +99,8 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="ClassVaultFactory.html" title="class in org.jvault.factory">ClassVaultFactory</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">VaultFactory&lt;T extends <a href="../vault/Vault.html" title="interface in org.jvault.vault">Vault</a>&lt;?&gt;&gt;</span></div>
+<div class="type-signature"><span class="annotations"><a href="../metadata/API.html" title="annotation interface in org.jvault.metadata">@API</a>
+</span><span class="modifiers">public interface </span><span class="element-name type-name-label">VaultFactory&lt;T extends <a href="../vault/Vault.html" title="interface in org.jvault.vault">Vault</a>&lt;?&gt;&gt;</span></div>
 <div class="block">Receives the VaultFactoryBuildInfo or String (the name of the Vault if the Vault already exists) value as an input,
  and returns the <a href="../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a>.</div>
 <dl class="notes">
@@ -107,10 +108,10 @@ loadScripts(document, 'script');</script>
 <dd>0.1</dd>
 <dt>See Also:</dt>
 <dd>
-<ul class="see-list">
+<ul class="see-list-long">
 <li><a href="ClassVaultFactory.html" title="class in org.jvault.factory"><code>ClassVaultFactory</code></a></li>
 <li><a href="../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a></li>
-<li><a href="buildinfo/VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo"><code>VaultFactoryBuildInfo</code></a></li>
+<li><a href="extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible"><code>VaultFactoryBuildInfoExtensiblePoint</code></a></li>
 </ul>
 </dd>
 </dl>
@@ -134,7 +135,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the Vault interface implementation class by receiving the VaultName.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="VaultFactory.html" title="type parameter in VaultFactory">T</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#get(org.jvault.factory.buildinfo.VaultFactoryBuildInfo)" class="member-name-link">get</a><wbr>(<a href="buildinfo/VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo">VaultFactoryBuildInfo</a>&nbsp;buildInfo)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#get(org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint)" class="member-name-link">get</a><wbr>(<a href="extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible">VaultFactoryBuildInfoExtensiblePoint</a>&nbsp;buildInfo)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the Vault interface implementation class by receiving the VaultFactoryBuildInfo.</div>
 </div>
@@ -173,9 +174,9 @@ throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/
 </section>
 </li>
 <li>
-<section class="detail" id="get(org.jvault.factory.buildinfo.VaultFactoryBuildInfo)">
+<section class="detail" id="get(org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint)">
 <h3>get</h3>
-<div class="member-signature"><span class="return-type"><a href="VaultFactory.html" title="type parameter in VaultFactory">T</a></span>&nbsp;<span class="element-name">get</span><wbr><span class="parameters">(<a href="buildinfo/VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo">VaultFactoryBuildInfo</a>&nbsp;buildInfo)</span></div>
+<div class="member-signature"><span class="return-type"><a href="VaultFactory.html" title="type parameter in VaultFactory">T</a></span>&nbsp;<span class="element-name">get</span><wbr><span class="parameters">(<a href="extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible">VaultFactoryBuildInfoExtensiblePoint</a>&nbsp;buildInfo)</span></div>
 <div class="block">Returns the Vault interface implementation class by receiving the VaultFactoryBuildInfo. <br>
  Vault Factory creates a new Vault based on VaultFactoryInfo. <br>
  If a vault with the name corresponding to "VaultFactoryBuildInfo.getVaultName()" already exists, the vault is returned.</div>
@@ -188,8 +189,8 @@ throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/
 <dd>0.1</dd>
 <dt>See Also:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="buildinfo/VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo"><code>VaultFactoryBuildInfo</code></a></li>
+<ul class="see-list-long">
+<li><a href="extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible"><code>VaultFactoryBuildInfoExtensiblePoint</code></a></li>
 </ul>
 </dd>
 </dl>

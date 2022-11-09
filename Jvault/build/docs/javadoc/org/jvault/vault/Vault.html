@@ -99,7 +99,8 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="ClassVault.html" title="class in org.jvault.vault">ClassVault</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">Vault&lt;P&gt;</span></div>
+<div class="type-signature"><span class="annotations"><a href="../metadata/API.html" title="annotation interface in org.jvault.metadata">@API</a>
+</span><span class="modifiers">public interface </span><span class="element-name type-name-label">Vault&lt;P&gt;</span></div>
 <div class="block">As a bean container, containing scanned Bean. <br>
  Inject beans to parameter and returns an instance of the parameter
  <br>
@@ -195,16 +196,16 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>Returns an instance of the type received param.</dd>
 <dt>Throws:</dt>
-<dd><code><a href="../exceptions/DisallowedAccessPackageException.html" title="class in org.jvault.exceptions">DisallowedAccessPackageException</a></code> - - Occurs when the package in param is a package that does not have access to Vault,
+<dd><code><a href="../exceptions/DisallowedAccessException.html" title="class in org.jvault.exceptions">DisallowedAccessException</a></code> - Occurs when the package in param is a package that does not have access to Vault,
  or the Beans to be injected into param cannot be injected into the package in Param.</dd>
 <dt>Since:</dt>
 <dd>0.1</dd>
 <dt>See Also:</dt>
 <dd>
-<ul class="see-list-long">
+<ul class="see-list">
 <li><a href="../annotation/Inject.html" title="annotation interface in org.jvault.annotation"><code>Inject</code></a></li>
 <li><a href="../annotation/InternalBean.html" title="annotation interface in org.jvault.annotation"><code>InternalBean</code></a></li>
-<li><a href="../exceptions/DisallowedAccessPackageException.html" title="class in org.jvault.exceptions"><code>DisallowedAccessPackageException</code></a></li>
+<li><a href="../exceptions/DisallowedAccessException.html" title="class in org.jvault.exceptions"><code>DisallowedAccessException</code></a></li>
 </ul>
 </dd>
 </dl>

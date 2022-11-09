@@ -2,6 +2,8 @@ package org.jvault.beanreader;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.jvault.factory.buildinfo.extensible.BeanLocationExtensiblePoint;
+import org.jvault.factory.buildinfo.extensible.BeanReaderExtensiblePoint;
 
 import java.util.List;
 
@@ -10,8 +12,8 @@ public class AnnotatedBeanReaderTest {
     @Test
     public void ANNOTATION_BEAN_READER_TEST(){
         // given
-        BeanReader annotationBeanReader = AnnotatedBeanReader.getInstance();
-        BeanLocation location = new BeanLocation() {
+        BeanReaderExtensiblePoint annotationBeanReader = AnnotatedBeanReader.getInstance();
+        BeanLocationExtensiblePoint location = new BeanLocationExtensiblePoint() {
             @Override
             public String[] getPackages() {
                 return new String[]{"org.jvault.struct.defaultstruct.*"};
@@ -36,8 +38,8 @@ public class AnnotatedBeanReaderTest {
     @Test
     public void FILED_INJECT_BEAN_READER_TEST(){
         // given
-        BeanReader annotationBeanReader = AnnotatedBeanReader.getInstance();
-        BeanLocation location = new BeanLocation() {
+        BeanReaderExtensiblePoint annotationBeanReader = AnnotatedBeanReader.getInstance();
+        BeanLocationExtensiblePoint location = new BeanLocationExtensiblePoint() {
             @Override
             public String[] getPackages() {
                 return new String[]{"org.jvault.struct.fieldInjectBean.*"};
@@ -62,8 +64,8 @@ public class AnnotatedBeanReaderTest {
     @Test
     public void UNDER_BAR_IN_PACKAGE_SRC_BEAN_LEADER_TEST(){
         // given
-        BeanReader annotationBeanReader = AnnotatedBeanReader.getInstance();
-        BeanLocation location = new BeanLocation() {
+        BeanReaderExtensiblePoint annotationBeanReader = AnnotatedBeanReader.getInstance();
+        BeanLocationExtensiblePoint location = new BeanLocationExtensiblePoint() {
             @Override
             public String[] getPackages() {
                 return new String[]{"org.jvault.struct.underbar_in_package_src.*"};
@@ -88,8 +90,8 @@ public class AnnotatedBeanReaderTest {
     @Test
     public void EXCLUDE_PACKAGE_BEAN_LEADER_TEST(){
         // given
-        BeanReader annotationBeanReader = AnnotatedBeanReader.getInstance();
-        BeanLocation location = new BeanLocation() {
+        BeanReaderExtensiblePoint annotationBeanReader = AnnotatedBeanReader.getInstance();
+        BeanLocationExtensiblePoint location = new BeanLocationExtensiblePoint() {
             @Override
             public String[] getPackages() {
                 return new String[]{"org.jvault.struct.excludepackage.*"};
@@ -114,9 +116,9 @@ public class AnnotatedBeanReaderTest {
     @Test
     public void REGEX_TEST_READ_ALL_EACH_PACKAGE_BEAN_READER_TEST(){
         // given
-        BeanReader beanReader = AnnotatedBeanReader.getInstance();
+        BeanReaderExtensiblePoint beanReader = AnnotatedBeanReader.getInstance();
 
-        BeanLocation location = new BeanLocation() {
+        BeanLocationExtensiblePoint location = new BeanLocationExtensiblePoint() {
             @Override
             public String[] getPackages() {
                 return new String[]{"org.jvault.struct.regextest", "org.jvault.struct.regextest.regexson1", "org.jvault.struct.regextest.regexson1.regexsonson1"
@@ -142,9 +144,9 @@ public class AnnotatedBeanReaderTest {
     @Test
     public void REGEX_TEST_READ_ALL_WITH_REGEX_BEAN_READER_TEST(){
         // given
-        BeanReader beanReader = AnnotatedBeanReader.getInstance();
+        BeanReaderExtensiblePoint beanReader = AnnotatedBeanReader.getInstance();
 
-        BeanLocation location = new BeanLocation() {
+        BeanLocationExtensiblePoint location = new BeanLocationExtensiblePoint() {
             @Override
             public String[] getPackages() {
                 return new String[]{"org.jvault.struct.regextest.*"};
@@ -169,9 +171,9 @@ public class AnnotatedBeanReaderTest {
     @Test
     public void REGEX_TEST_EXCLUDE_SON2_WITH_REGEX_BEAN_READER_TEST(){
         // given
-        BeanReader beanReader = AnnotatedBeanReader.getInstance();
+        BeanReaderExtensiblePoint beanReader = AnnotatedBeanReader.getInstance();
 
-        BeanLocation location = new BeanLocation() {
+        BeanLocationExtensiblePoint location = new BeanLocationExtensiblePoint() {
             @Override
             public String[] getPackages() {
                 return new String[]{"org.jvault.struct.regextest.*"};
@@ -196,9 +198,9 @@ public class AnnotatedBeanReaderTest {
     @Test
     public void REGEX_TEST_EXCLUDE_SON2_EACH_BEAN_READER_TEST(){
         // given
-        BeanReader beanReader = AnnotatedBeanReader.getInstance();
+        BeanReaderExtensiblePoint beanReader = AnnotatedBeanReader.getInstance();
 
-        BeanLocation location = new BeanLocation() {
+        BeanLocationExtensiblePoint location = new BeanLocationExtensiblePoint() {
             @Override
             public String[] getPackages() {
                 return new String[]{"org.jvault.struct.regextest.*"};
@@ -223,8 +225,8 @@ public class AnnotatedBeanReaderTest {
     @Test
     public void READ_FROM_CLASS_BEAN_READER_TEST(){
         // given
-        BeanReader beanReader = AnnotatedBeanReader.getInstance();
-        BeanLocation location = new BeanLocation() {
+        BeanReaderExtensiblePoint beanReader = AnnotatedBeanReader.getInstance();
+        BeanLocationExtensiblePoint location = new BeanLocationExtensiblePoint() {
             @Override
             public String[] getPackages() {
                 return new String[]{};

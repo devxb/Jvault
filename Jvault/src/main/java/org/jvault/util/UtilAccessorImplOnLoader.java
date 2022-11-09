@@ -1,5 +1,8 @@
 package org.jvault.util;
 
+import org.jvault.metadata.InternalAPI;
+
+@InternalAPI
 final class UtilAccessorImplOnLoader extends org.jvault.beanloader.Accessors.UtilAccessor {
 
     @Override

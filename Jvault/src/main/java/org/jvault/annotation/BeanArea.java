@@ -1,13 +1,17 @@
 package org.jvault.annotation;
 
+import org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo;
+import org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint;
+import org.jvault.metadata.API;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Meta-information used when creating a {@link org.jvault.factory.buildinfo.VaultFactoryBuildInfo} using a class. <br>
- * It can be created by passing the class marked as BeanArea as a parameter of the constructor of {@link org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo}.<br>
+ * Meta-information used when creating a {@link VaultFactoryBuildInfoExtensiblePoint} using a class. <br>
+ * It can be created by passing the class marked as BeanArea as a parameter of the constructor of {@link AnnotationVaultFactoryBuildInfo}.<br>
  * <br>
  * Example.
  * <pre>
@@ -25,11 +29,12 @@ import java.lang.annotation.Target;
  *
  * @see BeanWire
  * @see InternalBean
- * @see org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo
+ * @see AnnotationVaultFactoryBuildInfo
  *
  * @author devxb
  * @since 0.1
  */
+@API
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BeanArea {

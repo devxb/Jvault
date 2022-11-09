@@ -1,10 +1,11 @@
 package org.jvault.factory;
 
-import org.jvault.beanloader.BeanLoader;
-import org.jvault.beanreader.BeanReader;
+import org.jvault.factory.extensible.BeanLoaderExtensiblePoint;
+import org.jvault.metadata.InternalAPI;
 import org.jvault.vault.Vault;
 import org.jvault.vault.VaultType;
 
+@InternalAPI
 public final class Accessors {
 
     public abstract static class BeanLoaderAccessor{
@@ -28,7 +29,7 @@ public final class Accessors {
             return accessor;
         }
 
-        protected abstract BeanLoader getBeanLoader();
+        protected abstract BeanLoaderExtensiblePoint getBeanLoader();
 
     }
 

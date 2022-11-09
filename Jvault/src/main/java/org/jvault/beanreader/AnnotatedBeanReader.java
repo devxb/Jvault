@@ -2,29 +2,33 @@ package org.jvault.beanreader;
 
 import org.jvault.annotation.InternalBean;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
+import org.jvault.factory.buildinfo.extensible.BeanLocationExtensiblePoint;
+import org.jvault.factory.buildinfo.extensible.BeanReaderExtensiblePoint;
+import org.jvault.metadata.InternalAPI;
 import org.jvault.util.PackageReader;
 
 import java.util.*;
 
-public final class AnnotatedBeanReader implements BeanReader{
+@InternalAPI
+public final class AnnotatedBeanReader implements BeanReaderExtensiblePoint {
 
-    private static final BeanReader INSTANCE = new AnnotatedBeanReader();
+    private static final BeanReaderExtensiblePoint INSTANCE = new AnnotatedBeanReader();
     private final PackageReader PACKAGE_READER;
     {
         PACKAGE_READER = Accessors.UtilAccessor.getAccessor().getPackageReader();
     }
 
     @Override
-    public List<Class<?>> read(BeanLocation beanLocation) {
-        List<Class<?>> classes = readFromPackage(beanLocation);
-        classes.addAll(readFromClass(beanLocation));
+    public List<Class<?>> read(BeanLocationExtensiblePoint beanLocationExtensiblePoint) {
+        List<Class<?>> classes = readFromPackage(beanLocationExtensiblePoint);
+        classes.addAll(readFromClass(beanLocationExtensiblePoint));
         return classes;
     }
 
-    private List<Class<?>> readFromPackage(BeanLocation beanLocation){
+    private List<Class<?>> readFromPackage(BeanLocationExtensiblePoint beanLocationExtensiblePoint){
         List<Class<?>> classes = new ArrayList<>();
-        String[] packages = beanLocation.getPackages();
-        Set<String> excludePackages = initExcludePackages(beanLocation.getExcludePackages());
+        String[] packages = beanLocationExtensiblePoint.getPackages();
+        Set<String> excludePackages = initExcludePackages(beanLocationExtensiblePoint.getExcludePackages());
         for(String pkg : packages){
             if(isContainSelectAllRegex(pkg)) {
                 String stringWithoutRegex = pkg.substring(0, pkg.length() - 2);
@@ -67,9 +71,9 @@ public final class AnnotatedBeanReader implements BeanReader{
         return classes;
     }
 
-    private List<Class<?>> readFromClass(BeanLocation beanLocation){
+    private List<Class<?>> readFromClass(BeanLocationExtensiblePoint beanLocationExtensiblePoint){
         List<Class<?>> classes = new ArrayList<>();
-        String[] classSrcs = beanLocation.getClasses();
+        String[] classSrcs = beanLocationExtensiblePoint.getClasses();
         if(isEmptyClassSrcs(classSrcs)) return classes;
         for(String classSrc : classSrcs){
             try {
@@ -91,7 +95,7 @@ public final class AnnotatedBeanReader implements BeanReader{
         if(cls.getDeclaredAnnotation(InternalBean.class) == null) throw new NoDefinedInternalBeanException(cls.getSimpleName());
     }
 
-    static BeanReader getInstance(){
+    static BeanReaderExtensiblePoint getInstance(){
         return INSTANCE;
     }
 

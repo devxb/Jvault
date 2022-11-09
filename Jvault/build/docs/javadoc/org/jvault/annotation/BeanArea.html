@@ -83,10 +83,11 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Target.html" title="class or interface in java.lang.annotation" class="external-link">@Target</a>(<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/ElementType.html#TYPE" title="class or interface in java.lang.annotation" class="external-link">TYPE</a>)
+<div class="type-signature"><span class="annotations"><a href="../metadata/API.html" title="annotation interface in org.jvault.metadata">@API</a>
+<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Target.html" title="class or interface in java.lang.annotation" class="external-link">@Target</a>(<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/ElementType.html#TYPE" title="class or interface in java.lang.annotation" class="external-link">TYPE</a>)
 <a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/Retention.html" title="class or interface in java.lang.annotation" class="external-link">@Retention</a>(<a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/annotation/RetentionPolicy.html#RUNTIME" title="class or interface in java.lang.annotation" class="external-link">RUNTIME</a>)
 </span><span class="modifiers">public @interface </span><span class="element-name type-name-label">BeanArea</span></div>
-<div class="block">Meta-information used when creating a <a href="../factory/buildinfo/VaultFactoryBuildInfo.html" title="interface in org.jvault.factory.buildinfo"><code>VaultFactoryBuildInfo</code></a> using a class. <br>
+<div class="block">Meta-information used when creating a <a href="../factory/extensible/VaultFactoryBuildInfoExtensiblePoint.html" title="interface in org.jvault.factory.extensible"><code>VaultFactoryBuildInfoExtensiblePoint</code></a> using a class. <br>
  It can be created by passing the class marked as BeanArea as a parameter of the constructor of <a href="../factory/buildinfo/AnnotationVaultFactoryBuildInfo.html" title="class in org.jvault.factory.buildinfo"><code>AnnotationVaultFactoryBuildInfo</code></a>.<br>
  <br>
  Example.
@@ -100,7 +101,7 @@ loadScripts(document, 'script');</script>
  Example.
  <pre>
  <code>@BeanArea
- public final class BeanAreaConfig{ @BeanWire private final Foo foo;}</code>
+ public final class BeanAreaConfig{ @BeanWire private Foo foo; }</code>
  </pre></div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -126,15 +127,20 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Optional Element</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#name()" class="member-name-link">name</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the name of the <a href="../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a> to be created by <a href="../factory/VaultFactory.html" title="interface in org.jvault.factory"><code>VaultFactory</code></a>.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second odd-row-color"><code><a href="#vaultAccessClasses()" class="member-name-link">vaultAccessClasses</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns the class name with path that can be passed as parameters of the <a href="../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a></div>
+</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second even-row-color"><code><a href="#accesses()" class="member-name-link">accesses</a></code></div>
+<div class="col-second even-row-color"><code><a href="#vaultAccessPackages()" class="member-name-link">vaultAccessPackages</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Returns the paths of packages that can be passed as parameters of the <a href="../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a></div>
-</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#name()" class="member-name-link">name</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">Returns the name of the <a href="../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a> to be created by <a href="../factory/VaultFactory.html" title="interface in org.jvault.factory"><code>VaultFactory</code></a>.</div>
 </div>
 </div>
 </section>
@@ -166,13 +172,30 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="accesses()">
-<h3>accesses</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">accesses</span></div>
+<section class="detail" id="vaultAccessPackages()">
+<h3>vaultAccessPackages</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">vaultAccessPackages</span></div>
 <div class="block">Returns the paths of packages that can be passed as parameters of the <a href="../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a></div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>- String[] Packages injectable from vault</dd>
+<dt>Since:</dt>
+<dd>0.1</dd>
+</dl>
+<dl class="notes">
+<dt>Default:</dt>
+<dd>{}</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="vaultAccessClasses()">
+<h3>vaultAccessClasses</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">vaultAccessClasses</span></div>
+<div class="block">Returns the class name with path that can be passed as parameters of the <a href="../vault/Vault.html" title="interface in org.jvault.vault"><code>Vault</code></a></div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>- String[] Class name with path injectable from vault</dd>
 <dt>Since:</dt>
 <dd>0.1</dd>
 </dl>

@@ -4,6 +4,7 @@ import org.jvault.annotation.Inject;
 import org.jvault.beans.Bean;
 import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
+import org.jvault.metadata.API;
 import org.jvault.util.Reflection;
 
 import java.lang.reflect.Constructor;
@@ -31,7 +32,7 @@ import java.util.Map;
  * @author devxb
  * @since 0.1
  */
-
+@API
 public final class ClassVault implements Vault<Class<?>>{
 
     private final String NAME;

@@ -1,5 +1,8 @@
 package org.jvault.annotation;
 
+import org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo;
+import org.jvault.metadata.API;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -7,7 +10,7 @@ import java.lang.annotation.Target;
 
 /**
  * Meta-information used in the class marked with {@link BeanArea} <br>
- * This information is read from the {@link org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo} class,<br>
+ * This information is read from the {@link AnnotationVaultFactoryBuildInfo} class,<br>
  * and classes that will become {@link InternalBean} are found. <br> <br>
  *
  * This annotation can be declared on a field, <br>
@@ -35,6 +38,7 @@ import java.lang.annotation.Target;
  * @author devxb
  * @since 0.1
  */
+@API
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BeanWire {}
