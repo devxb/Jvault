@@ -22,8 +22,6 @@ import java.util.*;
 @InternalAPI
 public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
 
-    private int order = 1;
-    private int enter = 1;
     private final Reflection REFLECTION;
     private final BeanBuilderFactory BEAN_BUILDER_FACTORY;
     private final Map<String, Bean> BEANS;
@@ -31,6 +29,9 @@ public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
     private final Map<String, Class<?>> SCANNED_BEANS;
     private final Map<String, Integer> SCC;
     private final Map<String, Integer> FUNC_ENTER;
+    private int order = 1;
+    private int enter = 1;
+
     {
         REFLECTION = Accessors.UtilAccessor.getAccessor().getReflection();
         BEAN_BUILDER_FACTORY = Accessors.BeansAccessor.getAccessor().getBeanBuilderFactory();
@@ -41,25 +42,28 @@ public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
         FUNC_ENTER = new HashMap<>();
     }
 
+    DefaultBeanLoader() {}
+
     @Override
     public Map<String, Bean> load(List<Class<?>> beanClasses) {
         throwIfListContainNotInternalBean(beanClasses);
-        if(beanClasses.isEmpty()) return BEANS;
+        if (beanClasses.isEmpty()) return BEANS;
         scanBeans(beanClasses);
-        for(Class<?> beanClass : beanClasses){
-            if(BEANS.containsKey(getBeanName(beanClass))) continue;
+        for (Class<?> beanClass : beanClasses) {
+            if (BEANS.containsKey(getBeanName(beanClass))) continue;
             loadBean(beanClass);
             enter++;
         }
         return BEANS;
     }
 
-    private void throwIfListContainNotInternalBean(List<Class<?>> beanClasses){
-        for(Class<?> beanClass : beanClasses) throwIfIsNotInternalBean(beanClass);
+    private void throwIfListContainNotInternalBean(List<Class<?>> beanClasses) {
+        for (Class<?> beanClass : beanClasses) throwIfIsNotInternalBean(beanClass);
     }
 
-    private void throwIfIsNotInternalBean(Class<?> cls){
-        if(cls.getDeclaredAnnotation(InternalBean.class) == null) throw new NoDefinedInternalBeanException(cls.getSimpleName());
+    private void throwIfIsNotInternalBean(Class<?> cls) {
+        if (cls.getDeclaredAnnotation(InternalBean.class) == null)
+            throw new NoDefinedInternalBeanException(cls.getSimpleName());
     }
 
     private void scanBeans(List<Class<?>> beanClasses) {
@@ -82,13 +86,14 @@ public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
         registerBean(beanClass);
     }
 
-    private void throwIfBeanCycleOccurred(String beanName){
-        if (SCC.get(beanName) <= order && Objects.equals(FUNC_ENTER.get(beanName), enter)) throw new BeanCycledException();
+    private void throwIfBeanCycleOccurred(String beanName) {
+        if (SCC.get(beanName) <= order && Objects.equals(FUNC_ENTER.get(beanName), enter))
+            throw new BeanCycledException();
     }
 
-    private void registerBean(Class<?> beanClass){
+    private void registerBean(Class<?> beanClass) {
         Constructor<?> constructor = REFLECTION.findConstructor(beanClass);
-        if(constructor != null) {
+        if (constructor != null) {
             registerBeanFromConstructor(beanClass, constructor);
             return;
         }
@@ -99,63 +104,66 @@ public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
     private void registerBeanFromConstructor(Class<?> beanClass, Constructor<?> constructor) {
         Parameter[] parameters = constructor.getParameters();
         List<Object> instancedParameters = new ArrayList<>();
-        for(Parameter parameter : parameters){
-           Inject inject = parameter.getDeclaredAnnotation(Inject.class);
-           throwIfInjectInConstructorHasNotValue(inject);
-           String value = inject.value();
-           if(!BEANS.containsKey(value)) {
-               if(!SCANNED_BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
-               loadBean(SCANNED_BEANS.get(value));
-           }
-           Bean bean = BEANS.get(value);
-           if(!bean.isInjectable(beanClass))
-               throw new DisallowedAccessException(value, beanClass.getPackage().getName());
-           instancedParameters.add(INSTANCES.get(value));
+        for (Parameter parameter : parameters) {
+            Inject inject = parameter.getDeclaredAnnotation(Inject.class);
+            throwIfInjectInConstructorHasNotValue(inject);
+            String value = inject.value();
+            if (!BEANS.containsKey(value)) {
+                if (!SCANNED_BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
+                loadBean(SCANNED_BEANS.get(value));
+            }
+            Bean bean = BEANS.get(value);
+            if (!bean.isInjectable(beanClass))
+                throw new DisallowedAccessException(value, beanClass.getPackage().getName());
+            instancedParameters.add(INSTANCES.get(value));
         }
         try {
             constructor.setAccessible(true);
             createBean(beanClass, constructor.newInstance(instancedParameters.toArray()));
-        }catch(InvocationTargetException | InstantiationException | IllegalAccessException IE){
+        } catch (InvocationTargetException | InstantiationException | IllegalAccessException IE) {
             throw new IllegalStateException("Can not call \"newInstance(params)\" of bean \"" + getBeanName(beanClass) + "\"");
         }
     }
 
-    private void throwIfInjectInConstructorHasNotValue(Inject inject){
-        if(inject == null || inject.value().equals("")) throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
+    private void throwIfInjectInConstructorHasNotValue(Inject inject) {
+        if (inject == null || inject.value().equals(""))
+            throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
     }
 
-    private void registerBeanFromField(Class<?> beanClass, List<Field> fields){
+    private void registerBeanFromField(Class<?> beanClass, List<Field> fields) {
         Object bean = getBeanInstance(beanClass);
-        for(Field field : fields){
+        for (Field field : fields) {
             field.setAccessible(true);
             String value = field.getName();
-            if(!field.getAnnotation(Inject.class).value().equals("")) value = field.getAnnotation(Inject.class).value();
-            if(!BEANS.containsKey(value)){
-                if(!SCANNED_BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
+            if (!field.getAnnotation(Inject.class).value().equals(""))
+                value = field.getAnnotation(Inject.class).value();
+            if (!BEANS.containsKey(value)) {
+                if (!SCANNED_BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
                 loadBean(SCANNED_BEANS.get(value));
             }
-            if(!BEANS.get(value).isInjectable(beanClass))
+            if (!BEANS.get(value).isInjectable(beanClass))
                 throw new DisallowedAccessException(value, beanClass.getPackage().getName());
             try {
                 field.set(bean, INSTANCES.get(value));
-            }catch(IllegalAccessException IAE){
+            } catch (IllegalAccessException IAE) {
                 throw new IllegalStateException("Can not access field value \"" + value + "\"");
             }
         }
         createBean(beanClass, bean);
     }
 
-    private Object getBeanInstance(Class<?> cls){
+    private Object getBeanInstance(Class<?> cls) {
         try {
             Constructor<?> constructor = cls.getDeclaredConstructor();
             constructor.setAccessible(true);
             return constructor.newInstance();
-        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                 IllegalAccessException e) {
             throw new IllegalStateException("Can not find default constructor of \"" + getBeanName(cls) + "\"");
         }
     }
 
-    private void createBean(Class<?> beanClass, Object instance){
+    private void createBean(Class<?> beanClass, Object instance) {
         String beanName = getBeanName(beanClass);
         INSTANCES.put(beanName, instance);
         BEANS.put(beanName, BEAN_BUILDER_FACTORY.getBeanBuilder(getBeanType(beanClass))
@@ -167,29 +175,27 @@ public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
                 .build());
     }
 
-    private String getBeanName(Class<?> cls){
+    private String getBeanName(Class<?> cls) {
         String name = convertToBeanName(cls.getSimpleName());
         InternalBean internalBean = cls.getDeclaredAnnotation(InternalBean.class);
-        if(internalBean.name().equals("")) return name;
+        if (internalBean.name().equals("")) return name;
         return internalBean.name();
     }
 
-    private String convertToBeanName(String name){
+    private String convertToBeanName(String name) {
         return name.substring(0, 1).toLowerCase() + name.subSequence(1, name.length());
     }
 
-    private Type getBeanType(Class<?> cls){
+    private Type getBeanType(Class<?> cls) {
         return cls.getDeclaredAnnotation(InternalBean.class).type();
     }
 
-    private String[] getBeanInjectAccessPackages(Class<?> cls){
+    private String[] getBeanInjectAccessPackages(Class<?> cls) {
         return cls.getDeclaredAnnotation(InternalBean.class).accessPackages();
     }
 
-    private String[] getBeanInjectAccessClasses(Class<?> cls){
+    private String[] getBeanInjectAccessClasses(Class<?> cls) {
         return cls.getDeclaredAnnotation(InternalBean.class).accessClasses();
     }
-
-    DefaultBeanLoader() {}
 
 }

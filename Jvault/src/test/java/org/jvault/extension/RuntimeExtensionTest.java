@@ -32,11 +32,21 @@ public class RuntimeExtensionTest {
                 ()-> Assertions.assertEquals(BeanReaderExtension.class, classes.get(0)),
                 ()-> Assertions.assertEquals(BeanReaderExtensionBean.class, classes.get(1))
         );
+        JvaultRuntimeExtension.reset(BeanReaderExtensiblePoint.class);
+    }
+
+    @Test
+    public void FAIL_BEAN_READER_RUNTIME_EXTENSION_TEST(){
+        // given
+        Object notExtensiblePoint = new Object();
+
+        // then
+        Assertions.assertThrows(IllegalArgumentException.class, ()-> JvaultRuntimeExtension.extend(notExtensiblePoint, Object.class));
     }
 
     @AfterEach
     public void RESET_RUNTIME_EXTENSION(){
-        JvaultRuntimeExtension.reset();
+        JvaultRuntimeExtension.resetAll();
     }
 
 }

@@ -3,6 +3,7 @@ org.jvault.beanloader
 org.jvault.beanreader
 org.jvault.beans
 org.jvault.exceptions
+org.jvault.extension
 org.jvault.factory
 org.jvault.factory.buildinfo
 org.jvault.factory.buildinfo.extensible

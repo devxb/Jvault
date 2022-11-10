@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'org.jvault'
-version '1.0-BETA'
+version '0.1'
 sourceCompatibility = 8
 targetCompatibility = 8
 

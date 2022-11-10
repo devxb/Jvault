@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.jvault.beanreader.AnnotatedBeanReaderTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2022-11-10T07:14:35" hostname="xb-apple.local" time="0.005">
+<testsuite name="org.jvault.beanreader.AnnotatedBeanReaderTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2022-11-10T08:22:40" hostname="xb-apple.local" time="0.004">
   <properties/>
   <testcase name="EXCLUDE_PACKAGE_BEAN_LEADER_TEST()" classname="org.jvault.beanreader.AnnotatedBeanReaderTest" time="0.001"/>
-  <testcase name="REGEX_TEST_EXCLUDE_SON2_EACH_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotatedBeanReaderTest" time="0.001"/>
-  <testcase name="UNDER_BAR_IN_PACKAGE_SRC_BEAN_LEADER_TEST()" classname="org.jvault.beanreader.AnnotatedBeanReaderTest" time="0.0"/>
-  <testcase name="ANNOTATION_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotatedBeanReaderTest" time="0.001"/>
+  <testcase name="REGEX_TEST_EXCLUDE_SON2_EACH_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotatedBeanReaderTest" time="0.0"/>
+  <testcase name="UNDER_BAR_IN_PACKAGE_SRC_BEAN_LEADER_TEST()" classname="org.jvault.beanreader.AnnotatedBeanReaderTest" time="0.001"/>
+  <testcase name="ANNOTATION_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotatedBeanReaderTest" time="0.0"/>
   <testcase name="READ_FROM_CLASS_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotatedBeanReaderTest" time="0.0"/>
   <testcase name="REGEX_TEST_EXCLUDE_SON2_WITH_REGEX_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotatedBeanReaderTest" time="0.001"/>
   <testcase name="REGEX_TEST_READ_ALL_EACH_PACKAGE_BEAN_READER_TEST()" classname="org.jvault.beanreader.AnnotatedBeanReaderTest" time="0.0"/>
