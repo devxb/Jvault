@@ -25,7 +25,8 @@ public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuild
 
     @Override
     public List<Class<?>> getBeanClasses(){
-        BeanReaderExtensiblePoint beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
+        BeanReaderExtensiblePoint beanReader = Accessors.RuntimeExtensionAccessor.getAccessor().getRuntimeExtension().getExtension(BeanReaderExtensiblePoint.class);
+        if(beanReader == null) beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
         return beanReader.read(new BeanLocationExtensiblePoint(){
             @Override
             public String[] getPackages() {
@@ -71,7 +72,6 @@ public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuild
      * @return String[] Class name with package
      */
     protected abstract String[] getClassesImpl();
-
 
     @Override
     public String[] getVaultAccessPackages(){

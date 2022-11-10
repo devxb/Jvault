@@ -1,5 +1,5 @@
 /**
- * Package with information that must be passed as a parameter to the JvaultFactory to create a Jvault.
+ * Package that parameter of the JvaultFactory for build Vault and Bean.
  *
  * @author devxb
  * @since 0.1

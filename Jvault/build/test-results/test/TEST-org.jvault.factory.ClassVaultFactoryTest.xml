@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.jvault.factory.ClassVaultFactoryTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2022-11-09T14:03:56" hostname="xb-apple.local" time="0.011">
+<testsuite name="org.jvault.factory.ClassVaultFactoryTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2022-11-10T07:14:35" hostname="xb-apple.local" time="0.01">
   <properties/>
-  <testcase name="READ_FROM_CLASS_WITH_PROPERTIES_CONFIG_VAULT_FACTORY_TEST()" classname="org.jvault.factory.ClassVaultFactoryTest" time="0.006"/>
+  <testcase name="READ_FROM_CLASS_WITH_PROPERTIES_CONFIG_VAULT_FACTORY_TEST()" classname="org.jvault.factory.ClassVaultFactoryTest" time="0.005"/>
   <testcase name="BEAN_WITH_FACTORY_CLASS_VAULT_FACTORY_TEST()" classname="org.jvault.factory.ClassVaultFactoryTest" time="0.001"/>
   <testcase name="READ_WITH_ANNOTATION_CONFIG_VAULT_FACTORY_TEST()" classname="org.jvault.factory.ClassVaultFactoryTest" time="0.002"/>
   <testcase name="READ_WITH_PROPERTIES_VAULT_FACTORY_TEST()" classname="org.jvault.factory.ClassVaultFactoryTest" time="0.001"/>
-  <testcase name="FAIL_READ_WITH_ANNOTATION_CONFIG_VAULT_FACTORY_TEST()" classname="org.jvault.factory.ClassVaultFactoryTest" time="0.0"/>
+  <testcase name="FAIL_READ_WITH_ANNOTATION_CONFIG_VAULT_FACTORY_TEST()" classname="org.jvault.factory.ClassVaultFactoryTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
