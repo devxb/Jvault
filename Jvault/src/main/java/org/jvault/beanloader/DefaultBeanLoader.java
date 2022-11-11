@@ -25,10 +25,10 @@ public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
     private final Reflection REFLECTION;
     private final BeanBuilderFactory BEAN_BUILDER_FACTORY;
     private final Map<String, Bean> BEANS;
-    private final Map<String, Object> INSTANCES;
+    private final Map<String, Object> BEAN_INSTANCES;
     private final Map<String, Class<?>> SCANNED_BEANS;
     private final Map<String, Integer> SCC;
-    private final Map<String, Integer> FUNC_ENTER;
+    private final Map<String, Integer> SCC_ENTER;
     private int order = 1;
     private int enter = 1;
 
@@ -36,13 +36,14 @@ public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
         REFLECTION = Accessors.UtilAccessor.getAccessor().getReflection();
         BEAN_BUILDER_FACTORY = Accessors.BeansAccessor.getAccessor().getBeanBuilderFactory();
         BEANS = new HashMap<>();
-        INSTANCES = new HashMap<>();
+        BEAN_INSTANCES = new HashMap<>();
         SCANNED_BEANS = new HashMap<>();
         SCC = new HashMap<>();
-        FUNC_ENTER = new HashMap<>();
+        SCC_ENTER = new HashMap<>();
     }
 
-    DefaultBeanLoader() {}
+    DefaultBeanLoader() {
+    }
 
     @Override
     public Map<String, Bean> load(List<Class<?>> beanClasses) {
@@ -69,10 +70,14 @@ public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
     private void scanBeans(List<Class<?>> beanClasses) {
         for (Class<?> beanClass : beanClasses) {
             String beanName = getBeanName(beanClass);
-            if (SCANNED_BEANS.containsKey(beanName))
-                throw new DuplicateBeanNameException(beanName);
+            throwIfDuplicateBeanDetected(beanName);
             SCANNED_BEANS.put(beanName, beanClass);
         }
+    }
+
+    private void throwIfDuplicateBeanDetected(String beanName) {
+        if (SCANNED_BEANS.containsKey(beanName))
+            throw new DuplicateBeanNameException(beanName);
     }
 
     private void loadBean(Class<?> beanClass) {
@@ -82,12 +87,12 @@ public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
             return;
         }
         SCC.put(beanName, ++order);
-        FUNC_ENTER.put(beanName, enter);
+        SCC_ENTER.put(beanName, enter);
         registerBean(beanClass);
     }
 
     private void throwIfBeanCycleOccurred(String beanName) {
-        if (SCC.get(beanName) <= order && Objects.equals(FUNC_ENTER.get(beanName), enter))
+        if (SCC.get(beanName) <= order && Objects.equals(SCC_ENTER.get(beanName), enter))
             throw new BeanCycledException();
     }
 
@@ -108,14 +113,9 @@ public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
             Inject inject = parameter.getDeclaredAnnotation(Inject.class);
             throwIfInjectInConstructorHasNotValue(inject);
             String value = inject.value();
-            if (!BEANS.containsKey(value)) {
-                if (!SCANNED_BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
-                loadBean(SCANNED_BEANS.get(value));
-            }
-            Bean bean = BEANS.get(value);
-            if (!bean.isInjectable(beanClass))
-                throw new DisallowedAccessException(value, beanClass.getPackage().getName());
-            instancedParameters.add(INSTANCES.get(value));
+            loadBeanIfNotLoadedBean(value);
+            throwIfNotInjectable(value, beanClass);
+            instancedParameters.add(BEAN_INSTANCES.get(value));
         }
         try {
             constructor.setAccessible(true);
@@ -134,20 +134,10 @@ public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
         Object bean = getBeanInstance(beanClass);
         for (Field field : fields) {
             field.setAccessible(true);
-            String value = field.getName();
-            if (!field.getAnnotation(Inject.class).value().equals(""))
-                value = field.getAnnotation(Inject.class).value();
-            if (!BEANS.containsKey(value)) {
-                if (!SCANNED_BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
-                loadBean(SCANNED_BEANS.get(value));
-            }
-            if (!BEANS.get(value).isInjectable(beanClass))
-                throw new DisallowedAccessException(value, beanClass.getPackage().getName());
-            try {
-                field.set(bean, INSTANCES.get(value));
-            } catch (IllegalAccessException IAE) {
-                throw new IllegalStateException("Can not access field value \"" + value + "\"");
-            }
+            String value = getBeanNameFromField(field);
+            loadBeanIfNotLoadedBean(value);
+            throwIfNotInjectable(value, beanClass);
+            injectBeanToField(bean, field, value);
         }
         createBean(beanClass, bean);
     }
@@ -163,15 +153,47 @@ public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
         }
     }
 
+    private String getBeanNameFromField(Field field) {
+        String name = field.getName();
+        if (!field.getAnnotation(Inject.class).value().equals(""))
+            name = field.getAnnotation(Inject.class).value();
+        return name;
+    }
+
+    private void loadBeanIfNotLoadedBean(String beanName) {
+        if (!BEANS.containsKey(beanName)) {
+            throwIfNotScannedBean(beanName);
+            loadBean(SCANNED_BEANS.get(beanName));
+        }
+    }
+
+    private void throwIfNotScannedBean(String beanName) {
+        if (!SCANNED_BEANS.containsKey(beanName)) throw new NoDefinedInternalBeanException(beanName);
+    }
+
+    private void throwIfNotInjectable(String beanName, Class<?> injectClass) {
+        Bean bean = BEANS.get(beanName);
+        if (!bean.isInjectable(injectClass))
+            throw new DisallowedAccessException(beanName, injectClass.getPackage().getName());
+    }
+
+    private void injectBeanToField(Object bean, Field field, String beanName) {
+        try {
+            field.set(bean, BEAN_INSTANCES.get(beanName));
+        } catch (IllegalAccessException IAE) {
+            throw new IllegalStateException("Can not access field value \"" + beanName + "\"");
+        }
+    }
+
     private void createBean(Class<?> beanClass, Object instance) {
         String beanName = getBeanName(beanClass);
-        INSTANCES.put(beanName, instance);
+        BEAN_INSTANCES.put(beanName, instance);
         BEANS.put(beanName, BEAN_BUILDER_FACTORY.getBeanBuilder(getBeanType(beanClass))
                 .name(beanName)
                 .accessPackages(getBeanInjectAccessPackages(beanClass))
                 .accessClasses(getBeanInjectAccessClasses(beanClass))
                 .beans(BEANS)
-                .instance(INSTANCES.get(beanName))
+                .instance(BEAN_INSTANCES.get(beanName))
                 .build());
     }
 
