@@ -48,8 +48,7 @@ public final class NewBean implements Bean {
     @Override
     public boolean isInjectable(Class<?> cls) {
         if (ACCESS_PACKAGES.length == 0 && ACCESS_CLASSES.length == 0) return true;
-        if (isClassInjectable(cls)) return true;
-        return isPackageInjectable(cls);
+        return isClassInjectable(cls) || isPackageInjectable(cls);
     }
 
     private boolean isClassInjectable(Class<?> cls) {
@@ -101,26 +100,32 @@ public final class NewBean implements Bean {
     private void fillParameters(List<Object> instancedParameters, Parameter[] parameters) {
         for (Parameter parameter : parameters) {
             Inject inject = parameter.getDeclaredAnnotation(Inject.class);
-            if (inject == null || inject.value().equals(""))
-                throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
+            throwIfParameterDoesNotAnnotatedInject(inject);
             String value = inject.value();
-            if (!BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
+            throwIfCanNotFindDefinedBean(value);
             instancedParameters.add(BEANS.get(value).load());
         }
+    }
+
+    private void throwIfParameterDoesNotAnnotatedInject(Inject inject) {
+        if (inject == null || inject.value().equals(""))
+            throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
     }
 
     private Object loadBeanFromField(Class<?> cls, List<Field> fields) {
         Object bean = loadBeanFromDefaultConstructor(cls);
         for (Field field : fields) {
             field.setAccessible(true);
-            String value = field.getName();
-            if (!field.getAnnotation(Inject.class).value().equals(""))
-                value = field.getAnnotation(Inject.class).value();
-            if (!BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
+            String value = getBeanNameByField(field);
+            throwIfCanNotFindDefinedBean(value);
             Object instance = BEANS.get(value).load();
-            injectBeanToField(value, field, bean, instance);
+            injectBeanToField(field, bean, instance);
         }
         return bean;
+    }
+
+    private void throwIfCanNotFindDefinedBean(String beanName) {
+        if (!BEANS.containsKey(beanName)) throw new NoDefinedInternalBeanException(beanName);
     }
 
     private Object loadBeanFromDefaultConstructor(Class<?> cls) {
@@ -134,12 +139,19 @@ public final class NewBean implements Bean {
         }
     }
 
-    private void injectBeanToField(String value, Field field, Object bean, Object instance) {
+    private void injectBeanToField(Field field, Object bean, Object instance) {
         try {
             field.set(bean, instance);
         } catch (IllegalAccessException e) {
-            throw new IllegalStateException("Can not access field value \"" + value + "\"");
+            throw new IllegalStateException("Can not access field value \"" + getBeanNameByField(field) + "\"");
         }
+    }
+
+    private String getBeanNameByField(Field field) {
+        String beanName = field.getName();
+        if (!field.getAnnotation(Inject.class).value().equals(""))
+            beanName = field.getAnnotation(Inject.class).value();
+        return beanName;
     }
 
 }

@@ -29,8 +29,7 @@ public final class SingletonBean implements Bean {
     @Override
     public boolean isInjectable(Class<?> cls) {
         if (ACCESS_PACKAGES.length == 0 && ACCESS_CLASSES.length == 0) return true;
-        if (isClassInjectable(cls)) return true;
-        return isPackageInjectable(cls);
+        return isClassInjectable(cls) || isPackageInjectable(cls);
     }
 
     private boolean isClassInjectable(Class<?> cls) {

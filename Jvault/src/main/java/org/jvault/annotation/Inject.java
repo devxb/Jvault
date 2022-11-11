@@ -45,7 +45,7 @@ import java.lang.annotation.Target;
  * If try to inject bean using @Inject from a class or package that @InternalBean does not allow, a {@link org.jvault.exceptions.DisallowedAccessException} is thrown.<br><br>
  *
  * If CONSTRUCTOR INJECTION and FIELD INJECTION coexist, <br>
- * CONSTRUCTOR INJECTION is selected, and Bean injection proceeds in constructor injection method.
+ * CONSTRUCTOR INJECTION is always selected, and Bean injection proceeds in constructor injection method.
  *
  * @see InternalBean
  *

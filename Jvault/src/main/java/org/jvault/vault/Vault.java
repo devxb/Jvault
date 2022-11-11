@@ -8,7 +8,9 @@ import java.util.*;
 
 /**
  * As a bean container, containing scanned Bean. <br>
- * Inject beans to parameter and returns an instance of the parameter
+ * Inject beans to parameter and returns an instance of the parameter <br> <br>
+ * Vault can select classes and packages that can be passed as parameters.<br>
+ * If no classes and packages are selected, all classes and packages can be passed as parameters.
  * <br>
  * <br>
  * Vault can only be instantiated in the org.jvault.* package,<br>
@@ -47,8 +49,8 @@ public interface Vault<P> {
      * @param param The type of target to be injected beans, Vault will inject beans into the param.
      * @return Returns an instance of the type received param.
      *
-     * @throws DisallowedAccessException Occurs when the package in param is a package that does not have access to Vault,
-     * or the Beans to be injected into param cannot be injected into the package in Param.
+     * @throws DisallowedAccessException Occurs when the package or class passed to param, that does not have access to Vault,
+     * or the Beans to be injected into param cannot be injected package or class to Param.
      *
      * @see org.jvault.annotation.Inject
      * @see org.jvault.annotation.InternalBean
@@ -62,8 +64,8 @@ public interface Vault<P> {
     abstract class Builder<S>{
 
         String name;
-        String[] accessPackages = new String[0];
-        String[] accessClasses = new String[0];
+        String[] accessPackages;
+        String[] accessClasses;
         final Map<String, Bean> BEANS;
         {
             BEANS = new HashMap<>();

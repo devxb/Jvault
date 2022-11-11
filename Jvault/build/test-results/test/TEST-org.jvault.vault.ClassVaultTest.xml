@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.jvault.vault.ClassVaultTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-11-11T06:35:22" hostname="xb-apple.local" time="0.001">
+<testsuite name="org.jvault.vault.ClassVaultTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2022-11-11T07:03:33" hostname="xb-apple.local" time="0.015">
   <properties/>
-  <testcase name="BUILD_VAULT_CREATE_VAULT_TEST()" classname="org.jvault.vault.ClassVaultTest" time="0.0"/>
+  <testcase name="BUILD_VAULT_CREATE_VAULT_TEST()" classname="org.jvault.vault.ClassVaultTest" time="0.011"/>
   <testcase name="BUILD_VAULT_CANNOT_INJECT_BEAN_CREATE_VAULT_TEST()" classname="org.jvault.vault.ClassVaultTest" time="0.001"/>
   <testcase name="BUILD_VAULT_CANNOT_INJECT_CLASS_CREATE_VAULT_TEST()" classname="org.jvault.vault.ClassVaultTest" time="0.0"/>
-  <testcase name="ANNOTATION_CONFIG_WITH_CLASS_CREATE_VAULT_TEST()" classname="org.jvault.vault.ClassVaultTest" time="0.0"/>
+  <testcase name="CHOICE_CONSTRUCTOR_INJECT_CLASS_VAULT_TEST()" classname="org.jvault.vault.ClassVaultTest" time="0.001"/>
+  <testcase name="ANNOTATION_CONFIG_WITH_CLASS_CREATE_VAULT_TEST()" classname="org.jvault.vault.ClassVaultTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

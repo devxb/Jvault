@@ -11,6 +11,7 @@ import org.jvault.struct.annotationconfigwithclass.AnnotationConfigWithClass;
 import org.jvault.struct.buildvault.BuildVault;
 import org.jvault.struct.buildvaultcannotinjectbean.BuildVaultCannotInjectBean;
 import org.jvault.struct.buildvaultcannotinjectclass.BuildVaultCannotInjectClass;
+import org.jvault.struct.choiceconstructorinject.ChoiceConstructor;
 
 public class ClassVaultTest {
 
@@ -131,6 +132,16 @@ public class ClassVaultTest {
 
         // then
         Assertions.assertEquals("AnnotationConfigWithClassAnnotationConfigWithClassBean", bean.hello());
+    }
+
+    @Test
+    public void CHOICE_CONSTRUCTOR_INJECT_CLASS_VAULT_TEST(){
+        // given
+        ClassVaultFactory vaultFactory = ClassVaultFactory.getInstance();
+        AnnotationVaultFactoryBuildInfo annotationVaultFactoryBuildInfo = new AnnotationVaultFactoryBuildInfo(org.jvault.struct.choiceconstructorinject.AnnotationConfig.class);
+
+        // then
+        Assertions.assertThrows(IllegalStateException.class, ()-> vaultFactory.get(annotationVaultFactoryBuildInfo));
     }
 
 }
