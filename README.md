@@ -37,7 +37,7 @@ implemetation : org.jvault:jvault-api:0.1
    
 만약, 프로젝트에서 별도의 빌드 툴을 사용하지 않는다면 __Jvault-x.x.jar__ (x.x는 버전입니다) 를 다운받고 classpath를 설정해서 Jvault를 프로젝트에서 사용할 수 있습니다. 또한, IDE에 Jvault javadoc 색인을 적용하고 싶은 경우, __Jvault-x.x-sources.jar__ 를 다운받고 사용하는 IDE에 맞게 설정해주세요.   
 
-<br><br><br>
+<br><br>
 
 ## Overview
 
@@ -47,8 +47,8 @@ _예제 코드에 대한 간략한 소개_
 예제에서 사용되는 Wheel 클래스는 내부용 API 입니다. 만약 Wheel을 외부에서 사용한다면, API의 진화에 큰 악영향을 미칠것으로 _(API는 사용하는 사람이 많을수록 진화하기 힘들어집니다.)_ 프로젝트 외부에서는 사용할 수 없도록 해야합니다.   
 반면, 예제에서 사용되는 Car 클래스는 API 입니다. Car 클래스는 프로젝트 외부에서 사용될 목적으로 만들어 졌으며, 모든 사용자는 Car 클래스를 이용해서 우리의 프로젝트와 소통해야합니다.
    
-<br><br><br>
-   
+<br><br>
+
 ### InternalBean 등록하기
 
 Jvault는 클래스의 접근을 제어하기위해 @InternalBean이라는 어노테이션을 제공합니다.   
@@ -97,7 +97,7 @@ public final class SquareWheel implements Wheel{
    
 Jvault는 이 문제를 DI를 이용해 해결하는데, @InternalBean에 설정된 정보를 읽고 해당 Bean이 주입을 허가한 클래스가 아니라면 예외를 던집니다.   
    
-<br><br><br>
+<br><br>
    
 ### 주입받을 InternalBean 마킹하기
 
@@ -161,7 +161,7 @@ public final class Car implements Vehicle{
 > __TIP__ : 예시의 Car클래스는 Bean을 주입받지만 @InternalBean으로 마킹되어있지 않은데, Car클래스가 다른 클래스에 주입될 필요가 없다면 @InternalBean으로 마킹되어있지 않아도 상관없습니다.    
 > 만약, Car클래스가 @InternalBean으로 마킹되어있다면, 최초 Bean 등록시에 Bean사이클 판별과 최적화를 위해서 "squareWheel" Bean과 연결될 것 입니다.
    
-<br><br><br>
+<br><br>
    
 ### Bean 스캔, Vault 생성, 의존성 주입
 
@@ -260,7 +260,7 @@ ClassVault vault = vaultFactory.get(buildInfo);
 Car car = vault.inject(Car.class); // Returned Car object that wired to Bean named "squareWheel".
 ```
    
-<br><br><br>
+<br><br>
    
 ### 응용
 
