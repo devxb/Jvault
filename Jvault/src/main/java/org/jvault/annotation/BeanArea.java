@@ -1,7 +1,7 @@
 package org.jvault.annotation;
 
 import org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo;
-import org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint;
+import org.jvault.factory.extensible.VaultFactoryBuildInfo;
 import org.jvault.metadata.API;
 
 import java.lang.annotation.ElementType;
@@ -10,7 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Meta-information used when creating a {@link VaultFactoryBuildInfoExtensiblePoint} using a class. <br>
+ * Meta-information used when creating a {@link VaultFactoryBuildInfo} using a class. <br>
  * It can be created by passing the class marked as BeanArea as a parameter of the constructor of {@link AnnotationVaultFactoryBuildInfo}.<br>
  * <br>
  * Example.

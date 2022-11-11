@@ -9,7 +9,7 @@ import org.jvault.exceptions.BeanCycledException;
 import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.exceptions.DuplicateBeanNameException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
-import org.jvault.factory.extensible.BeanLoaderExtensiblePoint;
+import org.jvault.factory.extensible.BeanLoader;
 import org.jvault.metadata.InternalAPI;
 import org.jvault.util.Reflection;
 
@@ -20,7 +20,7 @@ import java.lang.reflect.Parameter;
 import java.util.*;
 
 @InternalAPI
-public final class DefaultBeanLoader implements BeanLoaderExtensiblePoint {
+public final class DefaultBeanLoader implements BeanLoader {
 
     private final Reflection REFLECTION;
     private final BeanBuilderFactory BEAN_BUILDER_FACTORY;

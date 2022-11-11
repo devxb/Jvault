@@ -1,7 +1,7 @@
 package org.jvault.factory;
 
-import org.jvault.factory.extensible.BeanLoaderExtensiblePoint;
-import org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint;
+import org.jvault.factory.extensible.BeanLoader;
+import org.jvault.factory.extensible.VaultFactoryBuildInfo;
 import org.jvault.metadata.API;
 import org.jvault.vault.ClassVault;
 import org.jvault.vault.VaultType;
@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author devxb
  * @see org.jvault.vault.ClassVault
  * @see org.jvault.factory.VaultFactory
- * @see VaultFactoryBuildInfoExtensiblePoint
+ * @see VaultFactoryBuildInfo
  * @since 0.1
  */
 @API
@@ -50,27 +50,31 @@ public final class ClassVaultFactory implements VaultFactory<ClassVault> {
      */
     @Override
     public ClassVault get(String vaultName) throws IllegalStateException {
+        throwIfCanNotFindVault(vaultName);
+        return VAULTS.get(vaultName);
+    }
+
+    private void throwIfCanNotFindVault(String vaultName){
         if (!VAULTS.containsKey(vaultName))
             throw new IllegalStateException("Can not find vaults named \"" + vaultName + "\"");
-        return VAULTS.get(vaultName);
     }
 
     /**
      * @param buildInfo The collection of information that VaultFactory needs to create Vault.
      * @return ClassVault that implementation type of the Vault<P> interface.
      * @author devxb
-     * @see VaultFactoryBuildInfoExtensiblePoint
+     * @see VaultFactoryBuildInfo
      * @since 0.1
      */
     @Override
-    public ClassVault get(VaultFactoryBuildInfoExtensiblePoint buildInfo) {
+    public ClassVault get(VaultFactoryBuildInfo buildInfo) {
         if (VAULTS.containsKey(buildInfo.getVaultName())) return VAULTS.get(buildInfo.getVaultName());
         return registerClassVault(buildInfo);
     }
 
-    private synchronized ClassVault registerClassVault(VaultFactoryBuildInfoExtensiblePoint buildInfo) {
+    private synchronized ClassVault registerClassVault(VaultFactoryBuildInfo buildInfo) {
         if (VAULTS.containsKey(buildInfo.getVaultName())) return VAULTS.get(buildInfo.getVaultName());
-        BeanLoaderExtensiblePoint beanLoader = Accessors.BeanLoaderAccessor.getAccessor().getBeanLoader();
+        BeanLoader beanLoader = Accessors.BeanLoaderAccessor.getAccessor().getBeanLoader();
 
         ClassVault classVault = Accessors.VaultAccessor.getAccessor().getBuilder(VaultType.CLASS, ClassVault.class)
                 .name(buildInfo.getVaultName())

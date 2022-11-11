@@ -3,10 +3,7 @@ package org.jvault.beanloader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.jvault.beans.Bean;
-import org.jvault.exceptions.BeanCycledException;
-import org.jvault.exceptions.DisallowedAccessException;
-import org.jvault.exceptions.DuplicateInjectConstructorException;
-import org.jvault.exceptions.NoDefinedInternalBeanException;
+import org.jvault.exceptions.*;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
 import org.jvault.struct.beanregex.BeanRegex;
 import org.jvault.struct.classaccess.ClassAccess;
@@ -730,6 +727,36 @@ public class DefaultBeanLoaderTest {
 
         // then
         Assertions.assertEquals("ClassAccessClassAccessBean", classAccess.hello());
+    }
+
+    @Test
+    public void DUPLICATE_BEAN_NAME_DETECTED_BEAN_LOADER_TEST(){
+        // given
+        DefaultBeanLoader beanLoader = new DefaultBeanLoader();
+        AbstractVaultFactoryBuildInfo abstractVaultFactoryBuildInfo = new AbstractVaultFactoryBuildInfo() {
+            @Override
+            public String getVaultName() {
+                return "DUPLICATE_BEAN_NAME_DETECTED";
+            }
+
+            @Override
+            protected String[] getPackagesImpl() {
+                return new String[]{"org.jvault.struct.duplicatebean"};
+            }
+
+            @Override
+            protected String[] getExcludePackagesImpl() {
+                return new String[0];
+            }
+
+            @Override
+            protected String[] getClassesImpl() {
+                return new String[0];
+            }
+        };
+
+        // then
+        Assertions.assertThrows(DuplicateBeanNameException.class, ()-> beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses()));
     }
 
 }

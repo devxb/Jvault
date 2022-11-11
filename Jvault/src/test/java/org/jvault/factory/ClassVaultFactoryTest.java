@@ -6,7 +6,7 @@ import org.jvault.exceptions.InvalidAnnotationConfigClassException;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
 import org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo;
 import org.jvault.factory.buildinfo.PropertiesVaultFactoryBuildInfo;
-import org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint;
+import org.jvault.factory.extensible.VaultFactoryBuildInfo;
 import org.jvault.struct.annotationconfig.AnnotationConfigBean;
 import org.jvault.struct.beanwithfactory.BeanWithFactoryInjectTarget;
 import org.jvault.struct.failannotationconfig.FailConfig;
@@ -20,7 +20,7 @@ public class ClassVaultFactoryTest {
     public void BEAN_WITH_FACTORY_CLASS_VAULT_FACTORY_TEST(){
         // given
         ClassVaultFactory factory = ClassVaultFactory.getInstance();
-        VaultFactoryBuildInfoExtensiblePoint buildInfo = new AbstractVaultFactoryBuildInfo() {
+        VaultFactoryBuildInfo buildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
             public String getVaultName() {
                 return "CLASS_VAULT_FACTORY_TEST";

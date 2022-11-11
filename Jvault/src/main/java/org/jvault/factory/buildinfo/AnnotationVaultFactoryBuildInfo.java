@@ -5,7 +5,7 @@ import org.jvault.annotation.BeanWire;
 import org.jvault.annotation.InternalBean;
 import org.jvault.exceptions.InvalidAnnotationConfigClassException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
-import org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint;
+import org.jvault.factory.extensible.VaultFactoryBuildInfo;
 import org.jvault.metadata.API;
 
 import java.lang.reflect.Field;
@@ -25,7 +25,7 @@ import java.util.List;
  * @since 0.1
  */
 @API
-public final class AnnotationVaultFactoryBuildInfo implements VaultFactoryBuildInfoExtensiblePoint {
+public final class AnnotationVaultFactoryBuildInfo implements VaultFactoryBuildInfo {
 
     private final String VAULT_NAME;
     private final List<Class<?>> BEAN_CLASSES;

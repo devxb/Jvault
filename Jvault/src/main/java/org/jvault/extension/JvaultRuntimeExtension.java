@@ -1,6 +1,6 @@
 package org.jvault.extension;
 
-import org.jvault.factory.buildinfo.extensible.BeanReaderExtensiblePoint;
+import org.jvault.factory.buildinfo.extensible.BeanReader;
 import org.jvault.metadata.API;
 
 import java.util.Optional;
@@ -26,7 +26,7 @@ public final class JvaultRuntimeExtension {
 
     static {
         EXPANDED = new ConcurrentHashMap<>();
-        EXPANDED.put(BeanReaderExtensiblePoint.class, Optional.empty());
+        EXPANDED.put(BeanReader.class, Optional.empty());
     }
 
     private JvaultRuntimeExtension() {

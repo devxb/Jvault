@@ -103,12 +103,10 @@ public final class ClassVault implements Vault<Class<?>> {
         List<Object> instancedParameters = new ArrayList<>();
         for (Parameter parameter : parameters) {
             Inject inject = parameter.getDeclaredAnnotation(Inject.class);
-            if (inject == null || inject.value().equals(""))
-                throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
+            throwIfParameterDoesNotAnnotatedInject(inject);
             String value = inject.value();
-            if (!BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
-            if (!BEANS.get(value).isInjectable(cls))
-                throw new DisallowedAccessException(value, cls.getPackage().getName());
+            throwIfCanNotFindDefinedBean(value);
+            throwIfBeanDoesNotAccessInject(value, cls);
             instancedParameters.add(BEANS.get(value).load());
         }
         try {
@@ -119,22 +117,20 @@ public final class ClassVault implements Vault<Class<?>> {
         }
     }
 
+    private void throwIfParameterDoesNotAnnotatedInject(Inject inject) {
+        if (inject == null || inject.value().equals(""))
+            throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
+    }
+
     private Object loadBeanFromField(Class<?> cls, List<Field> fields) {
         Object bean = loadBeanFromDefaultConstructor(cls);
         for (Field field : fields) {
             field.setAccessible(true);
-            String value = field.getName();
-            if (!field.getAnnotation(Inject.class).value().equals(""))
-                value = field.getAnnotation(Inject.class).value();
-            if (!BEANS.containsKey(value)) throw new NoDefinedInternalBeanException(value);
-            if (!BEANS.get(value).isInjectable(cls))
-                throw new DisallowedAccessException(value, cls.getPackage().getName());
+            String value = getBeanNameByField(field);
+            throwIfCanNotFindDefinedBean(value);
+            throwIfBeanDoesNotAccessInject(value, cls);
             Object instance = BEANS.get(value).load();
-            try {
-                field.set(bean, instance);
-            } catch (IllegalAccessException e) {
-                throw new IllegalStateException("Can not access field value \"" + value + "\"");
-            }
+            injectBeanToField(field, bean, instance);
         }
         return bean;
     }
@@ -148,6 +144,30 @@ public final class ClassVault implements Vault<Class<?>> {
                  IllegalAccessException e) {
             throw new IllegalStateException("Can not find default constructor of \"" + cls.getSimpleName() + "\"");
         }
+    }
+
+    private void throwIfCanNotFindDefinedBean(String beanName) {
+        if (!BEANS.containsKey(beanName)) throw new NoDefinedInternalBeanException(beanName);
+    }
+
+    private void throwIfBeanDoesNotAccessInject(String beanName, Class<?> injectReceiver){
+        if (!BEANS.get(beanName).isInjectable(injectReceiver))
+            throw new DisallowedAccessException(beanName, injectReceiver.getPackage().getName());
+    }
+
+    private void injectBeanToField(Field field, Object bean, Object instance) {
+        try {
+            field.set(bean, instance);
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException("Can not access field value \"" + getBeanNameByField(field) + "\"");
+        }
+    }
+
+    private String getBeanNameByField(Field field) {
+        String beanName = field.getName();
+        if (!field.getAnnotation(Inject.class).value().equals(""))
+            beanName = field.getAnnotation(Inject.class).value();
+        return beanName;
     }
 
 }

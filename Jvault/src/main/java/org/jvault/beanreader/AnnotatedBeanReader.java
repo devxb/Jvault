@@ -1,11 +1,8 @@
 package org.jvault.beanreader;
 
-import org.jvault.annotation.InternalBean;
-import org.jvault.exceptions.NoDefinedInternalBeanException;
-import org.jvault.factory.buildinfo.extensible.BeanLocationExtensiblePoint;
-import org.jvault.factory.buildinfo.extensible.BeanReaderExtensiblePoint;
+import org.jvault.factory.buildinfo.extensible.BeanLocation;
+import org.jvault.factory.buildinfo.extensible.BeanReader;
 import org.jvault.metadata.InternalAPI;
-import org.jvault.util.PackageReader;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,32 +10,34 @@ import java.util.List;
 import java.util.Set;
 
 @InternalAPI
-public final class AnnotatedBeanReader implements BeanReaderExtensiblePoint {
+final class AnnotatedBeanReader implements BeanReader {
 
-    private static final BeanReaderExtensiblePoint INSTANCE = new AnnotatedBeanReader();
+    private static final BeanReader INSTANCE = new AnnotatedBeanReader();
     private final PackageReader PACKAGE_READER;
+    private final ClassReader CLASS_READER;
 
     {
-        PACKAGE_READER = Accessors.UtilAccessor.getAccessor().getPackageReader();
+        PACKAGE_READER = PackageReader.getInstance();
+        CLASS_READER = ClassReader.getInstance();
     }
 
     private AnnotatedBeanReader() {}
 
-    static BeanReaderExtensiblePoint getInstance() {
+    static BeanReader getInstance() {
         return INSTANCE;
     }
 
     @Override
-    public List<Class<?>> read(BeanLocationExtensiblePoint beanLocationExtensiblePoint) {
-        List<Class<?>> classes = readFromPackage(beanLocationExtensiblePoint);
-        classes.addAll(readFromClass(beanLocationExtensiblePoint));
+    public List<Class<?>> read(BeanLocation beanLocation) {
+        List<Class<?>> classes = readFromPackage(beanLocation);
+        classes.addAll(readFromClass(beanLocation));
         return classes;
     }
 
-    private List<Class<?>> readFromPackage(BeanLocationExtensiblePoint beanLocationExtensiblePoint) {
+    private List<Class<?>> readFromPackage(BeanLocation beanLocation) {
         List<Class<?>> classes = new ArrayList<>();
-        String[] packages = beanLocationExtensiblePoint.getPackages();
-        Set<String> excludePackages = initExcludePackages(beanLocationExtensiblePoint.getExcludePackages());
+        String[] packages = beanLocation.getPackages();
+        Set<String> excludePackages = initExcludePackages(beanLocation.getExcludePackages());
         for (String pkg : packages) {
             if (isContainSelectAllRegex(pkg)) {
                 classes.addAll(getAllClasses(pkg, excludePackages));
@@ -81,39 +80,25 @@ public final class AnnotatedBeanReader implements BeanReaderExtensiblePoint {
 
     private List<Class<?>> findClasses(String pkg, Set<String> excludePackages) {
         List<Class<?>> classes = PACKAGE_READER.findClasses(pkg);
+        List<Class<?>> sonClasses = new ArrayList<>();
         List<String> directories = PACKAGE_READER.findDirectories(pkg);
-        for (String directory : directories) classes.addAll(findClasses(pkg + "." + directory, excludePackages));
-        if (excludePackages.contains(pkg)) return new ArrayList<>();
+        for (String directory : directories) sonClasses.addAll(findClasses(pkg + "." + directory, excludePackages));
+        if (excludePackages.contains(pkg)) return sonClasses;
+        classes.addAll(sonClasses);
         return classes;
     }
 
-    private List<Class<?>> readFromClass(BeanLocationExtensiblePoint beanLocationExtensiblePoint) {
+    private List<Class<?>> readFromClass(BeanLocation beanLocation) {
         List<Class<?>> classes = new ArrayList<>();
-        String[] classSrcs = beanLocationExtensiblePoint.getClasses();
+        String[] classSrcs = beanLocation.getClasses();
         if (isEmptyClassSrcs(classSrcs)) return classes;
-        for (String classSrc : classSrcs) {
-            Class<?> cls = getClassForSrc(classSrc);
-            throwIfIsNotAnnotatedInternalBean(cls);
-            classes.add(cls);
-        }
+        for (String classSrc : classSrcs) classes.add(CLASS_READER.readClass(classSrc));
         return classes;
     }
 
     private boolean isEmptyClassSrcs(String[] classSrcs) {
-        return classSrcs.length == 1 && classSrcs[0].equals("");
-    }
-
-    private Class<?> getClassForSrc(String src){
-        try{
-            return Class.forName(src);
-        } catch (ClassNotFoundException CNFE){
-            throw new NoDefinedInternalBeanException(src);
-        }
-    }
-
-    private void throwIfIsNotAnnotatedInternalBean(Class<?> cls) {
-        if (cls.getDeclaredAnnotation(InternalBean.class) == null)
-            throw new NoDefinedInternalBeanException(cls.getSimpleName());
+        return (classSrcs.length == 1 && classSrcs[0].equals(""))
+                || classSrcs.length == 0;
     }
 
 }

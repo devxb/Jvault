@@ -1,14 +1,14 @@
 package org.jvault.beanreader;
 
 import org.jvault.factory.buildinfo.Accessors;
-import org.jvault.factory.buildinfo.extensible.BeanReaderExtensiblePoint;
+import org.jvault.factory.buildinfo.extensible.BeanReader;
 import org.jvault.metadata.InternalAPI;
 
 @InternalAPI
 final class BeanReaderAccessorImplOnBuildInfoSide extends Accessors.BeanReaderAccessor {
 
     @Override
-    protected BeanReaderExtensiblePoint getBeanReader() {
+    protected BeanReader getBeanReader() {
         return AnnotatedBeanReader.getInstance();
     }
 

@@ -1,7 +1,7 @@
 package org.jvault.factory.buildinfo;
 
 import org.jvault.extension.JvaultRuntimeExtension;
-import org.jvault.factory.buildinfo.extensible.BeanReaderExtensiblePoint;
+import org.jvault.factory.buildinfo.extensible.BeanReader;
 import org.jvault.metadata.InternalAPI;
 
 @InternalAPI
@@ -29,7 +29,7 @@ public final class Accessors {
             return accessor;
         }
 
-        protected abstract BeanReaderExtensiblePoint getBeanReader();
+        protected abstract BeanReader getBeanReader();
 
     }
 

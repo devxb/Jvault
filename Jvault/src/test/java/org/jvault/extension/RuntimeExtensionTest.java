@@ -4,7 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.jvault.factory.buildinfo.PropertiesVaultFactoryBuildInfo;
-import org.jvault.factory.buildinfo.extensible.BeanReaderExtensiblePoint;
+import org.jvault.factory.buildinfo.extensible.BeanReader;
 import org.jvault.struct.beanreaderextension.BeanReaderExtension;
 import org.jvault.struct.beanreaderextension.BeanReaderExtensionBean;
 
@@ -21,10 +21,10 @@ public class RuntimeExtensionTest {
                         "/Users/devxb/develop/Jvault/Jvault/Jvault" +
                                 "/src/test/java/org/jvault/struct/beanreaderextension/beanreaderextension.properties");
 
-        BeanReaderExtensiblePoint someExtensibleOfBeanReader = param -> Arrays.asList(BeanReaderExtension.class, BeanReaderExtensionBean.class);
+        BeanReader someExtensibleOfBeanReader = param -> Arrays.asList(BeanReaderExtension.class, BeanReaderExtensionBean.class);
 
         // when
-        JvaultRuntimeExtension.extend(someExtensibleOfBeanReader, BeanReaderExtensiblePoint.class);
+        JvaultRuntimeExtension.extend(someExtensibleOfBeanReader, BeanReader.class);
         List<Class<?>> classes = propertiesVaultFactoryBuildInfo.getBeanClasses();
 
         // then
@@ -32,7 +32,7 @@ public class RuntimeExtensionTest {
                 ()-> Assertions.assertEquals(BeanReaderExtension.class, classes.get(0)),
                 ()-> Assertions.assertEquals(BeanReaderExtensionBean.class, classes.get(1))
         );
-        JvaultRuntimeExtension.reset(BeanReaderExtensiblePoint.class);
+        JvaultRuntimeExtension.reset(BeanReader.class);
     }
 
     @Test
