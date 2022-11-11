@@ -15,8 +15,7 @@ public final class BeanBuilderFactory {
     }
 
     public Bean.Builder<?> getBeanBuilder(Type beanType) {
-        if (beanType == Type.NEW) return NewBean.getBuilder();
-        return SingletonBean.getBuilder();
+        return beanType.getBeanBuilder();
     }
 
 }

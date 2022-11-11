@@ -22,8 +22,7 @@ public final class AnnotatedBeanReader implements BeanReaderExtensiblePoint {
         PACKAGE_READER = Accessors.UtilAccessor.getAccessor().getPackageReader();
     }
 
-    private AnnotatedBeanReader() {
-    }
+    private AnnotatedBeanReader() {}
 
     static BeanReaderExtensiblePoint getInstance() {
         return INSTANCE;
@@ -42,9 +41,7 @@ public final class AnnotatedBeanReader implements BeanReaderExtensiblePoint {
         Set<String> excludePackages = initExcludePackages(beanLocationExtensiblePoint.getExcludePackages());
         for (String pkg : packages) {
             if (isContainSelectAllRegex(pkg)) {
-                String stringWithoutRegex = pkg.substring(0, pkg.length() - 2);
-                if (excludePackages.contains(stringWithoutRegex)) continue;
-                classes.addAll(findClasses(stringWithoutRegex, excludePackages));
+                classes.addAll(getAllClasses(pkg, excludePackages));
                 continue;
             }
             if (excludePackages.contains(pkg)) continue;
@@ -56,9 +53,11 @@ public final class AnnotatedBeanReader implements BeanReaderExtensiblePoint {
     private Set<String> initExcludePackages(String[] excludePackages) {
         Set<String> excludedPackages = new HashSet<>();
         for (String excludePackage : excludePackages) {
-            if (isContainSelectAllRegex(excludePackage))
+            if (isContainSelectAllRegex(excludePackage)) {
                 excludedPackages.addAll(findExcludedPackages(excludePackage.substring(0, excludePackage.length() - 2)));
-            else excludedPackages.add(excludePackage);
+                continue;
+            }
+            excludedPackages.add(excludePackage);
         }
         return excludedPackages;
     }
@@ -75,6 +74,11 @@ public final class AnnotatedBeanReader implements BeanReaderExtensiblePoint {
         return excludePackages;
     }
 
+    private List<Class<?>> getAllClasses(String pkg, Set<String> excludePackages){
+        String stringWithoutRegex = pkg.substring(0, pkg.length() - 2);
+        return new ArrayList<>(findClasses(stringWithoutRegex, excludePackages));
+    }
+
     private List<Class<?>> findClasses(String pkg, Set<String> excludePackages) {
         List<Class<?>> classes = PACKAGE_READER.findClasses(pkg);
         List<String> directories = PACKAGE_READER.findDirectories(pkg);
@@ -88,19 +92,23 @@ public final class AnnotatedBeanReader implements BeanReaderExtensiblePoint {
         String[] classSrcs = beanLocationExtensiblePoint.getClasses();
         if (isEmptyClassSrcs(classSrcs)) return classes;
         for (String classSrc : classSrcs) {
-            try {
-                Class<?> cls = Class.forName(classSrc);
-                throwIfIsNotAnnotatedInternalBean(cls);
-                classes.add(cls);
-            } catch (ClassNotFoundException CNFE) {
-                throw new NoDefinedInternalBeanException(classSrc);
-            }
+            Class<?> cls = getClassForSrc(classSrc);
+            throwIfIsNotAnnotatedInternalBean(cls);
+            classes.add(cls);
         }
         return classes;
     }
 
     private boolean isEmptyClassSrcs(String[] classSrcs) {
         return classSrcs.length == 1 && classSrcs[0].equals("");
+    }
+
+    private Class<?> getClassForSrc(String src){
+        try{
+            return Class.forName(src);
+        } catch (ClassNotFoundException CNFE){
+            throw new NoDefinedInternalBeanException(src);
+        }
     }
 
     private void throwIfIsNotAnnotatedInternalBean(Class<?> cls) {
