@@ -1,32 +1,32 @@
 package org.jvault.factory.buildinfo;
 
-import org.jvault.factory.buildinfo.extensible.BeanLocationExtensiblePoint;
-import org.jvault.factory.buildinfo.extensible.BeanReaderExtensiblePoint;
-import org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint;
+import org.jvault.factory.buildinfo.extensible.BeanLocation;
+import org.jvault.factory.buildinfo.extensible.BeanReader;
+import org.jvault.factory.extensible.VaultFactoryBuildInfo;
 import org.jvault.metadata.API;
 
 import java.util.List;
 
 /**
- * Abstract class to help implement {@link VaultFactoryBuildInfoExtensiblePoint} interface.
+ * Abstract class to help implement {@link VaultFactoryBuildInfo} interface.
  * The getInjectAccesses() method and getClasses() method is implemented.
  *
- * @see org.jvault.factory.VaultFactory
- * @see BeanLocationExtensiblePoint
- *
  * @author devxb
+ * @see org.jvault.factory.VaultFactory
+ * @see BeanLocation
  * @since 0.1
  */
 @API
-public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuildInfoExtensiblePoint {
+public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuildInfo {
 
     @Override
     public abstract String getVaultName();
 
     @Override
-    public List<Class<?>> getBeanClasses(){
-        BeanReaderExtensiblePoint beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
-        return beanReader.read(new BeanLocationExtensiblePoint(){
+    public List<Class<?>> getBeanClasses() {
+        BeanReader beanReader = Accessors.RuntimeExtensionAccessor.getAccessor().getRuntimeExtension().getExtension(BeanReader.class);
+        if (beanReader == null) beanReader = Accessors.BeanReaderAccessor.getAccessor().getBeanReader();
+        return beanReader.read(new BeanLocation() {
             @Override
             public String[] getPackages() {
                 return getPackagesImpl();
@@ -38,7 +38,9 @@ public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuild
             }
 
             @Override
-            public String[] getClasses(){return getClassesImpl();}
+            public String[] getClasses() {
+                return getClassesImpl();
+            }
         });
     }
 
@@ -47,7 +49,7 @@ public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuild
      * .* expression can be used at the end of the path,<br>
      * and if there is a .* expression at the end of the path,<br>
      * all classes in the last leaf directory including the path are scanned.<br><br>
-     *
+     * <p>
      * BuildInfo will create a class that will be Beans based on this information.<br>
      *
      * @return String[] Package paths where the scan target beans exists
@@ -72,14 +74,13 @@ public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuild
      */
     protected abstract String[] getClassesImpl();
 
-
     @Override
-    public String[] getVaultAccessPackages(){
+    public String[] getVaultAccessPackages() {
         return new String[0];
     }
 
     @Override
-    public String[] getVaultAccessClasses(){
+    public String[] getVaultAccessClasses() {
         return new String[0];
     }
 

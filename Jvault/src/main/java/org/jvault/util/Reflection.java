@@ -1,7 +1,6 @@
 package org.jvault.util;
 
 import org.jvault.annotation.Inject;
-import org.jvault.annotation.InternalBean;
 import org.jvault.exceptions.DuplicateInjectConstructorException;
 import org.jvault.metadata.InternalAPI;
 

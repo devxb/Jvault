@@ -1,6 +1,6 @@
 package org.jvault.factory;
 
-import org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint;
+import org.jvault.factory.extensible.VaultFactoryBuildInfo;
 import org.jvault.metadata.API;
 import org.jvault.vault.Vault;
 
@@ -12,7 +12,7 @@ import org.jvault.vault.Vault;
  *
  * @see org.jvault.factory.ClassVaultFactory
  * @see org.jvault.vault.Vault
- * @see VaultFactoryBuildInfoExtensiblePoint
+ * @see VaultFactoryBuildInfo
  *
  * @author devxb
  * @since 0.1
@@ -43,11 +43,11 @@ public interface VaultFactory <T extends Vault<?>>{
      * @param buildInfo The collection of information that VaultFactory needs to create Vault.
      * @return T The implementation type of the Vault<P> interface.
      *
-     * @see VaultFactoryBuildInfoExtensiblePoint
+     * @see VaultFactoryBuildInfo
      *
      * @author devxb
      * @since 0.1
      */
-    T get(VaultFactoryBuildInfoExtensiblePoint buildInfo);
+    T get(VaultFactoryBuildInfo buildInfo);
 
 }

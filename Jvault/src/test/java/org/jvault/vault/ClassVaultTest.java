@@ -6,7 +6,7 @@ import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.factory.ClassVaultFactory;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
 import org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo;
-import org.jvault.factory.extensible.VaultFactoryBuildInfoExtensiblePoint;
+import org.jvault.factory.extensible.VaultFactoryBuildInfo;
 import org.jvault.struct.annotationconfigwithclass.AnnotationConfigWithClass;
 import org.jvault.struct.buildvault.BuildVault;
 import org.jvault.struct.buildvaultcannotinjectbean.BuildVaultCannotInjectBean;
@@ -18,7 +18,7 @@ public class ClassVaultTest {
     public void BUILD_VAULT_CREATE_VAULT_TEST(){
         // given
         ClassVaultFactory factory = ClassVaultFactory.getInstance();
-        VaultFactoryBuildInfoExtensiblePoint buildInfo = new AbstractVaultFactoryBuildInfo() {
+        VaultFactoryBuildInfo buildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
             public String getVaultName() {
                 return "BUILD_VAULT_CREATE_VAULT_TEST";
@@ -57,7 +57,7 @@ public class ClassVaultTest {
     public void BUILD_VAULT_CANNOT_INJECT_CLASS_CREATE_VAULT_TEST(){
         // given
         ClassVaultFactory factory = ClassVaultFactory.getInstance();
-        VaultFactoryBuildInfoExtensiblePoint buildInfo = new AbstractVaultFactoryBuildInfo() {
+        VaultFactoryBuildInfo buildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
             public String getVaultName() {
                 return "BUILD_VAULT_CREATE_VAULT_TEST";
@@ -90,7 +90,7 @@ public class ClassVaultTest {
     public void BUILD_VAULT_CANNOT_INJECT_BEAN_CREATE_VAULT_TEST(){
         // given
         ClassVaultFactory factory = ClassVaultFactory.getInstance();
-        VaultFactoryBuildInfoExtensiblePoint buildInfo = new AbstractVaultFactoryBuildInfo() {
+        VaultFactoryBuildInfo buildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
             public String getVaultName() {
                 return "BUILD_VAULT_CREATE_VAULT_TEST";
@@ -131,6 +131,33 @@ public class ClassVaultTest {
 
         // then
         Assertions.assertEquals("AnnotationConfigWithClassAnnotationConfigWithClassBean", bean.hello());
+    }
+
+    @Test
+    public void CHOICE_CONSTRUCTOR_INJECT_CLASS_VAULT_TEST(){
+        // given
+        ClassVaultFactory vaultFactory = ClassVaultFactory.getInstance();
+        AnnotationVaultFactoryBuildInfo annotationVaultFactoryBuildInfo = new AnnotationVaultFactoryBuildInfo(org.jvault.struct.choiceconstructorinject.AnnotationConfig.class);
+
+        // then
+        Assertions.assertThrows(IllegalStateException.class, ()-> vaultFactory.get(annotationVaultFactoryBuildInfo));
+    }
+
+    @Test
+    public void DUPLICATE_VAULT_DETECTED_CLASS_VAULT_TEST(){
+        // given
+        ClassVaultFactory vaultFactory = ClassVaultFactory.getInstance();
+        AnnotationVaultFactoryBuildInfo annotationVaultFactoryBuildInfo
+                = new AnnotationVaultFactoryBuildInfo(org.jvault.struct.duplicatevault.AnnotatinConfig.class);
+        AnnotationVaultFactoryBuildInfo duplicateAnnotationVaultFactoryBuildInfo
+                = new AnnotationVaultFactoryBuildInfo(org.jvault.struct.duplicatevault.DuplicatedAnnotationConfig.class);
+
+        // when
+        Vault<Class<?>> vault = vaultFactory.get(annotationVaultFactoryBuildInfo);
+        Vault<Class<?>> duplicatedVault = vaultFactory.get(duplicateAnnotationVaultFactoryBuildInfo);
+
+        // then
+        Assertions.assertEquals(vault, duplicatedVault);
     }
 
 }
