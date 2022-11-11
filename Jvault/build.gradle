@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group 'org.jvault'
+version '0.1'
+sourceCompatibility = 8
+targetCompatibility = 8
+
+java{
+    withJavadocJar()
+    withSourcesJar()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
