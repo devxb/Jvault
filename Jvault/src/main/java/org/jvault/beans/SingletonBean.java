@@ -5,13 +5,11 @@ import org.jvault.metadata.InternalAPI;
 @InternalAPI
 public final class SingletonBean implements Bean {
 
-    private final String NAME;
     private final String[] ACCESS_PACKAGES;
     private final String[] ACCESS_CLASSES;
     private final Object INSTANCE;
 
     private SingletonBean(Bean.Builder<SingletonBean> builder) {
-        NAME = builder.name;
         INSTANCE = builder.instance;
         ACCESS_PACKAGES = builder.accessPackages;
         ACCESS_CLASSES = builder.accessClasses;
@@ -58,6 +56,7 @@ public final class SingletonBean implements Bean {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <R> R load() {
         return (R) INSTANCE;
     }

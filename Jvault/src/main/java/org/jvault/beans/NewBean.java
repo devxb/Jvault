@@ -77,6 +77,7 @@ public final class NewBean implements Bean {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <R> R load() {
         Class<?> cls = INSTANCE.getClass();
         Constructor<?> constructor = REFLECTION.findConstructor(cls);

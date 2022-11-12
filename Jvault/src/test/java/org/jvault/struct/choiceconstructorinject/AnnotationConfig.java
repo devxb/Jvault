@@ -1,9 +1,9 @@
 package org.jvault.struct.choiceconstructorinject;
 
-import org.jvault.annotation.BeanArea;
 import org.jvault.annotation.BeanWire;
+import org.jvault.annotation.VaultConfiguration;
 
-@BeanArea(name = "CHOICE_CONSTRUCTOR_VAULT")
+@VaultConfiguration(name = "CHOICE_CONSTRUCTOR_VAULT")
 public final class AnnotationConfig {
 
     @BeanWire private ChoiceConstructorBean choiceConstructorBean;

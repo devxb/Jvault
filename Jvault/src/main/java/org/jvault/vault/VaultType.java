@@ -1,8 +1,8 @@
 package org.jvault.vault;
 
-import org.jvault.metadata.InternalAPI;
+import org.jvault.metadata.API;
 
-@InternalAPI
+@API
 public enum VaultType {
 
     CLASS(new Vault.Builder<ClassVault>() {
@@ -18,6 +18,7 @@ public enum VaultType {
         BUILDER = builder;
     }
 
+    @SuppressWarnings("unchecked")
     <S extends Vault<?>> Vault.Builder<S> getBuilder() {
         return (Vault.Builder<S>) BUILDER;
     }
