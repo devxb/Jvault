@@ -23,9 +23,11 @@ public interface VaultFactory <T>{
      * This method is not to create a new vault, but to return the existing vault corresponding to the vaultName. <br>
      * If none of the vault matched with vaultName, throw IllegalStateException.
      *
+     * @param <R> The implementation of Vault.
      * @param vaultName The name of the vault to be returned.
+     * @param param Type of vault to be created.
      *
-     * @return T The implementation type of the Vault<P> interface.
+     * @return R The implementation type of the Vault<P> interface.
      *
      * @throws IllegalStateException Throw IllegalStateException if the corresponding vault does not exist for the vaultName.
      *
@@ -39,8 +41,11 @@ public interface VaultFactory <T>{
      * Vault Factory creates a new Vault based on VaultFactoryInfo. <br>
      * If a vault with the name corresponding to "VaultFactoryBuildInfo.getVaultName()" already exists, the vault is returned.
      *
+     * @param <R> The implementation of Vault.
      * @param buildInfo The collection of information that VaultFactory needs to create Vault.
-     * @return T The implementation type of the Vault<P> interface.
+     * @param param Type of vault to be created.
+     *
+     * @return R The implementation type of the Vault<P> interface.
      *
      * @see VaultFactoryBuildInfo
      *

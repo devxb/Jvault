@@ -6,6 +6,12 @@ import org.jvault.metadata.InternalAPI;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+/**
+ * Storage that stores the information of the vault created at least once.
+ *
+ * @author devxb
+ * @since 0.1
+ */
 @InternalAPI
 public final class DefaultBuildStorage implements BuildStorage {
 

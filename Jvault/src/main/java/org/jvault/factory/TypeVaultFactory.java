@@ -8,11 +8,10 @@ import org.jvault.vault.Vault;
 import org.jvault.vault.VaultType;
 
 /**
- * receives VaultFactoryBuildInfo or String (the name of the Vault if the Vault already exists) value as an input,<br>
- * and returns {@link org.jvault.vault.ClassVault}.
+ * Class that receives (String or VaultFactoryBuildInfo) and {@link VaultType} together,<br>
+ * creates and returns a {@link Vault} implementation corresponding to the {@link VaultType}.
  *
  * @author devxb
- * @see org.jvault.vault.ClassVault
  * @see org.jvault.factory.VaultFactory
  * @see VaultFactoryBuildInfo
  * @since 0.1

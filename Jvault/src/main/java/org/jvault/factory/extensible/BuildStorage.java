@@ -5,6 +5,12 @@ import org.jvault.metadata.InternalExtensiblePoint;
 
 import java.util.Map;
 
+/**
+ * Interface that saves the creation information of the vault created at least once.
+ *
+ * @author devxb
+ * @since 0.1
+ */
 @InternalExtensiblePoint
 public interface BuildStorage {
 
