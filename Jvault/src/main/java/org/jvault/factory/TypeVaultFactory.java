@@ -45,6 +45,7 @@ public final class TypeVaultFactory implements VaultFactory<VaultType> {
      * @since 0.1
      */
     @Override
+    @SuppressWarnings("unchecked")
     public <R extends Vault<?>> R get(String vaultName, VaultType vaultType) throws IllegalStateException {
         BuildStorage.StorageInfo storageInfo = BUILD_STORAGE.get(vaultName);
         throwIfDoesNotExistVault(vaultName, storageInfo);
@@ -68,6 +69,7 @@ public final class TypeVaultFactory implements VaultFactory<VaultType> {
      * @since 0.1
      */
     @Override
+    @SuppressWarnings("unchecked")
     public <R extends Vault<?>> R get(VaultFactoryBuildInfo buildInfo, VaultType vaultType) {
         BuildStorage.StorageInfo storageInfo = BUILD_STORAGE.get(buildInfo.getVaultName());
         if (storageInfo != null) return (R) buildVault(storageInfo, vaultType);

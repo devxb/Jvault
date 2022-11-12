@@ -43,10 +43,6 @@ public final class ClassVault implements Vault<Class<?>> {
     private final ConcurrentMap<Class<?>, Bean> CACHED_BEANS;
     private final Reflection REFLECTION;
 
-    private ClassVault() {
-        throw new UnsupportedOperationException("Can not invoke constructor \"ClassVault()\"");
-    }
-
     ClassVault(Vault.Builder<ClassVault> builder) {
         NAME = builder.name;
         ACCESS_PACKAGES = builder.accessPackages;
@@ -64,6 +60,7 @@ public final class ClassVault implements Vault<Class<?>> {
      *                                   * or the Beans to be injected into param cannot be injected into the package in Param.
      */
     @Override
+    @SuppressWarnings("unchecked")
     public <R> R inject(Class<?> param) {
         throwIfParamDoesNotAccessibleVault(param);
 
@@ -72,9 +69,9 @@ public final class ClassVault implements Vault<Class<?>> {
         if(CACHED_BEANS.containsKey(param)) return CACHED_BEANS.get(param).load();
 
         Constructor<?> constructor = REFLECTION.findConstructor(param);
-        if (constructor != null) return loadBeanFromConstructor(param, constructor);
+        if (constructor != null) return (R) loadBeanFromConstructor(param, constructor);
         List<Field> fields = REFLECTION.findFields(param);
-        return loadBeanFromField(param, fields);
+        return (R) loadBeanFromField(param, fields);
     }
 
     private void throwIfParamDoesNotAccessibleVault(Class<?> param){
@@ -131,7 +128,7 @@ public final class ClassVault implements Vault<Class<?>> {
         return name.substring(0, 1).toLowerCase() + name.subSequence(1, name.length());
     }
 
-    private <R> R loadBeanFromConstructor(Class<?> cls, Constructor<?> constructor) {
+    private Object loadBeanFromConstructor(Class<?> cls, Constructor<?> constructor) {
         Parameter[] parameters = constructor.getParameters();
         List<Object> instancedParameters = new ArrayList<>();
         for (Parameter parameter : parameters) {
@@ -148,7 +145,7 @@ public final class ClassVault implements Vault<Class<?>> {
         }
         try {
             constructor.setAccessible(true);
-            return (R) constructor.newInstance(instancedParameters.toArray());
+            return constructor.newInstance(instancedParameters.toArray());
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
@@ -159,8 +156,8 @@ public final class ClassVault implements Vault<Class<?>> {
             throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
     }
 
-    private <R> R loadBeanFromField(Class<?> cls, List<Field> fields) {
-        R bean = loadBeanFromDefaultConstructor(cls);
+    private Object loadBeanFromField(Class<?> cls, List<Field> fields) {
+        Object bean = loadBeanFromDefaultConstructor(cls);
         for (Field field : fields) {
             field.setAccessible(true);
             String value = getBeanNameByField(field);
@@ -174,11 +171,11 @@ public final class ClassVault implements Vault<Class<?>> {
         return bean;
     }
 
-    private <R> R loadBeanFromDefaultConstructor(Class<?> cls) {
+    private Object loadBeanFromDefaultConstructor(Class<?> cls) {
         try {
             Constructor<?> constructor = cls.getDeclaredConstructor();
             constructor.setAccessible(true);
-            return (R) constructor.newInstance();
+            return constructor.newInstance();
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                  IllegalAccessException e) {
             throw new IllegalStateException("Can not find default constructor of \"" + cls.getSimpleName() + "\"");

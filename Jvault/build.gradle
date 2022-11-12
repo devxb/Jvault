@@ -8,7 +8,6 @@ sourceCompatibility = 8
 targetCompatibility = 8
 
 java{
-    withJavadocJar()
     withSourcesJar()
 }
 

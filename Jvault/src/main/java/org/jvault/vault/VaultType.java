@@ -18,6 +18,7 @@ public enum VaultType {
         BUILDER = builder;
     }
 
+    @SuppressWarnings("unchecked")
     <S extends Vault<?>> Vault.Builder<S> getBuilder() {
         return (Vault.Builder<S>) BUILDER;
     }
