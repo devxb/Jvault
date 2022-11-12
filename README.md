@@ -199,13 +199,18 @@ org.jvault.reader.exclude.packages = usecase.car
 아래는 Class 타입을 파라미터로 받아 파라미터의 인스턴스에 의존성을 주입하고 반환하는 ClassVault를 생성하고 사용하는 예시입니다.
 
 ``` Java
+// 1. Create instance containing the information of the .properties file.
 VaultFactoryBuildInfo buildInfo = new PropertiesVaultFactoryBuildInfo("path of properties file");
 
+// 2. Get an instance of VaultFactory.
 TypeVaultFactory vaultFactory = TypeVaultFactory.getInstance();
 
+// 3. Acquire a Vault using the Vault Factory.
 ClassVault vault = vaultFactory.get(buildInfo, VaultType.CLASS);
 
-Car car = vault.inject(Car.class); // Returned Car object that wired to Bean named "squareWheel".
+// 4. Acquire a Car instance using the created vault.
+// The created Car instance is in the state in which the "sqaureWheel" bean is injected.
+Car car = vault.inject(Car.class);
 ```
    
 만약, 다른 타입의 Vault를 생성하고 싶다면, vaultFactory의 인자로 전달되는 VaultType의 값을 변경하면 됩니다. 선택할 수 있는 VaultType의 종류는 [Java doc]() 을 참조하세요.
@@ -258,13 +263,18 @@ _*(멤버변수에 BeanWire를 매핑하는 방식을 채택했는데, Internal 
 이제, 이 클래스를 이용해 Vault를 생성할수 있습니다.   
    
 ``` Java
+// 1. Create instance containing the information of the CarVaultConfig.class
 VaultFactoryBuildInfo buildInfo = new AnnotationVaultFactoryBuildInfo(CarVaultConfig.class);
 
+// 2. Get an instance of VaultFactory.
 ClassVaultFactory vaultFactory = ClassVaultFactory.getInstance();
 
+// 3. Acquire a Vault using the Vault Factory.
 ClassVault vault = vaultFactory.get(buildInfo, VaultType.CLASS);
 
-Car car = vault.inject(Car.class); // Returned Car object that wired to Bean named "squareWheel".
+// 4. Acquire a Car instance using the created vault.
+// The created Car instance is in the state in which the "sqaureWheel" bean is injected.
+Car car = vault.inject(Car.class);
 ```
    
 <br>
