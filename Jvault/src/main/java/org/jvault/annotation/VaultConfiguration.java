@@ -10,20 +10,20 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Meta-information used when creating a {@link VaultFactoryBuildInfo} using a class. <br>
- * It can be created by passing the class marked as BeanArea as a parameter of the constructor of {@link AnnotationVaultFactoryBuildInfo}.<br>
+ * Meta-information used when creating a {@link VaultFactoryBuildInfo} with class config. <br>
+ * It can be created by passing the class marked as VaultConfiguration as a parameter of the constructor of {@link AnnotationVaultFactoryBuildInfo}.<br>
  * <br>
  * Example.
  * <pre>
- * {@code new AnnotationVaultFactoryBuildInfo(SomeBeanAreaMarked.class)}
+ * {@code new AnnotationVaultFactoryBuildInfo(SomeVaultConfigurationMarked.class)}
  * </pre>
  * <br>
  *
- * A field marked as {@link BeanWire} in a class marked as BeanArea is created as a {@link InternalBean}. <br>
+ * A field marked as {@link BeanWire} in a class marked as VaultConfiguration is created as a {@link InternalBean}. <br>
  * <br>
  * Example.
  * <pre>
- * {@code @BeanArea
+ * {@code @VaultConfiguration
  * public final class BeanAreaConfig{ @BeanWire private Foo foo; }}
  * </pre>
  *
@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
 @API
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface BeanArea {
+public @interface VaultConfiguration {
 
     /**
      * Returns the name of the {@link org.jvault.vault.Vault} to be created by {@link org.jvault.factory.VaultFactory}.

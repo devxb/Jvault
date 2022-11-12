@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Meta-information used in the class marked with {@link BeanArea} <br>
+ * Meta-information used in the class marked with {@link VaultConfiguration} <br>
  * This information is read from the {@link AnnotationVaultFactoryBuildInfo} class,<br>
  * and classes that will become {@link InternalBean} are found. <br> <br>
  *
@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
  * <pre>
  * {@code @BeanWire private Foo foo;}
  * </pre>
- * As above, if @BeanWire is marked in a class marked with @BeanArea, and the @InternalBean information of class Foo is as follows,
+ * As above, if @BeanWire is marked in a class marked with @VaultConfiguration, and the @InternalBean information of class Foo is as follows,
  * <pre>
  * {@code @InternalBean(name = "fOO",
  *                      type = Type.SINGLETON,
@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
  * This means that the class of fields marked with @BeanWire must be marked with @InternalBean. <br>
  * If not, a {@link org.jvault.exceptions.NoDefinedInternalBeanException} is thrown.
  *
- * @see BeanArea
+ * @see VaultConfiguration
  * @see InternalBean
  *
  * @author devxb

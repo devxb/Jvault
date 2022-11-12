@@ -1,6 +1,7 @@
 package org.jvault.factory;
 
 import org.jvault.factory.extensible.BeanLoader;
+import org.jvault.factory.extensible.BuildStorage;
 import org.jvault.metadata.InternalAPI;
 import org.jvault.vault.Vault;
 import org.jvault.vault.VaultType;
@@ -54,7 +55,34 @@ public final class Accessors {
             return accessor;
         }
 
-        protected abstract <S extends Vault<?>> Vault.Builder<S> getBuilder(VaultType vaultType, Class<S> cls);
+        protected abstract <S extends Vault<?>> Vault.Builder<S> getBuilder(VaultType vaultType);
+
+    }
+
+    public abstract static class StorageAccessor{
+
+        private static StorageAccessor accessor;
+
+        private final static Class<?> init = init();
+
+        private static java.lang.Class<?> init(){
+            try{
+                return java.lang.Class.forName("org.jvault.factory.storage.StorageAccessorImpl");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public static void registerAccessor(StorageAccessor accessor){
+            if(StorageAccessor.accessor != null) throw new IllegalStateException();
+            StorageAccessor.accessor = accessor;
+        }
+
+        static StorageAccessor getAccessor(){
+            return accessor;
+        }
+
+        protected abstract BuildStorage getBuildStorage();
 
     }
 

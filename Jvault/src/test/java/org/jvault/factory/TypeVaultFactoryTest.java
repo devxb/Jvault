@@ -13,13 +13,14 @@ import org.jvault.struct.failannotationconfig.FailConfig;
 import org.jvault.struct.readfromclass.ReadFromClass;
 import org.jvault.struct.scanwithproperties.ScanProperties;
 import org.jvault.vault.Vault;
+import org.jvault.vault.VaultType;
 
-public class ClassVaultFactoryTest {
+public class TypeVaultFactoryTest {
 
     @Test
     public void BEAN_WITH_FACTORY_CLASS_VAULT_FACTORY_TEST(){
         // given
-        ClassVaultFactory factory = ClassVaultFactory.getInstance();
+        TypeVaultFactory factory = TypeVaultFactory.getInstance();
         VaultFactoryBuildInfo buildInfo = new AbstractVaultFactoryBuildInfo() {
             @Override
             public String getVaultName() {
@@ -43,7 +44,7 @@ public class ClassVaultFactoryTest {
         };
 
         // when
-        Vault<Class<?>> vault = factory.get(buildInfo);
+        Vault<Class<?>> vault = factory.get(buildInfo, VaultType.CLASS);
         BeanWithFactoryInjectTarget injectTarget = vault.inject(BeanWithFactoryInjectTarget.class);
 
         // then
@@ -54,11 +55,11 @@ public class ClassVaultFactoryTest {
     @Test
     public void READ_WITH_PROPERTIES_VAULT_FACTORY_TEST(){
         // given
-        ClassVaultFactory vaultFactory = ClassVaultFactory.getInstance();
+        TypeVaultFactory vaultFactory = TypeVaultFactory.getInstance();
         PropertiesVaultFactoryBuildInfo buildInfo = new PropertiesVaultFactoryBuildInfo("/Users/devxb/develop/Jvault/Jvault/Jvault/src/test/java/org/jvault/struct/scanwithproperties/buildinfo.properties");
 
         // when
-        Vault<Class<?>> vault = vaultFactory.get(buildInfo);
+        Vault<Class<?>> vault = vaultFactory.get(buildInfo, VaultType.CLASS);
         ScanProperties scanProperties = vault.inject(ScanProperties.class);
 
         // then
@@ -68,11 +69,11 @@ public class ClassVaultFactoryTest {
     @Test
     public void READ_WITH_ANNOTATION_CONFIG_VAULT_FACTORY_TEST(){
         // given
-        ClassVaultFactory vaultFactory = ClassVaultFactory.getInstance();
+        TypeVaultFactory vaultFactory = TypeVaultFactory.getInstance();
         AnnotationVaultFactoryBuildInfo buildInfo = new AnnotationVaultFactoryBuildInfo(org.jvault.struct.annotationconfig.AnnotationConfig.class);
 
         // when
-        Vault<Class<?>> vault = vaultFactory.get(buildInfo);
+        Vault<Class<?>> vault = vaultFactory.get(buildInfo, VaultType.CLASS);
         AnnotationConfigBean annotationConfigBean = vault.inject(AnnotationConfigBean.class);
 
         // then
@@ -81,21 +82,18 @@ public class ClassVaultFactoryTest {
 
     @Test
     public void FAIL_READ_WITH_ANNOTATION_CONFIG_VAULT_FACTORY_TEST(){
-        // given
-        ClassVaultFactory vaultFactory = ClassVaultFactory.getInstance();
-
-        // then
-        Assertions.assertThrows(InvalidAnnotationConfigClassException.class, ()-> new AnnotationVaultFactoryBuildInfo(FailConfig.class));
+        Assertions.assertThrows(InvalidAnnotationConfigClassException.class,
+                ()-> new AnnotationVaultFactoryBuildInfo(FailConfig.class));
     }
 
     @Test
     public void READ_FROM_CLASS_WITH_PROPERTIES_CONFIG_VAULT_FACTORY_TEST(){
         // given
-        ClassVaultFactory classVaultFactory = ClassVaultFactory.getInstance();
+        TypeVaultFactory vaultFactory = org.jvault.factory.TypeVaultFactory.getInstance();
         PropertiesVaultFactoryBuildInfo buildInfo = new PropertiesVaultFactoryBuildInfo("/Users/devxb/develop/Jvault/Jvault/Jvault/src/test/java/org/jvault/struct/readfromclass/readfromclass.properties");
 
         // when
-        Vault<Class<?>> vault = classVaultFactory.get(buildInfo);
+        Vault<Class<?>> vault = vaultFactory.get(buildInfo, VaultType.CLASS);
         ReadFromClass readFromClass = vault.inject(ReadFromClass.class);
 
         // then

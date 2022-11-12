@@ -8,9 +8,8 @@ import org.jvault.vault.Vault;
  * Receives the VaultFactoryBuildInfo or String (the name of the Vault if the Vault already exists) value as an input,
  * and returns the {@link org.jvault.vault.Vault}.
  *
- * @param <T> The implementation type of the Vault<P> interface.
+ * @param <T> Type of vault to be created.
  *
- * @see org.jvault.factory.ClassVaultFactory
  * @see org.jvault.vault.Vault
  * @see VaultFactoryBuildInfo
  *
@@ -18,11 +17,11 @@ import org.jvault.vault.Vault;
  * @since 0.1
  */
 @API
-public interface VaultFactory <T extends Vault<?>>{
+public interface VaultFactory <T>{
     /**
-     * Returns the Vault interface implementation class by receiving the VaultName. <br>
+     * Returns the Vault interface implementation by receiving the vaultName and param(type of vault) <br>
      * This method is not to create a new vault, but to return the existing vault corresponding to the vaultName. <br>
-     * If the vaultName does not have a corresponding vault, throw IllegalStateException.
+     * If none of the vault matched with vaultName, throw IllegalStateException.
      *
      * @param vaultName The name of the vault to be returned.
      *
@@ -33,10 +32,10 @@ public interface VaultFactory <T extends Vault<?>>{
      * @author devxb
      * @since 0.1
      */
-    T get(String vaultName) throws IllegalStateException;
+    <R extends Vault<?>> R get(String vaultName, T param) throws IllegalStateException;
 
     /**
-     * Returns the Vault interface implementation class by receiving the VaultFactoryBuildInfo. <br>
+     * Returns the Vault interface implementation class by receiving the VaultFactoryBuildInfo and param(type of vault) <br>
      * Vault Factory creates a new Vault based on VaultFactoryInfo. <br>
      * If a vault with the name corresponding to "VaultFactoryBuildInfo.getVaultName()" already exists, the vault is returned.
      *
@@ -48,6 +47,6 @@ public interface VaultFactory <T extends Vault<?>>{
      * @author devxb
      * @since 0.1
      */
-    T get(VaultFactoryBuildInfo buildInfo);
+    <R extends Vault<?>> R get(VaultFactoryBuildInfo buildInfo, T param);
 
 }

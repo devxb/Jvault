@@ -7,7 +7,7 @@ import org.jvault.metadata.InternalAPI;
 final class VaultAccessorImpl extends Accessors.VaultAccessor {
 
     @Override
-    protected <S extends Vault<?>> Vault.Builder<S> getBuilder(VaultType vaultType, Class<S> cls) {
+    protected <S extends Vault<?>> Vault.Builder<S> getBuilder(VaultType vaultType) {
         return vaultType.getBuilder();
     }
 

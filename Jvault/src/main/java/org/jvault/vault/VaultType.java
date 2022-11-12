@@ -1,8 +1,8 @@
 package org.jvault.vault;
 
-import org.jvault.metadata.InternalAPI;
+import org.jvault.metadata.API;
 
-@InternalAPI
+@API
 public enum VaultType {
 
     CLASS(new Vault.Builder<ClassVault>() {
