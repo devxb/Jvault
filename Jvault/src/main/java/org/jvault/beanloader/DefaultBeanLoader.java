@@ -149,7 +149,7 @@ public final class DefaultBeanLoader implements BeanLoader {
             return constructor.newInstance();
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                  IllegalAccessException e) {
-            throw new IllegalStateException("Can not find default constructor of \"" + getBeanName(cls) + "\"");
+            throw new IllegalStateException("Can not invoke constructor of \"" + getBeanName(cls) + "\"");
         }
     }
 
