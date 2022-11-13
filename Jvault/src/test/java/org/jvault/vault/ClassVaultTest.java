@@ -13,6 +13,7 @@ import org.jvault.struct.buildvault.BuildVault;
 import org.jvault.struct.buildvaultcannotinjectbean.BuildVaultCannotInjectBean;
 import org.jvault.struct.buildvaultcannotinjectclass.BuildVaultCannotInjectClass;
 import org.jvault.struct.duplicatevault.DuplicateVault;
+import org.jvault.struct.genericbean.Generic;
 import org.jvault.struct.vaultinjectsingletonbean.AnnotationConfigWithNotScan;
 import org.jvault.struct.vaultinjectsingletonbean.AnnotationConfigWithScan;
 import org.jvault.struct.vaultinjectsingletonbean.VaultInjectBean;
@@ -214,6 +215,20 @@ public class ClassVaultTest {
 
         // then
         Assertions.assertNotEquals(vaultInjectBean, differentPointVaultInjectBean);
+    }
+
+    @Test
+    public void GENERIC_BEAN_SCAN_TEST(){
+        // given
+        TypeVaultFactory typeVaultFactory = TypeVaultFactory.getInstance();
+        AnnotationVaultFactoryBuildInfo buildInfo = new AnnotationVaultFactoryBuildInfo(org.jvault.struct.genericbean.AnnotationConfig.class);
+
+        // when
+        ClassVault vault = typeVaultFactory.get(buildInfo, VaultType.CLASS);
+        Generic generic = vault.inject(Generic.class);
+
+        // then
+        Assertions.assertEquals("Generic", generic.hello());
     }
 
 }
