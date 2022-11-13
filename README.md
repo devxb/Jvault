@@ -7,7 +7,7 @@
 [Java doc]()    
 [License]()    
    
-![current jvault version](https://img.shields.io/badge/Jvault-0.1-orange) ![test method coverage](https://img.shields.io/badge/Method%20coverage-99%25-brightgreen) ![test code coverage](https://img.shields.io/badge/Line%20coverage-91%25-brightgreen) ![needed jdk version](https://img.shields.io/badge/JDK-8-blue) ![libarry status](https://img.shields.io/badge/library%20status-activity-green)    
+![current jvault version](https://img.shields.io/badge/Jvault-0.1-orange) ![test method coverage](https://img.shields.io/badge/Method%20coverage-100%25-brightgreen) ![test line coverage](https://img.shields.io/badge/Line%20coverage-92%25-brightgreen) ![test class coverage](https://img.shields.io/badge/Class%20coverage-90%25-brightgreen) ![needed jdk version](https://img.shields.io/badge/JDK-8-blue) ![libarry status](https://img.shields.io/badge/library%20status-activity-green)    
 ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fdevxb%2FJvault&count_bg=%23C8C13D&title_bg=%23555555&icon=&icon_color=%23FFFFFF&title=HIT+COUNT&edge_flat=false) ![made with love](https://img.shields.io/badge/Made%20with-Love--❤-red)    
    
 Jvault는 Bean을 허가된 클래스 에서만 접근가능하도록 제한하고 제한된 클래스 끼리의 의존성을 연결 하는 라이브러리 입니다.   
@@ -58,7 +58,7 @@ _예제 코드에 대한 간략한 소개_
 Jvault는 클래스의 접근을 제어하기위해 @InternalBean이라는 어노테이션을 제공합니다.   
 @InternalBean어노테이션으로 마킹된 클래스는 빈 스캔의 대상이 되며, DI 과정중 자신이 허가하지 않은 클래스가 자신을 주입받으려고 시도한다면, 예외를 던집니다.   
    
-내부용 API인 Wheel인터페이스의 구현중 하나인 SquareWheel을 InternalBean으로 등록하는 예시를 통해 사용법을 알아보겠습니다.   
+Wheel인터페이스의 구현중 하나인 SquareWheel을 InternalBean으로 등록하는 예시를 통해 사용법을 알아보겠습니다.   
    
 ``` Java
 package usecase.car.wheel;
@@ -163,14 +163,25 @@ public final class Car implements Vehicle{
 > __WARNING__ : @Inject마킹시 빈 끼리 사이클이 생기지 않도록 주의하세요. 사이클이 발견될 경우, 예외가 던져집니다.
    
 > __TIP__ : 예시의 Car클래스는 Bean을 주입받지만 @InternalBean으로 마킹되어있지 않은데, Car클래스가 다른 클래스에 주입될 필요가 없다면 @InternalBean으로 마킹되어있지 않아도 상관없습니다.    
-> 만약, Car클래스가 @InternalBean(type = Type.SINGLETON)으로 마킹되어 있고, 빈 스캔 범위에 포함되어있다면, Vault를 이용해 Inject될때마다 같은 객체가 주입됩니다. 
    
 <br>
    
-### Bean 스캔, Vault 생성, 의존성 주입
+### Vault 생성, Bean스캔
 
-Vault는 BeanFactory의 일종으로 연결된 Internal Bean들을 API에 주입하는 역할을 합니다. 또한, Bean들은 Vault를 생성하는 과정중 스캔되고 연결됩니다.    
-따라서, 이 목차에서는 @InternalBean이 위치한 경로지정부터 생성될 Vault의 정보를 설정하는 방법과 Vault를 이용해 의존성을 주입하는 방법을 알아볼 것 입니다.   
+Vault는 BeanFactory의 변종으로 전달된 파라미터에 Vault에 등록된 Bean들을 연결하는 역할을 합니다. 따라서, Vault로 전달되는 파라미터는 InternalBean이 아니여도 되는데, 이것이 앞서 Car클래스를 @InternalBean으로 마킹하지 않은 이유입니다.   
+   
+> TIP : Vault로 전달되는 파라미터가 @InternalBean(type = Type.SINGLETON)으로 마킹되어있고 Vault의 Bean스캔 범위안에 포함되어 있다면, 매 요청마다 같은 객체가 반환됩니다. 아니라면 매 요청마다 새로운 객체가 반환됩니다.
+
+Vault라는 단어가 다소 추상적이라 Vault의 역할이 잘 와닿지 않을 수 있기때문에, Vault 사용 예시 코드를 미리 살펴보겠습니다.   
+   
+``` Java
+// The created Car instance is the state in which the "sqaureWheel" bean is injected.
+Car car = vault.inject(Car.class); 
+```
+   
+위 코드에서는 "squareWheel"이 주입된 Car 인스턴스가 반환되는데, 이는 앞서 Car.class의 생성자 주입에 마킹해놓은 @Inject("squareWheel")에 의해서 "squareWheel" 이름의 InternalBean이 Car인스턴스에 주입되었기 때문입니다.   
+   
+이 목차에서는 마킹한 Bean을 스캔하는방법과 Vault를 생성하는 방법을 알아볼 것 입니다.
    
 Bean 스캔정보와 Vault 생성정보 설정은 실제로 각각 다른 객체가 담당하지만, Jvault에서는 클라이언트 편의를 위해 위 두 정보를 한번에 설정할 수 있는 방법인 properties 파일을 이용한 설정과 Class를 이용한 설정을 제공합니다.   
    
@@ -209,7 +220,7 @@ TypeVaultFactory vaultFactory = TypeVaultFactory.getInstance();
 ClassVault vault = vaultFactory.get(buildInfo, VaultType.CLASS);
 
 // 4. Acquire a Car instance using the created vault.
-// The created Car instance is in the state in which the "sqaureWheel" bean is injected.
+// The created Car instance is the state in which the "sqaureWheel" bean is injected.
 Car car = vault.inject(Car.class);
 ```
    
