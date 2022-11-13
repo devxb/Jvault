@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * An annotation that registers the object as Bean in {@link org.jvault.vault.Vault}.<br><br>
+ * Annotation that marks this class to be registered as a bean in {@link org.jvault.vault.Vault}.<br><br>
  *
  * Below are the default settings of InternalBean. <br> <br>
  *
