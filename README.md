@@ -436,6 +436,7 @@ JvaultRuntimeExtension.reset(BeanReader.class);
 JvaultRuntimeExtension.resetAll();
 ```
    
+더 자세한 Jvault 확장에 대한 내용은 [Java doc]() 을 참조하세요.
    
 <h2></h2>
 
