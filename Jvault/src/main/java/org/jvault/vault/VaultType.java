@@ -10,6 +10,12 @@ public enum VaultType {
         public ClassVault build() {
             return new ClassVault(this);
         }
+    }),
+    INSTANCE(new Vault.Builder<InstanceVault>() {
+        @Override
+        public InstanceVault build() {
+            return new InstanceVault(this);
+        }
     });
 
     private final Vault.Builder<? extends Vault<?>> BUILDER;

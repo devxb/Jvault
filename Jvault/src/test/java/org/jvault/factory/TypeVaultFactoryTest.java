@@ -45,7 +45,7 @@ public class TypeVaultFactoryTest {
 
         // when
         Vault<Class<?>> vault = factory.get(buildInfo, VaultType.CLASS);
-        BeanWithFactoryInjectTarget injectTarget = vault.inject(BeanWithFactoryInjectTarget.class);
+        BeanWithFactoryInjectTarget injectTarget = vault.inject(BeanWithFactoryInjectTarget.class, BeanWithFactoryInjectTarget.class);
 
         // then
         Assertions.assertEquals("BeanWithFactoryBeanWithFactoryBeanABeanWithFactoryBeanBBeanWithFactoryBeanC"
@@ -60,7 +60,7 @@ public class TypeVaultFactoryTest {
 
         // when
         Vault<Class<?>> vault = vaultFactory.get(buildInfo, VaultType.CLASS);
-        ScanProperties scanProperties = vault.inject(ScanProperties.class);
+        ScanProperties scanProperties = vault.inject(ScanProperties.class, ScanProperties.class);
 
         // then
         Assertions.assertEquals("ScanPropertiesPropertiesBean1PropertiesBean2", scanProperties.hello());
@@ -74,7 +74,7 @@ public class TypeVaultFactoryTest {
 
         // when
         Vault<Class<?>> vault = vaultFactory.get(buildInfo, VaultType.CLASS);
-        AnnotationConfigBean annotationConfigBean = vault.inject(AnnotationConfigBean.class);
+        AnnotationConfigBean annotationConfigBean = vault.inject(AnnotationConfigBean.class, AnnotationConfigBean.class);
 
         // then
         Assertions.assertEquals("AnnotationConfigBeanACBean1ACBean2", annotationConfigBean.hello());
@@ -94,7 +94,7 @@ public class TypeVaultFactoryTest {
 
         // when
         Vault<Class<?>> vault = vaultFactory.get(buildInfo, VaultType.CLASS);
-        ReadFromClass readFromClass = vault.inject(ReadFromClass.class);
+        ReadFromClass readFromClass = vault.inject(ReadFromClass.class, ReadFromClass.class);
 
         // then
         Assertions.assertEquals("ReadFromClassReadFromClassBean", readFromClass.hello());

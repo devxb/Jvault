@@ -107,11 +107,10 @@ public final class DefaultBeanLoader implements BeanLoader {
     }
 
     private void registerBeanFromConstructor(Class<?> beanClass, Constructor<?> constructor) {
-        Parameter[] parameters = constructor.getParameters();
+        List<Parameter> parameters = REFLECTION.getAnnotatedConstructorParameters(constructor);
         List<Object> instancedParameters = new ArrayList<>();
         for (Parameter parameter : parameters) {
             Inject inject = parameter.getDeclaredAnnotation(Inject.class);
-            throwIfInjectInConstructorHasNotValue(inject);
             String value = inject.value();
             loadBeanIfNotLoadedBean(value);
             throwIfNotInjectable(value, beanClass);
@@ -123,11 +122,6 @@ public final class DefaultBeanLoader implements BeanLoader {
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException IE) {
             throw new IllegalStateException("Can not call \"newInstance(params)\" of bean \"" + getBeanName(beanClass) + "\"");
         }
-    }
-
-    private void throwIfInjectInConstructorHasNotValue(Inject inject) {
-        if (inject == null || inject.value().equals(""))
-            throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
     }
 
     private void registerBeanFromField(Class<?> beanClass, List<Field> fields) {

@@ -34,82 +34,64 @@ import java.util.concurrent.ConcurrentMap;
  * @since 0.1
  */
 @API
-public final class ClassVault implements Vault<Class<?>> {
-
-    private final String NAME;
-    private final String[] ACCESS_PACKAGES;
-    private final String[] ACCESS_CLASSES;
-    private final Map<String, Bean> BEANS;
+public final class ClassVault extends AbstractVault<Class<?>> {
     private final ConcurrentMap<Class<?>, Bean> CACHED_BEANS;
     private final Reflection REFLECTION;
 
     ClassVault(Vault.Builder<ClassVault> builder) {
-        NAME = builder.name;
-        ACCESS_PACKAGES = builder.accessPackages;
-        ACCESS_CLASSES = builder.accessClasses;
-        BEANS = builder.BEANS;
+        super(builder);
         CACHED_BEANS = new ConcurrentHashMap<>();
         REFLECTION = Accessors.UtilAccessor.getAccessor().getReflection();
     }
 
     /**
-     * @param <R>   the type of return instance
-     * @param param The type of target to be injected beans, Vault will inject beans into the param.
+     * Same method as inject(injectTarget, returnType). <br>
+     * The inject(injectTarget, returnType) method receives two parameters to prevent unchecked cast,<br>
+     * but this method enables the above function to be performed with one parameter.<br>
+     * Therefore, it is more convenient and recommended to use this method.
+     *
+     * @param type The class-type of target to be injected beans, Vault will inject beans into this parameter.
      * @return Returns an instance of the type received param.
+     * @param <R> the type of return instance.
+     */
+    public <R> R inject(Class<R> type){
+        return inject(type, type);
+    }
+
+    /**
+     * Method of inject beans into class-type-parameter and return instance of class-type-parameter.
+     *
+     * If parameter was mapped to @InternalBean(type = Type.SINGLETON) and included in the scope of Vault's bean scan, <br>
+     * ClassVault caches this parameter and returns the cached instance from the next request.
+     *
+     * @param <R> the type of return instance.
+     * @param injectTarget The class-type of target to be injected beans, Vault will inject beans into this parameter.
+     * @param returnType The class-type to be returned. This must be a type that matches the param parameter.
+     * @return Returns an instance of the injectTarget received param.
      * @throws DisallowedAccessException Occurs when the package in param is a package that does not have access to Vault,
      *                                   * or the Beans to be injected into param cannot be injected into the package in Param.
      */
     @Override
-    @SuppressWarnings("unchecked")
-    public <R> R inject(Class<?> param) {
-        throwIfParamDoesNotAccessibleVault(param);
+    public <R> R inject(Class<?> injectTarget, Class<R> returnType) {
+        throwIfParamDoesNotAccessible(injectTarget);
 
-        if(CACHED_BEANS.containsKey(param)) return CACHED_BEANS.get(param).load();
-        cacheBean(param);
-        if(CACHED_BEANS.containsKey(param)) return CACHED_BEANS.get(param).load();
+        if(CACHED_BEANS.containsKey(injectTarget)) return CACHED_BEANS.get(injectTarget).load();
+        cacheBean(injectTarget);
+        if(CACHED_BEANS.containsKey(injectTarget)) return CACHED_BEANS.get(injectTarget).load();
 
-        Constructor<?> constructor = REFLECTION.findConstructor(param);
-        if (constructor != null) return (R) loadBeanFromConstructor(param, constructor);
-        List<Field> fields = REFLECTION.findFields(param);
-        return (R) loadBeanFromField(param, fields);
+        Constructor<?> constructor = REFLECTION.findConstructor(injectTarget);
+        if (constructor != null) return returnType.cast(loadBeanFromConstructor(injectTarget, constructor));
+        List<Field> fields = REFLECTION.findFields(injectTarget);
+        return returnType.cast(loadBeanFromField(injectTarget, fields));
     }
 
-    private void throwIfParamDoesNotAccessibleVault(Class<?> param){
-        if (!isVaultAccessible(param)) throw new DisallowedAccessException(NAME, param.getPackage().getName());
-    }
-    private boolean isVaultAccessible(Class<?> cls) {
-        if (ACCESS_CLASSES.length == 0 && ACCESS_PACKAGES.length == 0) return true;
-        if (isVaultAccessibleClass(cls)) return true;
-        return isVaultAccessiblePackage(cls);
-    }
-    private boolean isVaultAccessibleClass(Class<?> cls) {
-        String name = cls.getName().replace("$", ".");
-        for (String access : ACCESS_CLASSES)
-            if (access.equals(name)) return true;
-        return false;
-    }
-
-    private boolean isVaultAccessiblePackage(Class<?> cls) {
-        String src = cls.getPackage().getName();
-        for (String vaultAccess : ACCESS_PACKAGES) {
-            if (isContainSelectAllRegex(vaultAccess)) {
-                String substring = vaultAccess.substring(0, vaultAccess.length() - 2);
-                if (substring.length() > src.length()) continue;
-                if (src.contains(substring)) return true;
-            }
-            if (vaultAccess.equals(src)) return true;
-        }
-        return false;
-    }
-
-    private boolean isContainSelectAllRegex(String pkg) {
-        return pkg.startsWith(".*", pkg.length() - 2);
-    }
-
+    @SuppressWarnings("all")
     private void cacheBean(Class<?> cls){
         if(isDoseNotNeedCache(cls)) return;
         String cachedBeanName = getBeanName(cls);
-        if(BEANS.containsKey(cachedBeanName)) CACHED_BEANS.put(cls, BEANS.get(cachedBeanName));
+        synchronized (cls) {
+            if (BEANS.containsKey(cachedBeanName)) CACHED_BEANS.put(cls, BEANS.get(cachedBeanName));
+        }
     }
 
     private boolean isDoseNotNeedCache(Class<?> cls){
@@ -129,13 +111,10 @@ public final class ClassVault implements Vault<Class<?>> {
     }
 
     private Object loadBeanFromConstructor(Class<?> cls, Constructor<?> constructor) {
-        Parameter[] parameters = constructor.getParameters();
+        List<Parameter> parameters = REFLECTION.getAnnotatedConstructorParameters(constructor);
         List<Object> instancedParameters = new ArrayList<>();
         for (Parameter parameter : parameters) {
             Inject inject = parameter.getDeclaredAnnotation(Inject.class);
-
-            throwIfParameterDoesNotAnnotatedInject(inject);
-
             String value = inject.value();
 
             throwIfCanNotFindDefinedBean(value);
@@ -149,11 +128,6 @@ public final class ClassVault implements Vault<Class<?>> {
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void throwIfParameterDoesNotAnnotatedInject(Inject inject) {
-        if (inject == null || inject.value().equals(""))
-            throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
     }
 
     private Object loadBeanFromField(Class<?> cls, List<Field> fields) {
