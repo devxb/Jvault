@@ -1,6 +1,5 @@
 /**
- * NONE-API: Cannot be used outside the library without reflection. <br>
- * Packages that support Jvault packages
+ * Packages that support Jvault API globally.
  *
  * @author devxb
  * @since 0.1

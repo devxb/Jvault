@@ -80,7 +80,7 @@ public final class InstanceVault extends AbstractVault<Object>{
      */
     @SuppressWarnings("unchecked")
     public <R> R inject(R injectTarget){
-        return inject(injectTarget, (Class<R>) injectTarget.getClass());
+        return inject(injectTarget, (Class<R>)injectTarget.getClass());
     }
 
 

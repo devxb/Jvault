@@ -1,6 +1,5 @@
 /**
- * NONE-API: Cannot be used outside the library without reflection. <br>
- * Packages that load Bean from read BeanLoadableExtensionPoint.
+ * Packages that load Bean
  *
  * @author devxb
  * @since 0.1
