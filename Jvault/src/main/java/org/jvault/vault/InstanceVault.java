@@ -5,6 +5,7 @@ import org.jvault.beans.Bean;
 import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
 import org.jvault.metadata.API;
+import org.jvault.metadata.ThreadSafe;
 import org.jvault.util.Reflection;
 
 import java.lang.reflect.Constructor;
@@ -57,6 +58,7 @@ import java.util.Map;
  * @since 0.1
  */
 @API
+@ThreadSafe
 public final class InstanceVault extends AbstractVault<Object>{
 
     private final Map<String, Bean> BEANS;

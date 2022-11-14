@@ -7,6 +7,7 @@ import org.jvault.beans.Type;
 import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
 import org.jvault.metadata.API;
+import org.jvault.metadata.ThreadSafe;
 import org.jvault.util.Reflection;
 
 import java.lang.reflect.Constructor;
@@ -69,6 +70,7 @@ import java.util.concurrent.ConcurrentMap;
  * @since 0.1
  */
 @API
+@ThreadSafe
 public final class ClassVault extends AbstractVault<Class<?>> {
     private final ConcurrentMap<Class<?>, Bean> CACHED_BEANS;
     private final Reflection REFLECTION;
