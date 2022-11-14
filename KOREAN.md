@@ -18,7 +18,7 @@ Jvaut를 사용하면, 내부 API를 외부 사용자로부터 효과적으로 �
 ## Getting Start
 
 이 문서에서는 Jvault라이브러리를 프로젝트에 다운하는 방법부터 Jvault사용방법을 소개합니다.   
-선택가능한 더 많은 (Bean, Vault , VaultFactory and etc.) 종류는 [Java doc]() 에서 확인할 수 있습니다.
+선택가능한 더 많은 (Bean, Vault , VaultFactory and etc.) 종류는 [Java doc](https://jvault.org/docs/) 에서 확인할 수 있습니다.
 
 <br>
    
