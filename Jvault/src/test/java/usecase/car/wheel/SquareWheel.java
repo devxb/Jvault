@@ -6,8 +6,8 @@ import org.jvault.beans.Type;
 @InternalBean(
         name = "squareWheel",
         type = Type.SINGLETON,
-        accessClasses = {"car.Car"},
-        accessPackages = {"car.factory.*", "car.wheel"}
+        accessClasses = {"usecase.car.Car", "usecase.car.InstancedCar"},
+        accessPackages = {"usecase.car.factory.*", "usecase.car.wheel"}
 )
 public final class SquareWheel implements Wheel{
 

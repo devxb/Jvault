@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to inject the corresponding Bean.<br>
+ * Annotation to inject the corresponding {@link InternalBean}.<br>
  *
  * Here is two ways to inject Bean.<br><br>
  *

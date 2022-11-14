@@ -10,7 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Meta-information used when creating a {@link VaultFactoryBuildInfo} with class config. <br>
+ * Annotation that used creating a {@link VaultFactoryBuildInfo} with class-configuration. <br>
  * It can be created by passing the class marked as VaultConfiguration as a parameter of the constructor of {@link AnnotationVaultFactoryBuildInfo}.<br>
  * <br>
  * Example.

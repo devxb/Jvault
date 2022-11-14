@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.factory.TypeVaultFactory;
-import org.jvault.factory.TypeVaultFactory;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
 import org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo;
 import org.jvault.factory.extensible.VaultFactoryBuildInfo;
@@ -13,6 +12,7 @@ import org.jvault.struct.buildvault.BuildVault;
 import org.jvault.struct.buildvaultcannotinjectbean.BuildVaultCannotInjectBean;
 import org.jvault.struct.buildvaultcannotinjectclass.BuildVaultCannotInjectClass;
 import org.jvault.struct.duplicatevault.DuplicateVault;
+import org.jvault.struct.genericbean.Generic;
 import org.jvault.struct.vaultinjectsingletonbean.AnnotationConfigWithNotScan;
 import org.jvault.struct.vaultinjectsingletonbean.AnnotationConfigWithScan;
 import org.jvault.struct.vaultinjectsingletonbean.VaultInjectBean;
@@ -51,7 +51,7 @@ public class ClassVaultTest {
         };
 
         // when
-        Vault<Class<?>> classVault = factory.get(buildInfo, VaultType.CLASS);
+        ClassVault classVault = factory.get(buildInfo, VaultType.CLASS);
         BuildVault buildVault = classVault.inject(BuildVault.class);
 
         // then
@@ -85,7 +85,7 @@ public class ClassVaultTest {
         };
 
         // when
-        Vault<Class<?>> classVault = factory.get(buildInfo, VaultType.CLASS);
+        ClassVault classVault = factory.get(buildInfo, VaultType.CLASS);
 
         // then
         Assertions.assertThrows(DisallowedAccessException.class, ()-> classVault.inject(BuildVaultCannotInjectClass.class));
@@ -131,7 +131,7 @@ public class ClassVaultTest {
         AnnotationVaultFactoryBuildInfo annotationVaultFactoryBuildInfo = new AnnotationVaultFactoryBuildInfo(org.jvault.struct.annotationconfigwithclass.AnnotationConfig.class);
 
         // when
-        Vault<Class<?>> vault = vaultFactory.get(annotationVaultFactoryBuildInfo, VaultType.CLASS);
+        ClassVault vault = vaultFactory.get(annotationVaultFactoryBuildInfo, VaultType.CLASS);
         AnnotationConfigWithClass bean = vault.inject(AnnotationConfigWithClass.class);
 
         // then
@@ -159,9 +159,9 @@ public class ClassVaultTest {
 
         // when
         Vault<Class<?>> vault = vaultFactory.get(annotationVaultFactoryBuildInfo, VaultType.CLASS);
-        Vault<Class<?>> duplicatedVault = vaultFactory.get(duplicateAnnotationVaultFactoryBuildInfo, VaultType.CLASS);
+        ClassVault duplicatedVault = vaultFactory.get(duplicateAnnotationVaultFactoryBuildInfo, VaultType.CLASS);
 
-        DuplicateVault duplicateVault = vault.inject(DuplicateVault.class);
+        DuplicateVault duplicateVault = vault.inject(DuplicateVault.class, DuplicateVault.class);
         DuplicateVault comparedDuplicatedVault = duplicatedVault.inject(DuplicateVault.class);
 
         // then
@@ -177,9 +177,9 @@ public class ClassVaultTest {
 
         // when
         Vault<Class<?>> vault = vaultFactory.get(annotationVaultFactoryBuildInfo, VaultType.CLASS);
-        Vault<Class<?>> duplicatedVault = vaultFactory.get("DUPLICATE_VAULT", VaultType.CLASS);
+        ClassVault duplicatedVault = vaultFactory.get("DUPLICATE_VAULT", VaultType.CLASS);
 
-        DuplicateVault duplicateVault = vault.inject(DuplicateVault.class);
+        DuplicateVault duplicateVault = vault.inject(DuplicateVault.class, DuplicateVault.class);
         DuplicateVault comparedDuplicatedVault = duplicatedVault.inject(DuplicateVault.class);
 
         // then
@@ -214,6 +214,20 @@ public class ClassVaultTest {
 
         // then
         Assertions.assertNotEquals(vaultInjectBean, differentPointVaultInjectBean);
+    }
+
+    @Test
+    public void GENERIC_BEAN_SCAN_TEST(){
+        // given
+        TypeVaultFactory typeVaultFactory = TypeVaultFactory.getInstance();
+        AnnotationVaultFactoryBuildInfo buildInfo = new AnnotationVaultFactoryBuildInfo(org.jvault.struct.genericbean.AnnotationConfig.class);
+
+        // when
+        ClassVault vault = typeVaultFactory.get(buildInfo, VaultType.CLASS);
+        Generic generic = vault.inject(Generic.class);
+
+        // then
+        Assertions.assertEquals("Generic", generic.hello());
     }
 
 }

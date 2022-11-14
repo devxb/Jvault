@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Meta-information used in the class marked with {@link VaultConfiguration} <br>
+ * Annotation that used in the class marked with {@link VaultConfiguration} <br>
  * This information is read from the {@link AnnotationVaultFactoryBuildInfo} class,<br>
  * and classes that will become {@link InternalBean} are found. <br> <br>
  *
