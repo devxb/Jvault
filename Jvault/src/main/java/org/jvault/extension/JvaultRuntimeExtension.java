@@ -8,10 +8,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * A point to change the internal behavior of the Jvault library. <br>
- * If the client implements the extensiblepoint of Jvault library and passes it to this class,
- * <br> the behavior of the library implementations is changed. <br>
+ * Extension point of the Jvault library's behavior. <br>
+ * If the client implements the extensiblepoint of Jvault library and passes it to this class, <br>
+ * the behavior of the library is changed. <br>
  * <br>
+ * Current extensiblepoints : {@link BeanReader} <br><br>
  * JvaultRuntimeExtension uses {@link Optional} to mean that no extension is given. Therefore, be careful not to pass type parameter {@link Optional}.
  *
  * @author devxb
@@ -29,8 +30,7 @@ public final class JvaultRuntimeExtension {
         EXPANDED.put(BeanReader.class, Optional.empty());
     }
 
-    private JvaultRuntimeExtension() {
-    }
+    private JvaultRuntimeExtension() {}
 
     /**
      * Receive extensiblepoint implementation of Jvault and change library behavior.<br>

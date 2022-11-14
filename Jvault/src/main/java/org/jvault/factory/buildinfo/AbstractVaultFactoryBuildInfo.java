@@ -67,7 +67,7 @@ public abstract class AbstractVaultFactoryBuildInfo implements VaultFactoryBuild
     protected abstract String[] getExcludePackagesImpl();
 
     /**
-     * The implementation of this method should return the path and package of the class.<br>
+     * The implementation of this method should return the package and class name of the bean.<br>
      * The bean of the returned information will be registered in the Vault.
      *
      * @return String[] Class name with package

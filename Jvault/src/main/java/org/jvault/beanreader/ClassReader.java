@@ -9,7 +9,7 @@ import java.lang.reflect.Modifier;
 @InternalAPI
 final class ClassReader {
 
-    private static ClassReader INSTANCE = new ClassReader();
+    private static final ClassReader INSTANCE = new ClassReader();
 
     private ClassReader(){}
 

@@ -6,7 +6,9 @@ import org.jvault.metadata.InternalAPI;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @InternalAPI
@@ -20,10 +22,11 @@ public final class Reflection {
         return INSTANCE;
     }
 
-    public Constructor<?> findConstructor(Class<?> cls){
-        Constructor<?>[] constructors = cls.getDeclaredConstructors();
-        Constructor<?> ans = null;
-        for(Constructor<?> constructor : constructors){
+    @SuppressWarnings("unchecked")
+    public <R> Constructor<R> findConstructor(Class<R> cls){
+        Constructor<R>[] constructors = (Constructor<R>[]) cls.getDeclaredConstructors();
+        Constructor<R> ans = null;
+        for(Constructor<R> constructor : constructors){
             constructor.setAccessible(true);
             if(constructor.getDeclaredAnnotation(Inject.class) == null) continue;
             if(ans != null) throw new DuplicateInjectConstructorException(cls.getName());
@@ -42,6 +45,25 @@ public final class Reflection {
             ans.add(field);
         }
         return ans;
+    }
+
+    public List<Parameter> getAnnotatedConstructorParameters(Constructor<?> constructor){
+        throwIfConstructorDoesNotAnnotatedInject(constructor);
+        Parameter[] parameters = constructor.getParameters();
+        for(Parameter parameter : parameters)
+            throwIfInjectConstructorParameterHasNotValue(parameter.getDeclaredAnnotation(Inject.class));
+        return Arrays.asList(parameters);
+    }
+
+    private void throwIfConstructorDoesNotAnnotatedInject(Constructor<?> constructor){
+        if(constructor.getDeclaredAnnotation(Inject.class) == null)
+            throw new IllegalArgumentException("\"Method findConstructorParameter(Constructor<?> constructor) " +
+                    "only accept constructors marked with \"@Inject\" as parameters.\"");
+    }
+
+    private void throwIfInjectConstructorParameterHasNotValue(Inject inject) {
+        if (inject == null || inject.value().equals(""))
+            throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
     }
 
 }

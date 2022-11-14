@@ -1,8 +1,8 @@
 package org.jvault.factory.buildinfo;
 
-import org.jvault.annotation.BeanArea;
 import org.jvault.annotation.BeanWire;
 import org.jvault.annotation.InternalBean;
+import org.jvault.annotation.VaultConfiguration;
 import org.jvault.exceptions.InvalidAnnotationConfigClassException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
 import org.jvault.factory.extensible.VaultFactoryBuildInfo;
@@ -14,12 +14,12 @@ import java.util.List;
 
 
 /**
- * A class that reads the {@link BeanWire} marking information of the class marked with {@link BeanArea} and returns the BuildInfo method.<br><br>
+ * A class that reads the {@link BeanWire} marking information of the class marked with {@link VaultConfiguration} and returns the BuildInfo method.<br><br>
  * <p>
- * Thrown {@link InvalidAnnotationConfigClassException} if an unmarked {@link BeanArea} parameter is passed to the constructor.
+ * Thrown {@link InvalidAnnotationConfigClassException} if an unmarked {@link VaultConfiguration} parameter is passed to the constructor.
  *
  * @author devxb
- * @see BeanArea
+ * @see VaultConfiguration
  * @see BeanWire
  * @see InvalidAnnotationConfigClassException
  * @since 0.1
@@ -33,11 +33,11 @@ public final class AnnotationVaultFactoryBuildInfo implements VaultFactoryBuildI
     private final String[] VAULT_ACCESS_CLASSES;
 
     /**
-     * A class marked with {@link BeanArea} must be passed as a parameter. <br>
+     * A class marked with {@link VaultConfiguration} must be passed as a parameter. <br>
      * <p>
      * It reads the field information marked with {@link BeanWire} and generates the return information of the method.
      *
-     * @param cls The class marked BeanArea
+     * @param cls The class marked VaultConfiguration
      * @author devxb
      * @since 0.1
      */
@@ -50,14 +50,14 @@ public final class AnnotationVaultFactoryBuildInfo implements VaultFactoryBuildI
     }
 
     private void throwIfClsNotBeansArea(Class<?> cls) {
-        if (cls.getDeclaredAnnotation(BeanArea.class) == null)
+        if (cls.getDeclaredAnnotation(VaultConfiguration.class) == null)
             throw new InvalidAnnotationConfigClassException(cls.getSimpleName());
     }
 
     private String getVaultName(Class<?> cls) {
         String vaultName = convertToBeanName(cls.getSimpleName());
-        BeanArea beanArea = cls.getDeclaredAnnotation(BeanArea.class);
-        if (beanArea != null && !beanArea.name().equals("")) vaultName = beanArea.name();
+        VaultConfiguration vaultConfiguration = cls.getDeclaredAnnotation(VaultConfiguration.class);
+        if (vaultConfiguration != null && !vaultConfiguration.name().equals("")) vaultName = vaultConfiguration.name();
         return vaultName;
     }
 
@@ -83,13 +83,13 @@ public final class AnnotationVaultFactoryBuildInfo implements VaultFactoryBuildI
     }
 
     private String[] getVaultAccessPackages(Class<?> cls) {
-        BeanArea beansArea = cls.getDeclaredAnnotation(BeanArea.class);
+        VaultConfiguration beansArea = cls.getDeclaredAnnotation(VaultConfiguration.class);
         return beansArea.vaultAccessPackages();
     }
 
     private String[] getVaultAccessClasses(Class<?> cls) {
-        BeanArea beanArea = cls.getDeclaredAnnotation(BeanArea.class);
-        return beanArea.vaultAccessClasses();
+        VaultConfiguration vaultConfiguration = cls.getDeclaredAnnotation(VaultConfiguration.class);
+        return vaultConfiguration.vaultAccessClasses();
     }
 
     @Override

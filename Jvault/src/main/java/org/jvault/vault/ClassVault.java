@@ -1,112 +1,162 @@
 package org.jvault.vault;
 
 import org.jvault.annotation.Inject;
+import org.jvault.annotation.InternalBean;
 import org.jvault.beans.Bean;
+import org.jvault.beans.Type;
 import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
 import org.jvault.metadata.API;
+import org.jvault.metadata.ThreadSafe;
 import org.jvault.util.Reflection;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
- * Receive the Class type as a parameter and returns the corresponding instance.
+ * Receive the Class type as a parameter and returns the corresponding instance.<br>
  * <br>
+ * ClassVault injects beans into parameters, using the @Inject annotation mapped to a field or constructor of the parameter's class.<br>
+ * Examples.
+ * <br>
+ * <br>
+ * 1. Field Inject <br>
+ * <pre>
+ *    {@code
+ *        public class Foo { @Inject private SomeBean bean; }
+ *    }
+ * </pre>
+ * If a Foo.class is passed to a method of ClassVault,<br>
+ * First, ClassVault creates an instance of Foo.class using default constructor and injects the bean into the field marked with @Inject. <br>
+ * After that, by the above process, the instance of Foo into which the bean is injected is returned.<br>
+ * <br>
+ * 2. Constructor Inject <br>
+ * <pre>
+ *     {@code
+ *      public class Foo{
+ *
+ *          private SomeBean bean;
+ *
+ *          public Foo(){}
+ *
+ *·         @Inject
+ *          private Foo(@Inject("bean") SomeBean someBean){
+ *              this.bean = someBean;
+ *          }
+ *      }
+ *     }
+ * </pre>
+ * If a Foo.class is passed to a method of ClassVault,<br>
+ * First, ClassVault creates an instance of Foo.class using the @Inject mapped constructor. <br>
+ * In this process, the bean is passed as a parameter of the @Inject marked constructor,<br>
+ * and finally the instance of Foo.class into which the bean is injected is returned. <br>
+ * If a class has more than one @Inject marked constructor, a DuplicateConstructorException is thrown. <br>
+ * If there is a parameter that is not mapped to @Inject in the parameter of the constructor mapped to @Inject, an IllegalStateException is thrown. <br>
  * <br>
  * ClassVault can only be instantiated in the org.jvault.* package,<br>
  * and actually you can't force instantiation of Vault without using Reflection.<br>
- * This means that you should not instantiate ClassVault using Reflection.<br>
- * To obtain ClassVault, see the {@link org.jvault.factory.ClassVaultFactory} class.
+ * To obtain ClassVault, see the {@link org.jvault.factory.TypeVaultFactory} class.
  *
  * @author devxb
- * @see org.jvault.factory.ClassVaultFactory
+ * @see org.jvault.factory.TypeVaultFactory
  * @see org.jvault.vault.Vault
  * @see org.jvault.annotation.Inject
  * @see org.jvault.annotation.InternalBean
  * @since 0.1
  */
 @API
-public final class ClassVault implements Vault<Class<?>> {
-
-    private final String NAME;
-    private final String[] ACCESS_PACKAGES;
-    private final String[] ACCESS_CLASSES;
-    private final Map<String, Bean> BEANS;
+@ThreadSafe
+public final class ClassVault extends AbstractVault<Class<?>> {
+    private final ConcurrentMap<Class<?>, Bean> CACHED_BEANS;
     private final Reflection REFLECTION;
 
-    private ClassVault() {
-        throw new UnsupportedOperationException("Can not invoke constructor \"ClassVault()\"");
-    }
-
     ClassVault(Vault.Builder<ClassVault> builder) {
-        NAME = builder.name;
-        ACCESS_PACKAGES = builder.accessPackages;
-        ACCESS_CLASSES = builder.accessClasses;
-        BEANS = builder.BEANS;
+        super(builder);
+        CACHED_BEANS = new ConcurrentHashMap<>();
         REFLECTION = Accessors.UtilAccessor.getAccessor().getReflection();
     }
 
     /**
-     * @param <R>   the type of return instance
-     * @param param The type of target to be injected beans, Vault will inject beans into the param.
+     * Same method as inject(injectTarget, returnType). <br>
+     * The inject(injectTarget, returnType) method receives two parameters to prevent unchecked cast,<br>
+     * but this method enables the above function to be performed with one parameter.<br>
+     * Therefore, it is more convenient and recommended to use this method.
+     *
+     * @param type The class-type of target to be injected beans, Vault will inject beans into this parameter.
      * @return Returns an instance of the type received param.
+     * @param <R> the type of return instance.
+     */
+    public <R> R inject(Class<R> type){
+        return inject(type, type);
+    }
+
+    /**
+     * Method of inject beans into class-type-parameter and return instance of class-type-parameter.
+     *
+     * If parameter was mapped to @InternalBean(type = Type.SINGLETON) and included in the scope of Vault's bean scan, <br>
+     * ClassVault caches this parameter and returns the cached instance from the next request.
+     *
+     * @param <R> the type of return instance.
+     * @param injectTarget The class-type of target to be injected beans, Vault will inject beans into this parameter.
+     * @param returnType The class-type to be returned. This must be a type that matches the param parameter.
+     * @return Returns an instance of the injectTarget received param.
      * @throws DisallowedAccessException Occurs when the package in param is a package that does not have access to Vault,
      *                                   * or the Beans to be injected into param cannot be injected into the package in Param.
      */
     @Override
-    public <R> R inject(Class<?> param) {
-        if (!isVaultAccessible(param)) throw new DisallowedAccessException(NAME, param.getPackage().getName());
-        Constructor<?> constructor = REFLECTION.findConstructor(param);
-        if (constructor != null) return (R) loadBeanFromConstructor(param, constructor);
-        List<Field> fields = REFLECTION.findFields(param);
-        return (R) loadBeanFromField(param, fields);
+    public <R> R inject(Class<?> injectTarget, Class<R> returnType) {
+        throwIfParamDoesNotAccessible(injectTarget);
+
+        if(CACHED_BEANS.containsKey(injectTarget)) return CACHED_BEANS.get(injectTarget).load();
+        cacheBean(injectTarget);
+        if(CACHED_BEANS.containsKey(injectTarget)) return CACHED_BEANS.get(injectTarget).load();
+
+        Constructor<?> constructor = REFLECTION.findConstructor(injectTarget);
+        if (constructor != null) return returnType.cast(loadBeanFromConstructor(injectTarget, constructor));
+        List<Field> fields = REFLECTION.findFields(injectTarget);
+        return returnType.cast(loadBeanFromField(injectTarget, fields));
     }
 
-    private boolean isVaultAccessible(Class<?> cls) {
-        if (ACCESS_CLASSES.length == 0 && ACCESS_PACKAGES.length == 0) return true;
-        if (isVaultAccessibleClass(cls)) return true;
-        return isVaultAccessiblePackage(cls);
-    }
-
-    private boolean isVaultAccessibleClass(Class<?> cls) {
-        String name = cls.getName().replace("$", ".");
-        for (String access : ACCESS_CLASSES)
-            if (access.equals(name)) return true;
-        return false;
-    }
-
-    private boolean isVaultAccessiblePackage(Class<?> cls) {
-        String src = cls.getPackage().getName();
-        for (String vaultAccess : ACCESS_PACKAGES) {
-            if (isContainSelectAllRegex(vaultAccess)) {
-                String substring = vaultAccess.substring(0, vaultAccess.length() - 2);
-                if (substring.length() > src.length()) continue;
-                if (src.contains(substring)) return true;
-            }
-            if (vaultAccess.equals(src)) return true;
+    @SuppressWarnings("all")
+    private void cacheBean(Class<?> cls){
+        if(isDoseNotNeedCache(cls)) return;
+        String cachedBeanName = getBeanName(cls);
+        synchronized (cls) {
+            if (BEANS.containsKey(cachedBeanName)) CACHED_BEANS.put(cls, BEANS.get(cachedBeanName));
         }
-        return false;
     }
 
-    private boolean isContainSelectAllRegex(String pkg) {
-        return pkg.startsWith(".*", pkg.length() - 2);
+    private boolean isDoseNotNeedCache(Class<?> cls){
+        InternalBean internalBean = cls.getDeclaredAnnotation(InternalBean.class);
+        return internalBean == null || internalBean.type() != Type.SINGLETON;
+    }
+
+    private String getBeanName(Class<?> cls) {
+        String name = convertToBeanName(cls.getSimpleName());
+        InternalBean internalBean = cls.getDeclaredAnnotation(InternalBean.class);
+        if (internalBean.name().equals("")) return name;
+        return internalBean.name();
+    }
+
+    private String convertToBeanName(String name) {
+        return name.substring(0, 1).toLowerCase() + name.subSequence(1, name.length());
     }
 
     private Object loadBeanFromConstructor(Class<?> cls, Constructor<?> constructor) {
-        Parameter[] parameters = constructor.getParameters();
+        List<Parameter> parameters = REFLECTION.getAnnotatedConstructorParameters(constructor);
         List<Object> instancedParameters = new ArrayList<>();
         for (Parameter parameter : parameters) {
             Inject inject = parameter.getDeclaredAnnotation(Inject.class);
-            throwIfParameterDoesNotAnnotatedInject(inject);
             String value = inject.value();
+
             throwIfCanNotFindDefinedBean(value);
             throwIfBeanDoesNotAccessInject(value, cls);
+
             instancedParameters.add(BEANS.get(value).load());
         }
         try {
@@ -117,18 +167,15 @@ public final class ClassVault implements Vault<Class<?>> {
         }
     }
 
-    private void throwIfParameterDoesNotAnnotatedInject(Inject inject) {
-        if (inject == null || inject.value().equals(""))
-            throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
-    }
-
     private Object loadBeanFromField(Class<?> cls, List<Field> fields) {
         Object bean = loadBeanFromDefaultConstructor(cls);
         for (Field field : fields) {
             field.setAccessible(true);
             String value = getBeanNameByField(field);
+
             throwIfCanNotFindDefinedBean(value);
             throwIfBeanDoesNotAccessInject(value, cls);
+
             Object instance = BEANS.get(value).load();
             injectBeanToField(field, bean, instance);
         }

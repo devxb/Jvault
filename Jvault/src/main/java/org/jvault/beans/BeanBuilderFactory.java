@@ -7,8 +7,7 @@ public final class BeanBuilderFactory {
 
     private static final BeanBuilderFactory INSTANCE = new BeanBuilderFactory();
 
-    private BeanBuilderFactory() {
-    }
+    private BeanBuilderFactory() {}
 
     static BeanBuilderFactory getInstance() {
         return INSTANCE;

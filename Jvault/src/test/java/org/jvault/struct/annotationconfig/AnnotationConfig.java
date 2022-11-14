@@ -1,9 +1,9 @@
 package org.jvault.struct.annotationconfig;
 
-import org.jvault.annotation.BeanArea;
 import org.jvault.annotation.BeanWire;
+import org.jvault.annotation.VaultConfiguration;
 
-@BeanArea(name = "annotationConfig", vaultAccessPackages = "org.jvault.struct.annotationconfig")
+@VaultConfiguration(name = "annotationConfig", vaultAccessPackages = "org.jvault.struct.annotationconfig")
 public final class AnnotationConfig {
 
     @BeanWire private AnnotationConfigBean annotationConfigBean;

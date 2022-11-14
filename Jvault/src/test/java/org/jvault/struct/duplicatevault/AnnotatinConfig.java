@@ -1,9 +1,9 @@
 package org.jvault.struct.duplicatevault;
 
-import org.jvault.annotation.BeanArea;
 import org.jvault.annotation.BeanWire;
+import org.jvault.annotation.VaultConfiguration;
 
-@BeanArea(name = "DUPLICATE_VAULT")
+@VaultConfiguration(name = "DUPLICATE_VAULT")
 public class AnnotatinConfig {
 
     @BeanWire private DuplicateVault duplicateVault;

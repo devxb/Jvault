@@ -27,6 +27,7 @@ final class PackageReader {
         throwIfCanNotFindUrl(pkg, url);
         File directory = new File(url.getFile());
         String[] fileNames = directory.list();
+        throwIfNullFileNames(pkg, fileNames);
         for (String fileName : fileNames) {
             if (isJavaFile(fileName)) continue;
             directories.add(fileName);
@@ -41,6 +42,7 @@ final class PackageReader {
         File directory = new File(url.getFile());
         List<Class<?>> classes = new ArrayList<>();
         String[] fileNames = directory.list();
+        throwIfNullFileNames(pkg, fileNames);
         for(String fileName : fileNames){
             if(!isJavaFile(fileName)) continue;
             String javaFileName = fileName.substring(0, fileName.length()-6);
@@ -53,6 +55,10 @@ final class PackageReader {
 
     private void throwIfCanNotFindUrl(String pkg, URL url){
         if(url == null) throw new IllegalStateException("Can not find directory \"" + pkg + "\"");
+    }
+
+    private void throwIfNullFileNames(String pkg, String[] fileNames){
+        if(fileNames == null) throw new IllegalStateException("Can not find file on src \"" + pkg + "\"");
     }
 
     private boolean isJavaFile(String name){
