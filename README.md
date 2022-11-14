@@ -2,7 +2,7 @@
 
 # Jvault - Java encapsulation library using DI
    
-[Translate to English]()    
+[한국어로 번역]()    
 [Learn Jvault]()    
 [Java doc]()    
 [License]()    
@@ -10,21 +10,23 @@
 ![current jvault version](https://img.shields.io/badge/Jvault-0.1-orange) ![test method coverage](https://img.shields.io/badge/Method%20coverage-100%25-brightgreen) ![test line coverage](https://img.shields.io/badge/Line%20coverage-92%25-brightgreen) ![test class coverage](https://img.shields.io/badge/Class%20coverage-91%25-brightgreen) ![needed jdk version](https://img.shields.io/badge/JDK-8-blue) ![libarry status](https://img.shields.io/badge/library%20status-activity-green)    
 ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fdevxb%2FJvault&count_bg=%23C8C13D&title_bg=%23555555&icon=&icon_color=%23FFFFFF&title=HIT+COUNT&edge_flat=false) ![made with love](https://img.shields.io/badge/Made%20with-Love--❤-red)    
    
-Jvault는 클래스를 허가된 클래스와 패키지 에서만 접근가능하도록 제한하고 제한된 클래스 끼리의 의존성을 연결 하는 라이브러리 입니다.   
-Jvaut를 사용하면, 내부 API를 외부 사용자로부터 효과적으로 캡슐화 할 수 있으며, API의 진화가능성을 더 쉽게 향상시킬 수 있습니다.   
+_Translate by google translate_
+
+Jvault is a library that restricts a class to be accessible only to the class permitted by it and links the dependencies between the restricted classes.   
+With Jvaut, you can effectively encapsulate your internal APIs from external users, making it easier to improve the evolveability of your APIs.   
 
 <br>
 
 ## Getting Start
 
-이 문서에서는 Jvault라이브러리를 프로젝트에 다운하는 방법부터 Jvault사용방법을 소개합니다.   
-선택가능한 더 많은 (Bean, Vault , VaultFactory and etc.) 종류는 [Java doc]() 에서 확인할 수 있습니다.
+This document introduces how to use Jvault and how to download the Jvault library to the project.   
+More library details can be found at [Javadoc]() .
 
 <br>
    
 ## Download Jvault in project
 
-Jvault는 Gradle, Maven 빌드툴을 이용해 프로젝트에 다운로드 할 수 있습니다.
+Jvault can be downloaded to the project using Gradle and Maven build tools.
 
 ``` gradle
 implemetation : org.jvault:jvault-api:0.1
@@ -39,26 +41,26 @@ implemetation : org.jvault:jvault-api:0.1
 </dependency>
 ```
    
-만약, 프로젝트에서 별도의 빌드 툴을 사용하지 않는다면 __Jvault-x.x.jar__ (x.x는 버전입니다) 를 다운받고 classpath를 설정해서 Jvault를 프로젝트에서 사용할 수 있습니다. 또한, IDE에 Jvault javadoc 색인을 적용하고 싶은 경우, __Jvault-x.x-sources.jar__ 를 다운받고 사용하는 IDE에 맞게 설정해주세요.   
+If the project does not use a build tool, you can download __Jvault-x.x.jar__ (x.x is the version) and set the classpath to use Jvault in the project. Also, if you want to apply the Jvault javadoc index to your IDE, download __Jvault-x.x-sources.jar__ and configure it according to the IDE you are using.   
 
 <br>
 
 ## Learn Jvault
 
-Learn Jvault에서는 자동차 프로그램을 Jvault를 이용해 캡슐화 하는 예제와 함께 Jvault의 사용법을 소개합니다.   
+Learn Jvault introduces the use of Jvault with examples of encapsulating vehicle programs using Jvault.   
    
--_예제 코드에 대한 간략한 소개_   
-예제에서 사용되는 Wheel 클래스는 내부용 API 입니다. Wheel클래스는 외부에서 사용된다면, API의 진화에 악영향을 미칠것으로 판단되는 클래스로 _(API는 사용하는 사람이 많을수록 진화하기 힘들어집니다.)_ 프로젝트 외부에서는 사용할 수 없도록 해야합니다.   
-반면, 예제에서 사용되는 Car 클래스는 API 입니다. Car 클래스는 프로젝트 외부에서 사용될 목적으로 만들어 졌으며, 모든 사용자는 Car 클래스를 이용해서 우리의 프로젝트와 소통해야합니다.
+-_A brief introduction to the example code_   
+The Wheel class used in the example is an internal API. If the Wheel class is used outside, it is judged that it will adversely affect the evolution of the API, _(The more people use an API, the harder it is to evolve.)_ so it should not be used outside the project.   
+On the other hand, the Car class used in the example is an API. The Car class is intended to be used as an API for users, and all users should use the Car class to communicate with our project.
    
 <br>
 
-### InternalBean 등록하기
+### Register InternalBean 
 
-Jvault는 클래스의 접근을 제어하고 클래스를 Bean등록대상으로 마킹하기위해 @InternalBean이라는 어노테이션을 제공합니다.   
-@InternalBean어노테이션으로 마킹된 클래스는 빈 스캔의 대상이 되며, DI 과정중 자신이 허가하지 않은 클래스가 자신을 주입받으려고 시도한다면, 예외를 던집니다.   
+Jvault provides @InternalBean annotation to control access of class and mark class as bean registration target.   
+Classes marked with @InternalBean annotation are subject to bean scan, and an exception is thrown if a class not permitted by @InternalBean tries to be injected during the DI process.   
    
-Wheel인터페이스의 구현중 하나인 SquareWheel을 InternalBean으로 등록하는 예시를 통해 사용법을 알아보겠습니다.   
+Let's see how to use it through an example of registering SquareWheel.class, as an InternalBean, which is one of the implementations of the Wheel interface.    
    
 ``` Java
 package usecase.car.wheel;
@@ -84,31 +86,31 @@ public final class SquareWheel implements Wheel{
 }
 ```
    
-@InternalBean에 등록할수있는 정보는 아래와 같습니다.   
+The information that can be parametered in @InternalBean is as follows.   
 
 | parameter | value |
 |-----------|---|
-| name | 등록될 Bean의 이름을 지정합니다. 생략될 경우 클래스 이름의 첫글자를 소문자로 변경한 값으로 등록됩니다.   |
-| type | Bean의 행동 방식을 지정합니다. 생략될 경우 SINGLETON으로 등록됩니다. type의 범위는 Vault범위와 동일합니다. 예를 들어, 싱글톤 타입 Bean의 경우 같은 이름을 갖는 Vault내에서는 항상 같은 주솟값의 객체가 주입됨이 보장되지만, 다른 Vault에 의해 주입되는 Bean과는 다른 주솟값을 갖고 있습니다.|
-| accessClasses | 이 빈을 주입받을 수 있는 클래스들을 지정합니다. 패키지 경로와 클래스의 이름을 명시해야하며, 만약, __accessClasses__ 와  __accessPackages__ 모두 생략될 경우 모든 클래스가 이 Bean을 주입받을 수 있습니다. _*(Class 타입이 아닌 String타입의 지정방식을 선택했는데, 그 이유는 Internal API의 특성상 주입받는 클래스가 public class가 아닐수도 있기때문입니다.)*_
-| accessPackages | 이 빈을 주입받을 수 있는 패키지 경로들을 지정합니다. 이 파라미터에 명시된 패키지내의 모든 클래스는 이 Bean을 주입받을 수 있습니다. 패키지 경로를 명시해야하며, 마지막에 .* 표현식을 사용할 경우, 해당 패키지를 포함한 모든 하위패키지까지 이 Bean을 주입받을 수 있습니다. 만약, .* 표현식이 존재하지 않는다면, 해당 패키지만 Bean을 주입받을 수 있습니다. 만약, __accessClasses__ 와  __accessPackages__ 모두 생략될 경우 모든 클래스가 이 Bean을 주입받을 수 있습니다. |
+| name | Specifies the name of the bean to be registered. If omitted, the value obtained by changing the first letter of the class name to lowercase is registered as the name of the bean.   |
+| type | Specifies how the bean behaves. If omitted, it is registered as SINGLETON. The scope of type is the same as that of Vault. For example, in the case of a singleton type bean, it is guaranteed that the same instance is always injected within the vault with the same name. However, it has a different address than a bean injected by a different named vault. |
+| accessClasses | Specifies the classes that this bean can be injected into. The package path and class name must be specified. If both accessClasses and accessPackages are omitted, all classes can receive this bean. (I chose the designation method of the String type rather than the Class type, because the injected class may not be a public class due to the characteristics of the Internal API.) |
+| accessPackages | Specifies the package paths into which this bean can be injected. All classes in the package specified in this parameter can receive this bean injection. The package path must be specified, and if .* expression is used at the end, this bean can be injected up to all subpackages including this package. If the .* expression does not exist, only the corresponding package can receive bean injection. If both accessClasses and accessPackages are omitted, all classes can receive this bean. |
    
-위 코드블럭을 보면, SquareWheel클래스는 public class로 모두가 접근할 수 있지만, 생성자가 package-private이므로 다른 패키지에있는 누구도 인스턴스화 할 수 없습니다.    
-즉, SquareWheel클래스는 사용자에게 캡슐화 되어있는데, 문제는 SquareWheel을 사용해야하는 같은 프로젝트의 다른패키지에 존재하는 코드에도 감춰져있다는점 입니다.   
+Looking at the code block above, the SquareWheel class is a public class that everyone can access, but since the constructor is package-private, no one in another package can instantiate it.    
+In other words, the SquareWheel class is encapsulated by the user, but the problem is that it is hidden from code that exists in other packages in the same project that need to use the SquareWheel.   
    
-> __WARNING__ : Jvault가 클래스를 캡슐화 하는것이 아닌, 캡슐화된 클래스의 의존성을 연결하는 라이브러리 임을 주의하세요.    
-> @InternalBean으로 마킹되어 있어도, 캡슐화 되지 않은 클래스에는 모두가 접근할 수 있습니다.
+> __WARNING__ : Jvault is not a library that encapsulates classes, but a library that links dependencies of encapsulated classes.    
+> Even if it is marked with @InternalBean, the non-encapsulated class can be accessed by everyone.
    
-Jvault는 이 문제를 DI를 이용해 해결하는데, @InternalBean에 설정된 정보를 읽고 해당 Bean이 주입을 허가한 클래스가 아니라면 예외를 던집니다.   
+Jvault solves this problem using DI, which reads the information of @InternalBean and throws an exception if the bean is not a class that allows injection.   
    
 <br>
    
-### 주입받을 InternalBean 마킹하기
+### Inject InternalBean
 
-Jvault는 등록된 InternalBean을 주입받기 위해 @Inject 어노테이션을 제공합니다.    
-주입방식은 생성자 주입과 필드주입이 있으며, 하나의 클래스에 두가지 방식이 공존할 경우 생성자 주입이 선택됩니다.   
+Jvault provides @Inject annotation to injected InternalBean.    
+There are two methods of injection, constructor injection and field injection, and if both methods coexist in one class, constructor injection is selected.   
    
-클라이언트가 사용할 API인 Vehicle의 구현중 하나인 Car에 Wheel을 주입하는 예제를 통해 사용법을 알아보겠습니다.   
+Let's see how to use it through an example of injecting a wheel into Car, which is one of the implementations of Vehicle, an API that the client will use.   
    
 ``` Java
 package usecase.car;
@@ -129,13 +131,13 @@ public final class Car implements Vehicle{
 }
 ```
    
-@Inject어노테이션에 등록할 수 있는 정보는 아래와 같습니다.   
+The information that can be parametered in the @Inject annotation is as follows.   
    
 | parameter | value |
 |-----------|---|
-| value | 주입할 빈의 이름을 지정합니다. |
+| value | Specifies the name of the bean to inject. |
    
-필드 주입은 value의 값이 생략되면 필드의 이름을 기준으로 Bean을 찾아서 등록합니다.   
+Field injection finds and registers a bean based on the field's name if the value is omitted.   
    
 ``` Java
 package usecase.car;
@@ -158,21 +160,21 @@ public final class Car implements Vehicle{
 }
 ```
    
-> __WARNING__ : 생성자 주입의 경우 주입에 사용할 생성자 위에 @Inject어노테이션을 마킹 해야하며, 생성자의 파라미터에 @Inject어노테이션을 마킹 해야합니다. 이때, 생성자의 파라미터에 마킹된 @Inject 어노테이션에는 주입할 Bean의 이름을 반드시 지정해야 하며, 아니라면 예외가 던져집니다.   
+> __WARNING__ : In case of constructor injection, @Inject annotation must be marked on the constructor to be used for injection, and @Inject annotation must be marked on the parameters of the constructor. At this time, the name of the bean to be injected must be specified in the @Inject annotation marked on the parameter of the constructor, otherwise an exception is thrown.   
    
-> __WARNING__ : @Inject마킹시 빈 끼리 사이클이 생기지 않도록 주의하세요. 사이클이 발견될 경우, 예외가 던져집니다.
+> __WARNING__ : Be careful not to cycle between InternalBeans. An exception is thrown when a cycle occurs.   
    
-> __TIP__ : 예시의 Car클래스는 Bean을 주입받지만 @InternalBean으로 마킹되어있지 않은데, Car클래스가 다른 클래스에 주입될 필요가 없다면 @InternalBean으로 마킹되어있지 않아도 상관없습니다.    
+> __TIP__ : The Car class in the example receives bean injection but is not marked with @InternalBean. If the Car class does not need to be injected into other classes, it does not need to be marked with @InternalBean.    
    
 <br>
    
-### Vault 생성, Bean스캔
+### Create Vault, Scan Bean
 
-Vault는 BeanFactory의 변종으로 전달된 파라미터에 Vault에 등록된 InternalBean들을 주입하는 역할을 합니다. 따라서, Vault로 전달되는 파라미터는 InternalBean이 아니여도 되는데, 이것이 앞서 Car클래스를 @InternalBean으로 마킹하지 않은 이유입니다.   
+Vault is a variant of BeanFactory, and plays a role for injecting InternalBeans (registered in Vault) into the passed parameters. Therefore, the parameter passed to the Vault does not need to be an InternalBean, which is why the Car class was not marked as @InternalBean earlier.   
    
-> TIP : Vault로 전달되는 파라미터가 @InternalBean(type = Type.SINGLETON)으로 마킹되어있고 Vault의 Bean스캔 범위안에 포함되어 있다면, 매 요청마다 같은 객체가 반환됩니다. 아니라면 매 요청마다 새로운 객체가 반환됩니다. - 이 동작은 ClassVault에 대한 설명이며, 다른 Vault구현체의 동작방식은 [Javadoc]() 을 참조하세요.
-
-Vault라는 단어가 다소 추상적이라 Vault의 역할이 잘 와닿지 않을 수 있기때문에, Vault를 사용하는 코드를 미리 살펴보겠습니다.   
+> __TIP__ : If the parameter passed to Vault is marked with @InternalBean(type = Type.SINGLETON) and is included in the scope of Vault's bean scan, the same instance is returned for every request. Otherwise, a new object is returned for every request. - This behavior is for ClassVault, and for the behavior of other Vault implementations, refer to [Javadoc]().   
+   
+Since the word Vault is a bit abstract and the role of Vault may not be well understood, let's take a look at the code that uses Vault in advance.   
    
 ``` Java
 // The created Car instance is the state in which the "sqaureWheel" bean is injected.
@@ -180,14 +182,14 @@ ClassVault classVault = TypeVaultFactory.get(buildInfo, VaultType.CLASS);
 Car car = classVault.inject(Car.class); 
 ```
    
-위 코드는 Car.class를 파라미터로 받아 Bean이 주입된 Car.class의 인스턴스를 반환하는 코드입니다. 위 코드 에서는 "squareWheel"이 주입된 Car 인스턴스가 반환되는데, 이는 앞서 Car.class의 생성자 주입에 마킹해놓은 @Inject("squareWheel")에 의해서 "squareWheel" 이름의 InternalBean이 Vault에 의해서, Car인스턴스에 주입되었기 때문입니다.   
+The above code receives Car.class as a parameter and returns an instance of Car.class into which the bean is injected. In the code above, a Car instance in which "squareWheel" is injected is returned. This is because the InternalBean named "squareWheel" was injected by the @Inject("squareWheel") annotation marked in the constructor of Car.class earlier.   
    
-이 목차에서는 위 와 같은 Vault를 만드는방법을 알아볼 것 입니다.
+In this tutorial, we will learn how to create a vault like the one above.
    
-우선, Vault를 생성하기위해 Bean스캔 위치와 Vault의 정보를 설정해줘야합니다.   
-Bean 스캔정보와 Vault 생성정보 설정은 실제로 각각 다른 객체가 담당하지만, Jvault에서는 클라이언트 편의를 위해 위 두 정보를 한번에 설정할 수 있는 방법인 properties 파일을 이용한 설정과 Class를 이용한 설정을 제공합니다.   
+First of all, to create a vault, you need to set the location to scan the bean and the information of the vault.   
+Bean scan information and vault creation information setting are actually in charge of different objects, but Jvault provides setting using properties file and setting using class which is a way to set the above two information at once for client convenience.   
    
-우선, properties 파일을 이용한 설정은 아래와 같습니다.   
+First of all, the settings using the properties file are as follows.   
    
 ``` properties
 org.jvault.vault.name = CAR_VAULT
@@ -201,15 +203,15 @@ org.jvault.reader.exclude.packages = usecase.car
    
 | key | value |
 | --- | ----- |
-| org.jvault.vault.name | 생성될 Vault의 이름을 명시합니다. |
-| org.jvault.vault.access.packages | Vault를 통해 Bean을 주입받을수 있는 패키지를 명시합니다. 명시된 패키지내의 모든 클래스가 Vault를 통해 Bean을 주입받을수 있으며, 마지막에 .* 표현식이 사용될 경우, 명시된 패키지를 포함한 하위의 모든 패키지내의 클래스가 Vault를 통해 Bean을 주입받을수 있습니다. 만약, __org.jvault.vault.access.packages__ 와 __org.jvault.vault.access.classes__ 둘 모두 생략되었다면, 모든 클래스가 Vault를 통해 Bean을 주입받을수 있습니다. |
-| org.jvault.vault.access.classes | Vault를 통해 Bean을 주입받을수 있는 클래스를 명시합니다. 명시된 클래스만 Vault를 통해 Bean을 주입받을수 있으며, 만약, __org.jvault.vault.access.packages__ 와 __org.jvault.vault.access.classes__ 둘 모두 생략되었다면, 모든 클래스가 Vault를 통해 Bean을 주입받을수 있습니다. |
-| org.jvault.reader.packages | Vault에 등록될 @InternalBean으로 마킹된 클래스가 존재하는 패키지를 명시합니다. 마지막에 .* 표현식이 사용될 경우, 해당 패키지를 포함한 모든 하위 패키지안의 @InternalBean으로 마킹된 클래스가 Vault에 Bean으로 등록됩니다. 표현식이 없다면, 해당 패키지내의 @InternalBean으로 마킹된 모든 클래스가 Vault에 Bean으로 등록됩니다. |
-| org.jvault.reader.classes | Vault에 등록될 @InternalBean으로 마킹된 클래스의 패키지와 이름을 명시합니다. |
-| org.jvault.reader.exclude.packages | Bean으로 등록하지 않을 패키지의 경로를 명시합니다. 등록되어있는 패키지는 Bean탐색에서 제외되며, 마지막에 .* 표현식이 사용될경우, 해당 패키지를 포함한 모든 하위패키지를 탐색에서 제외합니다. 단, 패키지 탐색이 아닌, __org.jvault.reader.classes__ 를 이용해 직접 등록되는 클래스는 제외되지 않습니다. |
+| org.jvault.vault.name | Specifies the name of the vault to be created. |
+| org.jvault.vault.access.packages | Specifies the package that can receive bean injection through Vault. All classes in the specified package can receive bean injection through the vault, and if the .* expression is used at the end, classes in all sub-packages including the specified package can receive bean injection through the vault. If both org.jvault.vault.access.packages and org.jvault.vault.access.classes are omitted, all classes can receive bean injection through the vault. |
+| org.jvault.vault.access.classes | Specifies the class that can receive bean injection through Vault. Only the specified class can receive beans through the vault, and if both org.jvault.vault.access.packages and org.jvault.vault.access.classes are omitted, all classes can receive beans through the vault. |
+| org.jvault.reader.packages | Specifies the package in which classes marked with @InternalBean to be registered in the vault exist. When the .* expression is used at the end, the class marked with @InternalBean in all subpackages including the package is registered as a bean in the vault. If there is no expression, all classes marked with @InternalBean in the package are registered as beans in the vault. |
+| org.jvault.reader.classes | Specifies the package and class-name of the class marked with @InternalBean to be registered in the vault. |
+| org.jvault.reader.exclude.packages | Specifies the path of the package not to be registered as a bean. The registered package is excluded from the bean search, and when the .* expression is used at the end, all subpackages including the package are excluded from the search. However, classes that are directly registered using org.jvault.reader.classes rather than package search are not excluded. |
    
-이제 이 properties파일을 이용해 Vault를 생성할 수 있습니다.     
-아래는 Class 타입을 파라미터로 받아 파라미터의 인스턴스에 의존성을 주입하고 반환하는 ClassVault를 생성하고 사용하는 예시입니다.
+Now you can create a vault using this properties file.     
+The following is an example of creating and using ClassVault that takes the Class type as a parameter, injects a dependency into the instance of the parameter, and returns it.
 
 ``` Java
 // 1. Create instance containing the information of the .properties file.
@@ -226,11 +228,11 @@ ClassVault vault = vaultFactory.get(buildInfo, VaultType.CLASS);
 Car car = vault.inject(Car.class);
 ```
    
-만약, 다른 타입의 Vault를 생성하고 싶다면, vaultFactory의 인자로 전달되는 VaultType의 값을 변경하면 됩니다. 선택할 수 있는 VaultType의 종류는 [Java doc]() 을 참조하세요.
+If you want to create a different type of vault, you can change the value of VaultType passed as an argument of vaultFactory. For the types of VaultTypes that can be selected, refer to [Java doc]().   
    
-위 코드에서는 SquareWheel과 RoundWheel이 Bean으로 등록된 vault가 생성되며, vault는 Car.class와 car, wheel패키지 내의 모든 클래스를 파라미터로 전달받을수 있습니다. 또한, Car 클래스는 "squareWheel"이름의 빈을 주입받는다고 명시되어 있으므로, __vault.inject(Car.class);__ 에 의해 "squareWheel" 이름의 빈을 주입받은 Car 인스턴스가 생성됩니다.   
+In the code above, a vault with SquareWheel and RoundWheel registered as beans is created, and the vault can receive Car.class and all classes in the car and wheel package as parameters. Also, since the Car class is specified to be injected with a bean named "squareWheel", a Car instance injected with a bean named "squareWheel" is created by __vault.inject(Car.class);__.   
    
-만약, 한번 이라도 VaultFactory에 의해 생성된 Vault라면, 다음과 같이 이름을 통해 조회할 수 있습니다. 위 코드의 vault와 아래 코드의 vault는 서로 다른 주솟값의 vault이지만, vault내부에 저장된 Bean들의 정보는 모두 똑같습니다.  
+If it is a Vault created by VaultFactory at least once, you can search by name as follows. The vault in the code above and the vault in the code below are different vaults, but the information of the beans stored inside the vault is the same.  
    
 ``` Java
 TypeVaultFactory vaultFactory = TypeVaultFactory.getInstance();
@@ -240,12 +242,10 @@ ClassVault vault = vaultFactory.get("CAR_VAULT", VaultType.CLASS);
 Car car = vault.inject(Car.class);
 ```
    
-> TIP : 앞서, SquareWheel Bean을 SINGLETON으로 등록한 것을 상기하세요. 위 예제에서 생성되는 car과 이전 예제에서 생성한 car은 서로 다른 객체이지만, Car 내부에 주입된 SquareWheel은 같은 객체 입니다.   
-> 만약, Car클래스가 @InternalBean(type = Type.SINGLETON)으로 매핑되어 있으며, Bean스캔범위에 포함되어 있다면, 매번 같은 Car객체가 반환됩니다.
-   
+> __TIP__ : Earlier, consider registering SquareWheel Bean as a SINGLETON. The car created in the above example and the car created in the previous example are different objects, but the SquareWheel injected inside the Car is the same object.   
   
-다음은, Class를 이용한 설정 예시입니다.   
-Vault설정 클래스는 클래스 이름 위에 @VaultConfiguration을 마킹함으로 정의할 수 있습니다.
+The following is an example of creating a vault using the Class setting.   
+A VaultConfiguration class can be defined by marking @VaultConfiguration above the class name.   
    
 ``` Java
 @VaultConfiguration(
@@ -261,19 +261,19 @@ public class CarVaultConfig{
 }
 ```
    
-@VaultConfiguration에 설정가능한 정보들 입니다.   
+information that can be parametered in @VaultConfiguration.   
    
 | parameter | value |
 | ---------- | ----- | 
-| name | properties 설정 예시의 org.jvault.vault.name 과 동일합니다. 만약 생략된다면, 클래스의 이름의 첫 글자를 소문자로 바꾼값이 vault의 이름으로 등록됩니다. |
-| vaultAccessPackages | properties 설정 예시의 org.jvault.vault.access.packages 와 동일합니다. 만약, __vaultAccessPackages__ 와 __vaultAccessClasses__ 모두 생략된다면 모든 클래스가 vault의 파라미터로 전달될 수 있습니다. |
-| vaultAccessClasses | properties 설정 예시의 org.jvault.vault.access.classes 와 동일합니다. 만약, __vaultAccessPackages__ 와 __vaultAccessClasses__ 모두 생략된다면 모든 클래스가 vault의 파라미터로 전달될 수 있습니다. |
+| name | Same as org.jvault.vault.name in the properties setting example. If omitted, the value of changing the first letter of the class name to lowercase is registered as the vault name. |
+| vaultAccessPackages | Same as org.jvault.vault.access.packages in the properties setting example. If both vaultAccessPackages and vaultAccessClasses are omitted, all classes can be passed as parameters of the vault. |
+| vaultAccessClasses | Same as org.jvault.vault.access.classes in the properties setting example. If both vaultAccessPackages and vaultAccessClasses are omitted, all classes can be passed as parameters of the vault. |
    
-또한, 클래스 내부의 멤버변수에 @BeanWire 어노테이션을 마킹함으로써 Vault에 등록될 Bean을 정의할 수 있습니다. 이때, 마킹된 필드의 타입은 인터페이스가 아닌 구체타입 이어야 하며, 해당하는 클래스는 반드시 @InternalBean으로 마킹되어 있어야 합니다. Bean은 @BeanWire로 마크된 변수 클래스의 @InternalBean정보에 따라 생성됩니다.   
+Also, by marking @BeanWire annotation on member variable inside class, bean to be registered in vault can be defined. At this time, the type of the marked field must be a concrete type, not an interface, and the corresponding class must be marked with @InternalBean. Bean is created according to @InternalBean information of variable class marked with @BeanWire.   
    
-_*(멤버변수에 BeanWire를 매핑하는 방식을 채택했는데, Internal API의 특성상, 클래스의 생성자가 public이 아닐수도 있기때문에, 생성자없이 Bean을 등록하는 방법이 필요했습니다.)*_
+_*(I adopted the mapping of BeanWire to field variables. Due to the nature of the internal API, the class constructor may not be public, so it was necessary to register the bean without the constructor.)*_     
    
-이제, 이 클래스를 이용해 Vault를 생성할수 있습니다.   
+Now, we can use this class to create a Vault.   
    
 ``` Java
 // 1. Create instance containing the information of the CarVaultConfig.class
@@ -290,14 +290,14 @@ ClassVault vault = vaultFactory.get(buildInfo, VaultType.CLASS);
 Car car = vault.inject(Car.class);
 ```
    
-생성 가능한 더 많은 Vault 종류는 [Java doc]() 을 참조해주세요.
+For more types of vaults that can be created, refer to [Java doc]().
    
 <br>
    
-### Vault 사용
+### Use Vault
 
-이 목차에서는 Vault를 사용하는 다양한 방법을 소개합니다.   
-Vault는 애플리케이션에서 전역적으로 관리되며, 한번 생성된 Vault라면, 다음 요청부터는 매번 동등한 Vault가 반환됩니다. 즉, Vault는 애플리케이션 로딩시 처음 한번 생성했다면, 그 다음부터는 애플리케이션에서 전역적으로 재사용할 수 있습니다.   
+This tutorials introduce different ways to use Vault.   
+Vaults are managed globally by the application, and once a vault is created, the same vault is returned every time from the next request. This means that Vault is globally reusable across applications.   
    
 ``` Java
 public class Main {  
@@ -323,8 +323,8 @@ public class Main {
 
 ```
    
-예를 들어, 위 코드와 같이, 애플리케이션 시작시 "CAR_VAULT"라는 이름으로 Vault를 생성해놓았다면, 애플리케이션의 어디에서든지 아래 코드와 같이 Vault를 얻을 수 있습니다.   
-
+For example, as in the code above, if you have created a vault with the name "CAR_VAULT", you can get a vault anywhere in the application as in the code below.   
+   
 ``` Java
 TypeVaultFactory vaultFactory = TypeVaultFactory.getInstance();
 
@@ -333,12 +333,12 @@ ClassVault classVault = vaultFactory.get("CAR_VAULT", VaultType.CLASS);
 InstanceVault instanceVault = vaultFactory.get("CAR_VAULT", VaultType.INSTANCE);
 ```
    
-(이름이 똑같다면, 동일한 Bean을 갖고있는 다양한 Type의 Vault를 생성할 수 있습니다.)   
+_(If the name is the same, you can create various types vault with the same bean.)_   
    
-Jvault를 사용해서 API를 구축하는 개발자는 자신의 API를 사용하는 유저가 Jvault를 익혀야하는 상황을 달갑게 여기지 않을 수 있는데, Jvault는 이러한 _"달갑지 않은 제 3 코드 노출"_ 문제를 완벽히 해결할 수 있는 방법을 제공합니다.   
+Developers who use Jvault to build APIs may not like the fact that users who use their APIs have to learn Jvault, but Jvault provides the perfect way to solve this "unwelcome third-party code exposure" problem.   
    
-예를들어, API인 Car 클래스가 반드시 생성자를 통해 생성되어야 한다면, 다음과 같이 InstanceVault를 사용할 수 있습니다.   
-(roundWheel과 squareWheel클래스가 InstancedCar에서 자신들을 주입받는것을 허락한 상태일때,)   
+For example, if the Car class, which is an API, must be created through a constructor, you can use InstanceVault as follows   
+_(When the roundWheel and squareWheel classes are allowed to inject themselves from the InstancedCar,)_   
    
 ``` Java
 package usecase.car;  
@@ -367,16 +367,17 @@ public final class InstancedCar implements Vehicle{
 }
 ```
    
-이제, InstancedCar 사용자는 다음과 같이 roundWheel과 squareWheel이 주입된 InstancedCar를 사용할 수 있습니다.   
+Now, InstancedCar users can use InstancedCar injected with roundWheel and squareWheel like this:   
    
 ``` Java
 InstancedCar instancedCar = new InstancedCar("mini-car");
 instancedCar.meter();
 ```
    
-위 코드에서 사용자는 실제로 Jvault API에 대해 무지한 상태로 InstancedCar객체를 얻고 사용합니다.   
-InstanceVault의 더 자세한 사용법은 [Java doc]() 을 참조하세요.   
-더 좋은 방법은 생성자가 아닌 별도의 Factory나 Instance를 얻는 메소드를 제공하는 것 입니다.   
+In the code above, the user actually gets and uses the InstancedCar object with no knowledge of the Jvault API.   
+For more detailed usage of InstanceVault, see [Java doc]().   
+   
+A better way is to provide a Factory rather than a constructor, or a separate method to get an Instance.   
    
 ``` Java
 public final class VehicleFactory {  
@@ -395,40 +396,39 @@ public final class VehicleFactory {
   
 }```
    
-이제 사용자는 VehicleFactory를 통해서 다음과 같이 Car 객체를 얻습니다.   
+Now the user gets a Car object through VehicleFactory like this:   
    
 ``` Java
 	Car car = VehicleFactory.getVehicle(Car.class);  
 	InstancedCar instancedCar = VehicleFactory.getVehicle(InstancedCar.class);
 ```
    
-> 저는 위 코드와 같이 ClassVault를 매번 재사용하는 방식을 추천하는데, ClassVault는 특정 조건(파라미터로 전달되는 클래스가 @InternalBean(type = Type.SINGLETON)으로 마킹되어있으며, Vault의 Bean스캔 범위에 포함되어야함.) 을 만족하는 요청을 캐시하고 이 다음부터 들어오는 요청에 대해 캐시된 객체를 반환하기 때문에 더 효율적이기 때문입니다.
+> __TIP__ : I recommend reusing ClassVault every time as in the code above, ClassVault is more efficient because it caches requests that satisfy certain conditions(The class passed as a parameter is marked with @InternalBean(type = Type.SINGLETON) and must be included in the scope of Vault's bean scan.), and uses the cache to process incoming requests after this.   
    
-또한, Jvault는 스프링과 함께 사용할 수 있는데,   
-Spring Bean으로 Vault를 등록하고, Vault가 필요한 객체에서 Vault를 주입받으면 됩니다.   
+Also, Jvault can be used with spring,   
+Register Vault with Spring Bean and inject Vault from an object that requires Vault.   
    
 ``` Java
 @Autowire 
 private ClassVault classVault;
 ```
    
-또한, 만약, InternalBean에서 Spring Bean을 사용해야한다면, Spring에서 제공하는 
-_ApplicatioContextAware_ 를 이용할 수 있습니다.   
+Also, if you need to use Spring Bean in InternalBean, you can use _ApplicationContextAware_ provided by Spring.   
    
 <br>
    
 ### Jvault 확장
 
-Jvault라이브러리는 Runtime에 라이브러리 동작을 수정할 수 있는 방법을 제공합니다.   
-모든 런타임 확장은 [JvaultRuntimeExtension.class]() 를 이용해 진행되는데, 예를 들어, Jvault가 기본적으로 제공하는 AnnotatedBeanReader가 아닌 자신만의 BeanReader를 등록하고 싶다면, BeanReader 인터페이스의 구현체를 JvaultRuntimeExtension으로 주입하면 됩니다.   
+The Jvault library provides a way to modify library behavior at runtime.   
+All runtime extensions are performed using [JvaultRuntimeExtension.class](). For example, if you want to register your own BeanReader instead of the AnnotatedBeanReader provided by Jvault at default, you can inject the implementation of the BeanReader interface into JvaultRuntimeExtension.   
    
 ``` Java
 BeanReader nullBeanReader = param -> null;  
 JvaultRuntimeExtension.extend(nullBeanReader, BeanReader.class);
 ```
    
-위 코드와 같이, 요청시 null을 반환하는 _nullBeanReader_ 를 등록하면, PropertiesVaultFactoryBuildInfo와 AnnotationVaultFactoryBuildInfo를 비롯한 모든 BeanReader를 사용하는 Jvault 내부 구현들이 nullBeanReader를 사용하게 됩니다.   
-만약, 기본값으로 초기화 하고 싶다면, 다음 코드를 작성하면 됩니다.   
+As shown in the code above, if you register _nullBeanReader_ that returns null when requested, all Jvault internal implementations that use BeanReader including PropertiesVaultFactoryBuildInfo and AnnotationVaultFactoryBuildInfo will use nullBeanReader.   
+If you want to initialize to default, you can write the following code.   
    
 ``` Java
 JvaultRuntimeExtension.reset(BeanReader.class);
@@ -436,7 +436,7 @@ JvaultRuntimeExtension.reset(BeanReader.class);
 JvaultRuntimeExtension.resetAll();
 ```
    
-더 자세한 Jvault 확장에 대한 내용은 [Java doc]() 을 참조하세요.
+See [Java doc]() for more detailed Jvault extensions.
    
 <h2></h2>
 
