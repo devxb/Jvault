@@ -4,7 +4,7 @@
    
 [Translate to English](/README.md)    
 [Learn Jvault]()    
-[Java doc]()    
+[Java doc](https://jvault.org/docs/)    
 [License](/LICENSE)    
    
 ![current jvault version](https://img.shields.io/badge/Jvault-0.1-orange) ![test method coverage](https://img.shields.io/badge/Method%20coverage-100%25-brightgreen) ![test line coverage](https://img.shields.io/badge/Line%20coverage-92%25-brightgreen) ![test class coverage](https://img.shields.io/badge/Class%20coverage-91%25-brightgreen) ![needed jdk version](https://img.shields.io/badge/JDK-8-blue) ![libarry status](https://img.shields.io/badge/library%20status-activity-green)    
