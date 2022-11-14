@@ -18,7 +18,7 @@ With Jvaut, you can effectively encapsulate your internal APIs from external use
 ## Getting Start
 
 This document introduces how to use Jvault and how to download the Jvault library to the project.   
-More library details can be found at [Javadoc]() .
+More library details can be found at [Javadoc](https://jvault.org/docs/).
 
 <br>
    
