@@ -2,7 +2,7 @@
 
 # Jvault - Java encapsulation library using DI
    
-[한국어로 번역]()    
+[한국어로 번역](/KOREAN.md)    
 [Learn Jvault]()    
 [Java doc]()    
 [License]()    
@@ -439,6 +439,6 @@ See [Java doc]() for more detailed Jvault extensions.
 <h2></h2>
 
 <div align="center">
-        <a href="">LICENSE</a> / 문의 : <i>develxb@gmail.com</i> / <a href=""><i>Java doc</i></a>
+        <a href="">LICENSE</a> / inquiry : <i>develxb@gmail.com</i> / <a href=""><i>Java doc</i></a>
         <br/><div align="right"> @author : <a href="https://github.com/devxb"><i>devxb</i></a></div>
 </div>
