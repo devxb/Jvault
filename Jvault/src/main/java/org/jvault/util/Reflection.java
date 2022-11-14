@@ -51,7 +51,7 @@ public final class Reflection {
         throwIfConstructorDoesNotAnnotatedInject(constructor);
         Parameter[] parameters = constructor.getParameters();
         for(Parameter parameter : parameters)
-            throwIfInjectInConstructorHasNotValue(parameter.getDeclaredAnnotation(Inject.class));
+            throwIfInjectConstructorParameterHasNotValue(parameter.getDeclaredAnnotation(Inject.class));
         return Arrays.asList(parameters);
     }
 
@@ -61,7 +61,7 @@ public final class Reflection {
                     "only accept constructors marked with \"@Inject\" as parameters.\"");
     }
 
-    private void throwIfInjectInConstructorHasNotValue(Inject inject) {
+    private void throwIfInjectConstructorParameterHasNotValue(Inject inject) {
         if (inject == null || inject.value().equals(""))
             throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
     }

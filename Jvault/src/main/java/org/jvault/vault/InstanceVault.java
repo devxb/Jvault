@@ -14,12 +14,43 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Receive instance of class as a parameter and inject bean to parameter.
+ * Receive instance of class as a parameter and inject bean to parameter. <br>
  * <br>
+ * InstanceVault injects beans into parameters, using the @Inject annotation mapped to a field or constructor of the parameter's class.<br>
+ * Examples.
+ * <br>
+ * 1. Field Inject <br>
+ * <pre>
+ *    {@code
+ *        public class Foo { @Inject private SomeBean bean; }
+ *    }
+ * </pre>
+ * If a Foo instance is passed to a method of InstanceVault,<br>
+ * InstanceVault injects a bean into the field mapped to @Inject of the created Foo instance.<br>
+ * <br>
+ * 2. Constructor Inject <br>
+ * <pre>
+ *     {@code
+ *      public class Foo{
+ *
+ *          private SomeBean bean;
+ *
+ *          public Foo(){}
+ *
+ *·         @Inject
+ *          private Foo(@Inject("bean") SomeBean someBean){ }
+ *      }
+ *     }
+ * </pre>
+ * InstanceVault injects a value into the field based on the constructor parameter information mapped with @Inject of the passed parameter.<br>
+ * Note that the constructor is not actually executed, and the bean is injected based on the parameter information of the constructor.<br>
+ * and, the injected field is not mapped to the parameter name of the constructor,<br>
+ * but is mapped to the value of the @Inject annotation marked on the parameter of the constructor.<br>
+ * <br>
+ * Also, constructor parameters must be marked with @Inject annotation. Otherwise, {@link org.jvault.exceptions.DuplicateInjectConstructorException} is thrown.<br>
  * <br>
  * InstanceVault can only be instantiated in the org.jvault.* package,<br>
  * and actually you can't force instantiation of Vault without using Reflection.<br>
- * This means that you should not instantiate ClassVault using Reflection.<br>
  * To obtain InstanceVault, see the {@link org.jvault.factory.TypeVaultFactory} class.
  *
  * @author devxb
