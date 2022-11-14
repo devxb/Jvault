@@ -1,4 +1,4 @@
-<img src = "https://user-images.githubusercontent.com/62425964/201114722-23e84cd7-eb57-4f9b-a4a5-f218cc480dcf.svg" width="630" height="auto"/>
+<img src = "https://user-images.githubusercontent.com/62425964/201680890-2072d240-c91d-4b69-94c3-f60c30520e79.svg" width="625" height="auto"/>
 
 # Jvault - Java encapsulation library using DI
    
