@@ -1,5 +1,6 @@
 package org.jvault.vault;
 
+import org.jvault.factory.extensible.Vault;
 import org.jvault.metadata.API;
 
 /**

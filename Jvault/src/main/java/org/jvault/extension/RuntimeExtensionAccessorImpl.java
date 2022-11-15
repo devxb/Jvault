@@ -4,6 +4,7 @@ import org.jvault.factory.buildinfo.Accessors;
 import org.jvault.metadata.InternalAPI;
 
 @InternalAPI
+@SuppressWarnings("unused")
 final class RuntimeExtensionAccessorImpl extends Accessors.RuntimeExtensionAccessor{
 
     @Override

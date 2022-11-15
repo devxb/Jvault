@@ -1,6 +1,7 @@
 package org.jvault.annotation;
 
 import org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo;
+import org.jvault.factory.extensible.Vault;
 import org.jvault.factory.extensible.VaultFactoryBuildInfo;
 import org.jvault.metadata.API;
 
@@ -40,7 +41,7 @@ import java.lang.annotation.Target;
 public @interface VaultConfiguration {
 
     /**
-     * Returns the name of the {@link org.jvault.vault.Vault} to be created by {@link org.jvault.factory.VaultFactory}.
+     * Returns the name of the {@link Vault} to be created by {@link org.jvault.factory.VaultFactory}.
      *
      * @return String - vault name
      *
@@ -50,7 +51,7 @@ public @interface VaultConfiguration {
     String name() default "";
 
     /**
-     * Returns the paths of packages that can be passed as parameters of the {@link org.jvault.vault.Vault}
+     * Returns the paths of packages that can be passed as parameters of the {@link Vault}
      *
      * @return - String[] Packages injectable from vault
      *
@@ -60,7 +61,7 @@ public @interface VaultConfiguration {
     String[] vaultAccessPackages() default {};
 
     /**
-     * Returns the class name with path that can be passed as parameters of the {@link org.jvault.vault.Vault}
+     * Returns the class name with path that can be passed as parameters of the {@link Vault}
      *
      * @return - String[] Class name with path injectable from vault
      *

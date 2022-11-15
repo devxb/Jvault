@@ -3,9 +3,10 @@ package org.jvault.factory;
 import org.jvault.factory.extensible.BeanLoader;
 import org.jvault.factory.extensible.BuildStorage;
 import org.jvault.factory.extensible.VaultFactoryBuildInfo;
+import org.jvault.factory.extensible.Vault;
 import org.jvault.metadata.API;
 import org.jvault.metadata.ThreadSafe;
-import org.jvault.vault.Vault;
+
 import org.jvault.vault.VaultType;
 
 /**

@@ -1,6 +1,7 @@
 package org.jvault.annotation;
 
-import org.jvault.beans.Type;
+import org.jvault.bean.Type;
+import org.jvault.factory.extensible.Vault;
 import org.jvault.metadata.API;
 
 import java.lang.annotation.ElementType;
@@ -9,12 +10,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation that marks this class to be registered as a bean in {@link org.jvault.vault.Vault}.<br><br>
+ * Annotation that marks this class to be registered as a bean in {@link Vault}.<br><br>
  *
  * Below are the default settings of InternalBean. <br> <br>
  *
  * Bean name : Same as changing the first alphabet of the class name to lowercase <br>
- * Bean {@link org.jvault.beans.Type} : Bean is created as Singleton by default <br>
+ * Bean {@link Type} : Bean is created as Singleton by default <br>
  * Bean accesses : Set to Empty String[] by default. In this case, this Bean can be injected from all packages
  * <br><br>
  *
@@ -58,9 +59,9 @@ public @interface InternalBean {
     /**
      * Specifies the type of bean to be created.
      *
-     * Default Bean {@link org.jvault.beans.Type} : Bean is created as Singleton by default <br>
+     * Default Bean {@link Type} : Bean is created as Singleton by default <br>
      *
-     * @return {@link org.jvault.beans.Type}
+     * @return {@link Type}
      *
      * @author devxb
      * @since 0.1

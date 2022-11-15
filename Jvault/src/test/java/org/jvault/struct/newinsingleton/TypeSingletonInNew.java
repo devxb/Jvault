@@ -1,7 +1,7 @@
 package org.jvault.struct.newinsingleton;
 
 import org.jvault.annotation.InternalBean;
-import org.jvault.beans.Type;
+import org.jvault.bean.Type;
 
 @InternalBean(type = Type.SINGLETON, accessPackages = "org.jvault.*")
 final class TypeSingletonInNew {

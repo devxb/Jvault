@@ -2,7 +2,7 @@ package org.jvault.struct.injectInInternalBean;
 
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
-import org.jvault.beans.Type;
+import org.jvault.bean.Type;
 
 @InternalBean(name = "A", type = Type.SINGLETON, accessPackages = "org.jvault.*")
 public class A {

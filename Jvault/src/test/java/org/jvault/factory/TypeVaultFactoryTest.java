@@ -12,7 +12,7 @@ import org.jvault.struct.beanwithfactory.BeanWithFactoryInjectTarget;
 import org.jvault.struct.failannotationconfig.FailConfig;
 import org.jvault.struct.readfromclass.ReadFromClass;
 import org.jvault.struct.scanwithproperties.ScanProperties;
-import org.jvault.vault.Vault;
+import org.jvault.factory.extensible.Vault;
 import org.jvault.vault.VaultType;
 
 public class TypeVaultFactoryTest {

@@ -1,6 +1,6 @@
 package org.jvault.beanloader;
 
-import org.jvault.beans.BeanBuilderFactory;
+import org.jvault.bean.BeanBuilderFactory;
 import org.jvault.metadata.InternalAPI;
 import org.jvault.util.Reflection;
 
@@ -10,6 +10,7 @@ public final class Accessors {
     public abstract static class UtilAccessor{
 
         private static UtilAccessor accessor;
+        @SuppressWarnings("unused")
         private final static Class<?> init = init();
 
         private static Class<?> init(){
@@ -33,25 +34,26 @@ public final class Accessors {
 
     }
 
-    public abstract static class BeansAccessor{
+    public abstract static class BeanAccessor{
 
-        private static BeansAccessor accessor;
+        private static BeanAccessor accessor;
+        @SuppressWarnings("unused")
         private final static Class<?> init = init();
 
         private static Class<?> init(){
             try{
-                return Class.forName("org.jvault.beans.BeansAccessorImpl");
+                return Class.forName("org.jvault.bean.BeanAccessorImpl");
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        public static void registerAccessor(BeansAccessor accessor){
-            if(BeansAccessor.accessor != null) throw new IllegalStateException();
-            BeansAccessor.accessor = accessor;
+        public static void registerAccessor(BeanAccessor accessor){
+            if(BeanAccessor.accessor != null) throw new IllegalStateException();
+            BeanAccessor.accessor = accessor;
         }
 
-        static BeansAccessor getAccessor(){
+        static BeanAccessor getAccessor(){
             return accessor;
         }
 
