@@ -3,7 +3,7 @@
 # Jvault - Java encapsulation library using DI
    
 [한국어로 번역](/KOREAN.md)    
-[Learn Jvault]()    
+[Learn Jvault](#Learn-Jvault)    
 [Java doc](https://docs.jvault.org/)    
 [License](/LICENSE)    
    
@@ -169,7 +169,7 @@ public final class Car implements Vehicle{
 
 Vault is a variant of BeanFactory, and plays a role for injecting InternalBeans (registered in Vault) into the passed parameters. Therefore, the parameter passed to the Vault does not need to be an InternalBean, which is why the Car class was not marked as @InternalBean earlier.   
    
-> __TIP__ : If the parameter passed to Vault is marked with @InternalBean(type = Type.SINGLETON) and is included in the scope of Vault's bean scan, the same instance is returned for every request. Otherwise, a new object is returned for every request. - This behavior is for ClassVault, and for the behavior of other Vault implementations, refer to [Javadoc]().   
+> __TIP__ : If the parameter passed to Vault is marked with @InternalBean(type = Type.SINGLETON) and is included in the scope of Vault's bean scan, the same instance is returned for every request. Otherwise, a new object is returned for every request. - This behavior is for ClassVault, and for the behavior of other Vault implementations, refer to [Javadoc](https://docs.jvault.org).   
    
 Since the word Vault is a bit abstract and the role of Vault may not be well understood, let's take a look at the code that uses Vault in advance.   
    
@@ -225,7 +225,7 @@ ClassVault vault = vaultFactory.get(buildInfo, VaultType.CLASS);
 Car car = vault.inject(Car.class);
 ```
    
-If you want to create a different type of vault, you can change the value of VaultType passed as an argument of vaultFactory. For the types of VaultTypes that can be selected, refer to [Java doc]().   
+If you want to create a different type of vault, you can change the value of VaultType passed as an argument of vaultFactory. For the types of VaultTypes that can be selected, refer to [Java doc](https://docs.jvault.org).   
    
 In the code above, a vault with SquareWheel and RoundWheel registered as beans is created, and the vault can receive Car.class and all classes in the car and wheel package as parameters. Also, since the Car class is specified to be injected with a bean named "squareWheel", a Car instance injected with a bean named "squareWheel" is created by __vault.inject(Car.class);__.   
    
@@ -287,7 +287,7 @@ ClassVault vault = vaultFactory.get(buildInfo, VaultType.CLASS);
 Car car = vault.inject(Car.class);
 ```
    
-For more types of vaults that can be created, refer to [Java doc]().
+For more types of vaults that can be created, refer to [Java doc](https://docs.jvault.org).
    
 <br>
    
@@ -372,7 +372,7 @@ instancedCar.meter();
 ```
    
 In the code above, the user actually gets and uses the InstancedCar object with no knowledge of the Jvault API.   
-For more detailed usage of InstanceVault, see [Java doc]().   
+For more detailed usage of InstanceVault, see [Java doc](https://docs.jvault.org).   
    
 A better way is to provide a Factory rather than a constructor, or a separate method to get an Instance.   
    
@@ -433,11 +433,11 @@ JvaultRuntimeExtension.reset(BeanReader.class);
 JvaultRuntimeExtension.resetAll();
 ```
    
-See [Java doc]() for more detailed Jvault extensions.
+See [Java doc](https://docs.jvault.org) for more detailed Jvault extensions.
    
 <h2></h2>
 
 <div align="center">
-        <a href="/LICENSE">LICENSE</a> / inquiry : <i>develxb@gmail.com</i> / <a href=""><i>Java doc</i></a>
+        <a href="/LICENSE">LICENSE</a> / inquiry : <i>develxb@gmail.com</i> / <a href="https://docs.jvault.org"><i>Java doc</i></a>
         <br/><div align="right"> @author : <a href="https://github.com/devxb"><i>devxb</i></a></div>
 </div>
