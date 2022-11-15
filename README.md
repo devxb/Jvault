@@ -27,15 +27,14 @@ More library details can be found at [Javadoc](https://docs.jvault.org/).
 Jvault can be downloaded to the project using Gradle and Maven build tools.
 
 ``` gradle
-implemetation : org.jvault:jvault-api:0.1
+implementation 'org.jvault:jvault-core:0.1'
 ```
    
 ``` maven
 <dependency>
-    <groupId>org.jvault</groupId>
-    <artifactId>jvault-api</artifactId>
-    <version>0.1</version>
-    <scope>compile</scope>
+  <groupId>org.jvault</groupId>
+  <artifactId>jvault-core</artifactId>
+  <version>0.1</version>
 </dependency>
 ```
    
