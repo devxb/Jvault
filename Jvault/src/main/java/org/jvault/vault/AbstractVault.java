@@ -1,11 +1,12 @@
 package org.jvault.vault;
 
-import org.jvault.beans.Bean;
+import org.jvault.bean.Bean;
 import org.jvault.exceptions.DisallowedAccessException;
+import org.jvault.factory.extensible.Vault;
 
 import java.util.Map;
 
-abstract class AbstractVault<P> implements Vault<P>{
+abstract class AbstractVault<P> implements Vault<P> {
 
     protected final String NAME;
     protected final String[] ACCESS_PACKAGES;
@@ -13,10 +14,10 @@ abstract class AbstractVault<P> implements Vault<P>{
     protected final Map<String, Bean> BEANS;
 
     protected AbstractVault(Vault.Builder<? extends Vault<P>> builder){
-        NAME = builder.name;
-        ACCESS_PACKAGES = builder.accessPackages;
-        ACCESS_CLASSES = builder.accessClasses;
-        BEANS = builder.BEANS;
+        NAME = builder.getName();
+        ACCESS_PACKAGES = builder.getAccessPackages();
+        ACCESS_CLASSES = builder.getAccessClasses();
+        BEANS = builder.getBeans();
     }
 
     protected void throwIfParamDoesNotAccessible(Class<?> param){

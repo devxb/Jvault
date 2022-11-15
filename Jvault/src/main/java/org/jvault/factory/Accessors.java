@@ -2,11 +2,12 @@ package org.jvault.factory;
 
 import org.jvault.factory.extensible.BeanLoader;
 import org.jvault.factory.extensible.BuildStorage;
+import org.jvault.factory.extensible.Vault;
 import org.jvault.metadata.InternalAPI;
-import org.jvault.vault.Vault;
 import org.jvault.vault.VaultType;
 
 @InternalAPI
+@SuppressWarnings("unused")
 public final class Accessors {
 
     public abstract static class BeanLoaderAccessor{

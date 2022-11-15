@@ -3,6 +3,7 @@ package org.jvault.beanloader;
 import org.jvault.metadata.InternalAPI;
 
 @InternalAPI
+@SuppressWarnings("unused")
 final class BeanLoaderAccessorImpl extends org.jvault.factory.Accessors.BeanLoaderAccessor {
 
     @Override

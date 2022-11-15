@@ -24,7 +24,7 @@ import java.util.List;
 public interface VaultFactoryBuildInfo {
 
     /**
-     * Method that returns the name of the {@link org.jvault.vault.Vault} to be created by {@link org.jvault.factory.VaultFactory}. <br>
+     * Method that returns the name of the {@link Vault} to be created by {@link org.jvault.factory.VaultFactory}. <br>
      * You can find Vault from VaultFactory using this name.
      *
      * @return String - Name of the vault to be created
@@ -45,11 +45,11 @@ public interface VaultFactoryBuildInfo {
     List<Class<?>> getBeanClasses();
 
     /**
-     * Method that returns the accessible package paths to which {@link org.jvault.vault.Vault} created by {@link org.jvault.factory.VaultFactory} <br>
+     * Method that returns the accessible package paths to which {@link Vault} created by {@link org.jvault.factory.VaultFactory} <br>
      * Only the path of the class specified here can be passed as a parameter of the vault. <br>
      * If empty, any class can be passed as a parameter.<br>
      *
-     * @return String[] Packages of classes that can be passed as parameters to the {@link org.jvault.vault.Vault}
+     * @return String[] Packages of classes that can be passed as parameters to the {@link Vault}
      *
      * @author devxb
      * @since 0.1
@@ -57,11 +57,11 @@ public interface VaultFactoryBuildInfo {
     String[] getVaultAccessPackages();
 
     /**
-     * Method that returns the accessible class name with path to which {@link org.jvault.vault.Vault} created by {@link org.jvault.factory.VaultFactory} <br>
+     * Method that returns the accessible class name with path to which {@link Vault} created by {@link org.jvault.factory.VaultFactory} <br>
      * Only the path of the class specified here can be passed as a parameter of the vault.<br>
      * If empty, any class can be passed as a parameter.<br>
      *
-     * @return String[] The name with path of the class that can be passed as parameters to the {@link org.jvault.vault.Vault}
+     * @return String[] The name with path of the class that can be passed as parameters to the {@link Vault}
      *
      * @author devxb
      * @since 0.1

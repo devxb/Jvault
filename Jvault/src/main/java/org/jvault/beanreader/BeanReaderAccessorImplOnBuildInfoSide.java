@@ -5,6 +5,7 @@ import org.jvault.factory.buildinfo.extensible.BeanReader;
 import org.jvault.metadata.InternalAPI;
 
 @InternalAPI
+@SuppressWarnings("unused")
 final class BeanReaderAccessorImplOnBuildInfoSide extends Accessors.BeanReaderAccessor {
 
     @Override

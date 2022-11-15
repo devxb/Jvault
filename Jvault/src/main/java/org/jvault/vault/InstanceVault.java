@@ -1,9 +1,9 @@
 package org.jvault.vault;
 
 import org.jvault.annotation.Inject;
-import org.jvault.beans.Bean;
 import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
+import org.jvault.factory.extensible.Vault;
 import org.jvault.metadata.API;
 import org.jvault.metadata.ThreadSafe;
 import org.jvault.util.Reflection;
@@ -12,7 +12,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Receive instance of class as a parameter and inject bean to parameter. <br>
@@ -61,12 +60,10 @@ import java.util.Map;
 @ThreadSafe
 public final class InstanceVault extends AbstractVault<Object>{
 
-    private final Map<String, Bean> BEANS;
     private final Reflection REFLECTION;
 
     InstanceVault(Vault.Builder<InstanceVault> builder) {
         super(builder);
-        BEANS = builder.BEANS;
         REFLECTION = Accessors.UtilAccessor.getAccessor().getReflection();
     }
 
@@ -121,7 +118,6 @@ public final class InstanceVault extends AbstractVault<Object>{
             String beanName = inject.value();
 
             throwIfCanNotFindDefinedBean(beanName);
-            throwIfBeanDoesNotAccessInject(beanName, injectTargetClass);
 
             Field field = getInjectTargetField(injectTargetClass, beanName);
             field.setAccessible(true);
@@ -140,13 +136,11 @@ public final class InstanceVault extends AbstractVault<Object>{
 
     private <R> R injectBeanToTargetField(R injectTarget){
         List<Field> fields = REFLECTION.findFields(injectTarget.getClass());
-        Class<?> injectTargetClass = injectTarget.getClass();
         for(Field field : fields){
             field.setAccessible(true);
             String beanName = getBeanNameByField(field);
 
             throwIfCanNotFindDefinedBean(beanName);
-            throwIfBeanDoesNotAccessInject(beanName, injectTargetClass);
 
             injectBeanToField(injectTarget, field, beanName);
         }
@@ -164,14 +158,9 @@ public final class InstanceVault extends AbstractVault<Object>{
         if (!BEANS.containsKey(beanName)) throw new NoDefinedInternalBeanException(beanName);
     }
 
-    private void throwIfBeanDoesNotAccessInject(String beanName, Class<?> injectReceiver){
-        if (!BEANS.get(beanName).isInjectable(injectReceiver))
-            throw new DisallowedAccessException(beanName, injectReceiver.getPackage().getName());
-    }
-
     private void injectBeanToField(Object injectTarget, Field field, String beanName) {
         try {
-            field.set(injectTarget, BEANS.get(beanName).load());
+            field.set(injectTarget, BEANS.get(beanName).loadIfInjectable(injectTarget.getClass()));
         } catch (IllegalAccessException IAE) {
             throw new IllegalStateException("Can not access field value \"" + beanName + "\"");
         }

@@ -6,6 +6,7 @@ import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.factory.TypeVaultFactory;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
 import org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo;
+import org.jvault.factory.extensible.Vault;
 import org.jvault.factory.extensible.VaultFactoryBuildInfo;
 import org.jvault.struct.annotationconfigwithclass.AnnotationConfigWithClass;
 import org.jvault.struct.buildvault.BuildVault;

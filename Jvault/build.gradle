@@ -9,6 +9,7 @@ targetCompatibility = 8
 
 java{
     withSourcesJar()
+    withJavadocJar()
 }
 
 repositories {
