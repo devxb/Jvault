@@ -27,15 +27,14 @@ Jvaut를 사용하면, 내부 API를 외부 사용자로부터 효과적으로 �
 Jvault는 Gradle, Maven 빌드툴을 이용해 프로젝트에 다운로드 할 수 있습니다.
 
 ``` gradle
-implemetation : org.jvault:jvault-api:0.1
+implementation 'org.jvault:jvault-core:0.1'
 ```
    
 ``` maven
 <dependency>
-    <groupId>org.jvault</groupId>
-    <artifactId>jvault-api</artifactId>
-    <version>0.1</version>
-    <scope>compile</scope>
+  <groupId>org.jvault</groupId>
+  <artifactId>jvault-core</artifactId>
+  <version>0.1</version>
 </dependency>
 ```
    
