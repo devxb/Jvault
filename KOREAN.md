@@ -4,7 +4,7 @@
    
 [Translate to English](/README.md)    
 [Learn Jvault]()    
-[Java doc](https://jvault.org/docs/)    
+[Java doc](https://docs.jvault.org/)    
 [License](/LICENSE)    
    
 ![current jvault version](https://img.shields.io/badge/Jvault-0.1-orange) ![test method coverage](https://img.shields.io/badge/Method%20coverage-100%25-brightgreen) ![test line coverage](https://img.shields.io/badge/Line%20coverage-92%25-brightgreen) ![test class coverage](https://img.shields.io/badge/Class%20coverage-91%25-brightgreen) ![needed jdk version](https://img.shields.io/badge/JDK-8-blue) ![libarry status](https://img.shields.io/badge/library%20status-activity-green)    
@@ -18,7 +18,7 @@ Jvaut를 사용하면, 내부 API를 외부 사용자로부터 효과적으로 �
 ## Getting Start
 
 이 문서에서는 Jvault라이브러리를 프로젝트에 다운하는 방법부터 Jvault사용방법을 소개합니다.   
-선택가능한 더 많은 (Bean, Vault , VaultFactory and etc.) 종류는 [Java doc](https://jvault.org/docs/) 에서 확인할 수 있습니다.
+선택가능한 더 많은 (Bean, Vault , VaultFactory and etc.) 종류는 [Java doc](https://docs.jvault.org/) 에서 확인할 수 있습니다.
 
 <br>
    
