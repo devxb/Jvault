@@ -4,7 +4,7 @@
    
 [한국어로 번역](/KOREAN.md)    
 [Learn Jvault]()    
-[Java doc](https://jvault.org/docs/)    
+[Java doc](https://docs.jvault.org/)    
 [License](/LICENSE)    
    
 ![current jvault version](https://img.shields.io/badge/Jvault-0.1-orange) ![test method coverage](https://img.shields.io/badge/Method%20coverage-100%25-brightgreen) ![test line coverage](https://img.shields.io/badge/Line%20coverage-92%25-brightgreen) ![test class coverage](https://img.shields.io/badge/Class%20coverage-91%25-brightgreen) ![needed jdk version](https://img.shields.io/badge/JDK-8-blue) ![libarry status](https://img.shields.io/badge/library%20status-activity-green)    
@@ -18,7 +18,7 @@ With Jvaut, you can effectively encapsulate your internal APIs from external use
 ## Getting Start
 
 This document introduces how to use Jvault and how to download the Jvault library to the project.   
-More library details can be found at [Javadoc](https://jvault.org/docs/).
+More library details can be found at [Javadoc](https://docs.jvault.org/).
 
 <br>
    
