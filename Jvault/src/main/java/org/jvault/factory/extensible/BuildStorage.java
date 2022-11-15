@@ -1,6 +1,6 @@
 package org.jvault.factory.extensible;
 
-import org.jvault.beans.Bean;
+import org.jvault.bean.Bean;
 import org.jvault.metadata.InternalExtensiblePoint;
 
 import java.util.Map;

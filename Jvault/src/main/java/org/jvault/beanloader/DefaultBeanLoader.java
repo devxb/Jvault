@@ -2,9 +2,9 @@ package org.jvault.beanloader;
 
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
-import org.jvault.beans.Bean;
-import org.jvault.beans.BeanBuilderFactory;
-import org.jvault.beans.Type;
+import org.jvault.bean.Bean;
+import org.jvault.bean.BeanBuilderFactory;
+import org.jvault.bean.Type;
 import org.jvault.exceptions.BeanCycledException;
 import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.exceptions.DuplicateBeanNameException;
@@ -34,7 +34,7 @@ public final class DefaultBeanLoader implements BeanLoader {
 
     {
         REFLECTION = Accessors.UtilAccessor.getAccessor().getReflection();
-        BEAN_BUILDER_FACTORY = Accessors.BeansAccessor.getAccessor().getBeanBuilderFactory();
+        BEAN_BUILDER_FACTORY = Accessors.BeanAccessor.getAccessor().getBeanBuilderFactory();
         BEANS = new HashMap<>();
         BEAN_INSTANCES = new HashMap<>();
         SCANNED_BEANS = new HashMap<>();

@@ -1,9 +1,9 @@
 package org.jvault.vault;
 
 import org.jvault.annotation.Inject;
-import org.jvault.beans.Bean;
 import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
+import org.jvault.factory.extensible.Vault;
 import org.jvault.metadata.API;
 import org.jvault.metadata.ThreadSafe;
 import org.jvault.util.Reflection;
@@ -12,7 +12,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Receive instance of class as a parameter and inject bean to parameter. <br>
@@ -61,12 +60,10 @@ import java.util.Map;
 @ThreadSafe
 public final class InstanceVault extends AbstractVault<Object>{
 
-    private final Map<String, Bean> BEANS;
     private final Reflection REFLECTION;
 
     InstanceVault(Vault.Builder<InstanceVault> builder) {
         super(builder);
-        BEANS = builder.BEANS;
         REFLECTION = Accessors.UtilAccessor.getAccessor().getReflection();
     }
 

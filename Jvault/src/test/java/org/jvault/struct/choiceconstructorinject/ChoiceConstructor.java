@@ -2,7 +2,7 @@ package org.jvault.struct.choiceconstructorinject;
 
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
-import org.jvault.beans.Type;
+import org.jvault.bean.Type;
 
 @InternalBean(type = Type.NEW)
 public final class ChoiceConstructor {

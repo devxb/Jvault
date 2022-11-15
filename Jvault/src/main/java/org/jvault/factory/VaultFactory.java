@@ -2,15 +2,15 @@ package org.jvault.factory;
 
 import org.jvault.factory.extensible.VaultFactoryBuildInfo;
 import org.jvault.metadata.API;
-import org.jvault.vault.Vault;
+import org.jvault.factory.extensible.Vault;
 
 /**
  * Receives the VaultFactoryBuildInfo or String (the name of the Vault if the Vault already exists) value as an input,
- * and returns the {@link org.jvault.vault.Vault}.
+ * and returns the {@link Vault}.
  *
  * @param <T> Type of vault to be created.
  *
- * @see org.jvault.vault.Vault
+ * @see Vault
  * @see VaultFactoryBuildInfo
  *
  * @author devxb

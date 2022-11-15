@@ -2,7 +2,7 @@ package org.jvault.beanloader;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.jvault.beans.Bean;
+import org.jvault.bean.Bean;
 import org.jvault.exceptions.*;
 import org.jvault.factory.buildinfo.AbstractVaultFactoryBuildInfo;
 import org.jvault.struct.beanregex.BeanRegex;

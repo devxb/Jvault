@@ -1,7 +1,7 @@
 package org.jvault.struct.privateconstructor;
 
 import org.jvault.annotation.InternalBean;
-import org.jvault.beans.Type;
+import org.jvault.bean.Type;
 
 @InternalBean(name = "pb", type = Type.SINGLETON, accessPackages = "org.jvault.*")
 final class PrivateBean {

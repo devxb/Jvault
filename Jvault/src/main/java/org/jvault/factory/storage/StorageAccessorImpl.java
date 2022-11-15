@@ -5,6 +5,7 @@ import org.jvault.factory.extensible.BuildStorage;
 import org.jvault.metadata.InternalAPI;
 
 @InternalAPI
+@SuppressWarnings("unused")
 final class StorageAccessorImpl extends Accessors.StorageAccessor {
 
     @Override

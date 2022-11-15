@@ -2,10 +2,11 @@ package org.jvault.vault;
 
 import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
-import org.jvault.beans.Bean;
-import org.jvault.beans.Type;
+import org.jvault.bean.Bean;
+import org.jvault.bean.Type;
 import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
+import org.jvault.factory.extensible.Vault;
 import org.jvault.metadata.API;
 import org.jvault.metadata.ThreadSafe;
 import org.jvault.util.Reflection;
@@ -64,7 +65,7 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @author devxb
  * @see org.jvault.factory.TypeVaultFactory
- * @see org.jvault.vault.Vault
+ * @see Vault
  * @see org.jvault.annotation.Inject
  * @see org.jvault.annotation.InternalBean
  * @since 0.1
@@ -159,11 +160,15 @@ public final class ClassVault extends AbstractVault<Class<?>> {
 
             instancedParameters.add(BEANS.get(value).load());
         }
-        try {
+        return invokeConstructor(cls.getSimpleName(), constructor, instancedParameters.toArray());
+    }
+
+    private Object invokeConstructor(String name, Constructor<?> constructor, Object[] parameters){
+        try{
             constructor.setAccessible(true);
-            return constructor.newInstance(instancedParameters.toArray());
+            return constructor.newInstance(parameters);
         } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("Fail to invoke constructor of \"" + name + "\"");
         }
     }
 
