@@ -3,7 +3,7 @@
 # Jvault - Java encapsulation library using DI
    
 [Translate to English](/README.md)    
-[Learn Jvault]()    
+[Learn Jvault](#Learn-Jvault)    
 [Java doc](https://docs.jvault.org/)    
 [License](/LICENSE)    
    
@@ -169,7 +169,7 @@ public final class Car implements Vehicle{
 
 Vault는 BeanFactory의 변종으로 전달된 파라미터에 Vault에 등록된 InternalBean들을 주입하는 역할을 합니다. 따라서, Vault로 전달되는 파라미터는 InternalBean이 아니여도 되는데, 이것이 앞서 Car클래스를 @InternalBean으로 마킹하지 않은 이유입니다.   
    
-> __TIP__ : Vault로 전달되는 파라미터가 @InternalBean(type = Type.SINGLETON)으로 마킹되어있고 Vault의 Bean스캔 범위안에 포함되어 있다면, 매 요청마다 같은 객체가 반환됩니다. 아니라면 매 요청마다 새로운 객체가 반환됩니다. - 이 동작은 ClassVault에 대한 설명이며, 다른 Vault구현체의 동작방식은 [Javadoc]() 을 참조하세요.
+> __TIP__ : Vault로 전달되는 파라미터가 @InternalBean(type = Type.SINGLETON)으로 마킹되어있고 Vault의 Bean스캔 범위안에 포함되어 있다면, 매 요청마다 같은 객체가 반환됩니다. 아니라면 매 요청마다 새로운 객체가 반환됩니다. - 이 동작은 ClassVault에 대한 설명이며, 다른 Vault구현체의 동작방식은 [Javadoc](https://docs.jvault.org) 을 참조하세요.
 
 Vault라는 단어가 다소 추상적이라 Vault의 역할이 잘 와닿지 않을 수 있기때문에, Vault를 사용하는 코드를 미리 살펴보겠습니다.   
    
@@ -225,7 +225,7 @@ ClassVault vault = vaultFactory.get(buildInfo, VaultType.CLASS);
 Car car = vault.inject(Car.class);
 ```
    
-만약, 다른 타입의 Vault를 생성하고 싶다면, vaultFactory의 인자로 전달되는 VaultType의 값을 변경하면 됩니다. 선택할 수 있는 VaultType의 종류는 [Java doc]() 을 참조하세요.   
+만약, 다른 타입의 Vault를 생성하고 싶다면, vaultFactory의 인자로 전달되는 VaultType의 값을 변경하면 됩니다. 선택할 수 있는 VaultType의 종류는 [Java doc](https://docs.jvault.org) 을 참조하세요.   
    
 위 코드에서는 SquareWheel과 RoundWheel이 Bean으로 등록된 vault가 생성되며, vault는 Car.class와 car, wheel패키지 내의 모든 클래스를 파라미터로 전달받을수 있습니다. 또한, Car 클래스는 "squareWheel"이름의 빈을 주입받는다고 명시되어 있으므로, __vault.inject(Car.class);__ 에 의해 "squareWheel" 이름의 빈을 주입받은 Car 인스턴스가 생성됩니다.   
    
@@ -287,7 +287,7 @@ ClassVault vault = vaultFactory.get(buildInfo, VaultType.CLASS);
 Car car = vault.inject(Car.class);
 ```
    
-생성 가능한 더 많은 Vault 종류는 [Java doc]() 을 참조해주세요.
+생성 가능한 더 많은 Vault 종류는 [Java doc](https://docs.jvault.org) 을 참조해주세요.
    
 <br>
    
@@ -372,7 +372,7 @@ instancedCar.meter();
 ```
    
 위 코드에서 사용자는 실제로 Jvault API에 대해 무지한 상태로 InstancedCar객체를 얻고 사용합니다.   
-InstanceVault의 더 자세한 사용법은 [Java doc]() 을 참조하세요.   
+InstanceVault의 더 자세한 사용법은 [Java doc](https://docs.jvault.org) 을 참조하세요.   
    
 더 좋은 방법은 생성자가 아닌 Factory를 제공하거나, Instance를 얻는 별도의 메소드를 제공하는 것 입니다.   
    
@@ -434,11 +434,11 @@ JvaultRuntimeExtension.reset(BeanReader.class);
 JvaultRuntimeExtension.resetAll();
 ```
    
-더 자세한 Jvault 확장에 대한 내용은 [Java doc]() 을 참조하세요.
+더 자세한 Jvault 확장에 대한 내용은 [Java doc](https://docs.jvault.org) 을 참조하세요.
    
 <h2></h2>
 
 <div align="center">
-        <a href="/LICENSE">LICENSE</a> / 문의 : <i>develxb@gmail.com</i> / <a href=""><i>Java doc</i></a>
+        <a href="/LICENSE">LICENSE</a> / 문의 : <i>develxb@gmail.com</i> / <a href="https://docs.jvault.org"><i>Java doc</i></a>
         <br/><div align="right"> @author : <a href="https://github.com/devxb"><i>devxb</i></a></div>
 </div>
