@@ -14,6 +14,7 @@ import org.jvault.struct.injectinterface.InjectInterface;
 import org.jvault.struct.mixedconstructorandfieldinject.MixedConstructorAndFieldInject;
 import org.jvault.struct.multipleaccesses.MultipleAccesses;
 import org.jvault.struct.newinsingleton.TypeNew;
+import org.jvault.struct.privateconstructor.PrivateConstructor;
 import org.jvault.struct.readfromclass.ReadFromClass;
 import org.jvault.struct.singletoninnew.TypeSingleton;
 import org.jvault.struct.typenew.TypeNewA;
@@ -86,7 +87,7 @@ public class DefaultBeanLoaderTest {
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
 
         // then
-        A a = beans.get("A").load();
+        A a = beans.get("A").loadIfInjectable(A.class);
         Assertions.assertEquals("ABC", a.hello());
     }
 
@@ -121,7 +122,7 @@ public class DefaultBeanLoaderTest {
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
 
         // then
-        FA fa = beans.get("fA").load();
+        FA fa = beans.get("fA").loadIfInjectable(FA.class);
         Assertions.assertEquals("ABC", fa.hello());
     }
 
@@ -246,7 +247,7 @@ public class DefaultBeanLoaderTest {
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
 
         // then
-        Assertions.assertEquals("private-bean", beans.get("privateConstructor").load().toString());
+        Assertions.assertEquals("private-bean", beans.get("privateConstructor").loadIfInjectable(PrivateConstructor.class).toString());
     }
 
     @Test
@@ -277,8 +278,8 @@ public class DefaultBeanLoaderTest {
 
         // when
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
-        TypeNewA typeNewA = beans.get("typeNewA").load();
-        TypeNewA difTypeNewA = beans.get("typeNewA").load();
+        TypeNewA typeNewA = beans.get("typeNewA").loadIfInjectable(TypeNewA.class);
+        TypeNewA difTypeNewA = beans.get("typeNewA").loadIfInjectable(TypeNewA.class);
 
         // then
         Assertions.assertAll(
@@ -316,8 +317,8 @@ public class DefaultBeanLoaderTest {
 
         // when
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
-        TypeSingleton singleton = beans.get("typeSingleton").load();
-        TypeSingleton sameSingleton = beans.get("typeSingleton").load();
+        TypeSingleton singleton = beans.get("typeSingleton").loadIfInjectable(TypeSingleton.class);
+        TypeSingleton sameSingleton = beans.get("typeSingleton").loadIfInjectable(TypeSingleton.class);
 
         // then
         Assertions.assertAll(
@@ -355,8 +356,8 @@ public class DefaultBeanLoaderTest {
 
         // when
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
-        TypeNew newInstance = beans.get("typeNew").load();
-        TypeNew difNewInstance = beans.get("typeNew").load();
+        TypeNew newInstance = beans.get("typeNew").loadIfInjectable(TypeNew.class);
+        TypeNew difNewInstance = beans.get("typeNew").loadIfInjectable(TypeNew.class);
 
         // then
         Assertions.assertAll(
@@ -395,7 +396,7 @@ public class DefaultBeanLoaderTest {
 
         // when
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
-        MixedConstructorAndFieldInject result = beans.get("mixedConstructorAndFieldInject").load();
+        MixedConstructorAndFieldInject result = beans.get("mixedConstructorAndFieldInject").loadIfInjectable(MixedConstructorAndFieldInject.class);
 
         // then
         Assertions.assertEquals("MixedB", result.hello());
@@ -459,7 +460,7 @@ public class DefaultBeanLoaderTest {
 
         // when
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
-        MultipleAccesses result = beans.get("multipleAccesses").load();
+        MultipleAccesses result = beans.get("multipleAccesses").loadIfInjectable(MultipleAccesses.class);
 
         // then
         Assertions.assertEquals("MultipleAccessesMultipleAccessesTargetBean", result.hello());
@@ -493,7 +494,7 @@ public class DefaultBeanLoaderTest {
 
         // when
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
-        EmptyAccess result = beans.get("emptyAccess").load();
+        EmptyAccess result = beans.get("emptyAccess").loadIfInjectable(EmptyAccess.class);
 
         // then
         Assertions.assertEquals("EmptyAccessEmptyAccessTargetBean", result.hello());
@@ -527,7 +528,7 @@ public class DefaultBeanLoaderTest {
 
         // when
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
-        Can_Read_Underbar can_read_underbar = beans.get("can_Read_Underbar").load();
+        Can_Read_Underbar can_read_underbar = beans.get("can_Read_Underbar").loadIfInjectable(Can_Read_Underbar.class);
 
         // then
         Assertions.assertEquals(Can_Read_Underbar.class.getSimpleName(), can_read_underbar.toString());
@@ -561,7 +562,7 @@ public class DefaultBeanLoaderTest {
 
         // when
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
-        InjectInterface injectInterface = beans.get("injectInterface").load();
+        InjectInterface injectInterface = beans.get("injectInterface").loadIfInjectable(InjectInterface.class);
 
         // then
         Assertions.assertEquals("InjectInterfaceInterfaceImplB", injectInterface.hello());
@@ -625,7 +626,7 @@ public class DefaultBeanLoaderTest {
 
         // when
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
-        BeanRegex beanRegex = beans.get("beanRegex").load();
+        BeanRegex beanRegex = beans.get("beanRegex").loadIfInjectable(BeanRegex.class);
 
         // then
         Assertions.assertEquals("BeanRegexInjectableBeanRegexInjectableBean", beanRegex.hello());
@@ -689,7 +690,7 @@ public class DefaultBeanLoaderTest {
 
         // when
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
-        ReadFromClass readFromClass = beans.get("readFromClass").load();
+        ReadFromClass readFromClass = beans.get("readFromClass").loadIfInjectable(ReadFromClass.class);
 
         // then
         Assertions.assertEquals("ReadFromClassReadFromClassBean", readFromClass.hello());
@@ -723,7 +724,7 @@ public class DefaultBeanLoaderTest {
 
         // when
         Map<String, Bean> beans = beanLoader.load(abstractVaultFactoryBuildInfo.getBeanClasses());
-        ClassAccess classAccess = beans.get("classAccess").load();
+        ClassAccess classAccess = beans.get("classAccess").loadIfInjectable(ClassAccess.class);
 
         // then
         Assertions.assertEquals("ClassAccessClassAccessBean", classAccess.hello());

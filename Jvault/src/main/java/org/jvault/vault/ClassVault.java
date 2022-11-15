@@ -113,9 +113,9 @@ public final class ClassVault extends AbstractVault<Class<?>> {
     public <R> R inject(Class<?> injectTarget, Class<R> returnType) {
         throwIfParamDoesNotAccessible(injectTarget);
 
-        if(CACHED_BEANS.containsKey(injectTarget)) return CACHED_BEANS.get(injectTarget).load();
+        if(CACHED_BEANS.containsKey(injectTarget)) return CACHED_BEANS.get(injectTarget).loadIfInjectable(injectTarget);
         cacheBean(injectTarget);
-        if(CACHED_BEANS.containsKey(injectTarget)) return CACHED_BEANS.get(injectTarget).load();
+        if(CACHED_BEANS.containsKey(injectTarget)) return CACHED_BEANS.get(injectTarget).loadIfInjectable(injectTarget);
 
         Constructor<?> constructor = REFLECTION.findConstructor(injectTarget);
         if (constructor != null) return returnType.cast(loadBeanFromConstructor(injectTarget, constructor));
@@ -156,9 +156,8 @@ public final class ClassVault extends AbstractVault<Class<?>> {
             String value = inject.value();
 
             throwIfCanNotFindDefinedBean(value);
-            throwIfBeanDoesNotAccessInject(value, cls);
 
-            instancedParameters.add(BEANS.get(value).load());
+            instancedParameters.add(BEANS.get(value).loadIfInjectable(cls));
         }
         return invokeConstructor(cls.getSimpleName(), constructor, instancedParameters.toArray());
     }
@@ -179,9 +178,8 @@ public final class ClassVault extends AbstractVault<Class<?>> {
             String value = getBeanNameByField(field);
 
             throwIfCanNotFindDefinedBean(value);
-            throwIfBeanDoesNotAccessInject(value, cls);
 
-            Object instance = BEANS.get(value).load();
+            Object instance = BEANS.get(value).loadIfInjectable(cls);
             injectBeanToField(field, bean, instance);
         }
         return bean;
@@ -200,11 +198,6 @@ public final class ClassVault extends AbstractVault<Class<?>> {
 
     private void throwIfCanNotFindDefinedBean(String beanName) {
         if (!BEANS.containsKey(beanName)) throw new NoDefinedInternalBeanException(beanName);
-    }
-
-    private void throwIfBeanDoesNotAccessInject(String beanName, Class<?> injectReceiver){
-        if (!BEANS.get(beanName).isInjectable(injectReceiver))
-            throw new DisallowedAccessException(beanName, injectReceiver.getPackage().getName());
     }
 
     private void injectBeanToField(Field field, Object bean, Object instance) {

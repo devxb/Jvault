@@ -118,7 +118,6 @@ public final class InstanceVault extends AbstractVault<Object>{
             String beanName = inject.value();
 
             throwIfCanNotFindDefinedBean(beanName);
-            throwIfBeanDoesNotAccessInject(beanName, injectTargetClass);
 
             Field field = getInjectTargetField(injectTargetClass, beanName);
             field.setAccessible(true);
@@ -137,13 +136,11 @@ public final class InstanceVault extends AbstractVault<Object>{
 
     private <R> R injectBeanToTargetField(R injectTarget){
         List<Field> fields = REFLECTION.findFields(injectTarget.getClass());
-        Class<?> injectTargetClass = injectTarget.getClass();
         for(Field field : fields){
             field.setAccessible(true);
             String beanName = getBeanNameByField(field);
 
             throwIfCanNotFindDefinedBean(beanName);
-            throwIfBeanDoesNotAccessInject(beanName, injectTargetClass);
 
             injectBeanToField(injectTarget, field, beanName);
         }
@@ -161,14 +158,9 @@ public final class InstanceVault extends AbstractVault<Object>{
         if (!BEANS.containsKey(beanName)) throw new NoDefinedInternalBeanException(beanName);
     }
 
-    private void throwIfBeanDoesNotAccessInject(String beanName, Class<?> injectReceiver){
-        if (!BEANS.get(beanName).isInjectable(injectReceiver))
-            throw new DisallowedAccessException(beanName, injectReceiver.getPackage().getName());
-    }
-
     private void injectBeanToField(Object injectTarget, Field field, String beanName) {
         try {
-            field.set(injectTarget, BEANS.get(beanName).load());
+            field.set(injectTarget, BEANS.get(beanName).loadIfInjectable(injectTarget.getClass()));
         } catch (IllegalAccessException IAE) {
             throw new IllegalStateException("Can not access field value \"" + beanName + "\"");
         }

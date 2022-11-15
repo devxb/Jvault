@@ -4,7 +4,7 @@ import org.jvault.annotation.Inject;
 import org.jvault.annotation.InternalBean;
 
 @InternalBean(accessPackages = "org.jvault.*")
-final class PrivateConstructor {
+public final class PrivateConstructor {
 
     private final PrivateBean PRIVATE_BEAN;
 
