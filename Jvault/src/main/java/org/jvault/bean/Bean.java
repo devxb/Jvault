@@ -6,7 +6,7 @@ import java.util.*;
 
 @InternalExtensiblePoint
 public interface Bean {
-    <R> R load();
+    <R> R loadIfInjectable(Class<?> cls);
     boolean isInjectable(Class<?> cls);
 
     abstract class Builder<S extends Bean>{
