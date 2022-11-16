@@ -393,7 +393,8 @@ public final class VehicleFactory {
         return INSTANCE.CLASS_VAULT.inject(type);  
     }  
   
-}```
+}
+```
    
 Now the user gets a Car object through VehicleFactory like this:   
    
