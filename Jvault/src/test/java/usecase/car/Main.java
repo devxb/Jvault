@@ -1,35 +1,46 @@
 package usecase.car;
 
-import org.jvault.annotation.BeanWire;
-import org.jvault.annotation.VaultConfiguration;
 import org.jvault.factory.TypeVaultFactory;
 import org.jvault.factory.buildinfo.AnnotationVaultFactoryBuildInfo;
 import org.jvault.vault.ClassVault;
 import org.jvault.vault.VaultType;
-import usecase.car.wheel.RoundWheel;
-import usecase.car.wheel.SquareWheel;
+import usecase.car.jvaultconfig.AnnotationConfig;
 
 public class Main {
 
     public static void main(String[] args){
+        initJvault();
+
+        caseOfClassVault();
+
+        caseOfVehicleFactory();
+
+        caseOfVehicleFactory();
+    }
+
+    private static void initJvault(){
         AnnotationVaultFactoryBuildInfo buildInfo = new AnnotationVaultFactoryBuildInfo(AnnotationConfig.class);
         TypeVaultFactory typeVaultFactory = TypeVaultFactory.getInstance();
         typeVaultFactory.get(buildInfo, VaultType.CLASS);
-
-        Car car = VehicleFactory.getVehicle(Car.class);
-        InstancedCar instancedCar = VehicleFactory.getVehicle(InstancedCar.class);
-        System.out.println(car.meter() + ", " + instancedCar.meter());
     }
 
-    @VaultConfiguration(name = "CAR_VAULT", vaultAccessPackages = "usecase.car.*")
-    private static class AnnotationConfig{
+    private static void caseOfVehicleFactory(){
+        Car car = VehicleFactory.getVehicle(Car.class);
+        InstancedCar instancedCar = VehicleFactory.getVehicle(InstancedCar.class);
+        assert car.meter().equals("current meter : 1");
+        assert instancedCar.meter().equals("default name101");
+    }
 
-        @BeanWire
-        private RoundWheel roundWheel;
+    private static void caseOfClassVault(){
+        TypeVaultFactory vaultFactory = TypeVaultFactory.getInstance();
+        ClassVault classVault = vaultFactory.get("CAR_VAULT", VaultType.CLASS);
+        Car car = classVault.inject(Car.class);
+        assert car.meter().equals("current meter : 1");
+    }
 
-        @BeanWire
-        private SquareWheel squareWheel;
-
+    private static void caseOfInstanceVault(){
+        InstancedCar instancedCar = new InstancedCar("hello car");
+        assert instancedCar.meter().equals("hello car101");
     }
 
 }

@@ -2,6 +2,7 @@ package usecase.car.wheel;
 
 import org.jvault.annotation.InternalBean;
 import org.jvault.bean.Type;
+import usecase.car.Wheel;
 
 @InternalBean(
         name = "roundWheel",
@@ -9,7 +10,7 @@ import org.jvault.bean.Type;
         accessClasses = {"usecase.car.Car", "usecase.car.InstancedCar"},
         accessPackages = {"usecase.car.factory.*", "usecase.car.wheel"}
 )
-public final class RoundWheel implements Wheel{
+public final class RoundWheel implements Wheel {
 
     RoundWheel(){}
 

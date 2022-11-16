@@ -19,8 +19,7 @@ public class RuntimeExtensionTest {
         // given
         PropertiesVaultFactoryBuildInfo propertiesVaultFactoryBuildInfo
                 = new PropertiesVaultFactoryBuildInfo(
-                        "/Users/devxb/develop/Jvault/Jvault/Jvault" +
-                                "/src/test/java/org/jvault/struct/beanreaderextension/beanreaderextension.properties");
+                                "src/test/java/org/jvault/struct/beanreaderextension/beanreaderextension.properties");
 
         BeanReader someExtensibleOfBeanReader = param -> Arrays.asList(BeanReaderExtension.class, BeanReaderExtensionBean.class);
 

@@ -4,11 +4,10 @@ import org.jvault.annotation.Inject;
 import org.jvault.factory.TypeVaultFactory;
 import org.jvault.vault.InstanceVault;
 import org.jvault.vault.VaultType;
-import usecase.car.wheel.Wheel;
 
 public final class InstancedCar implements Vehicle{
 
-    private String carName;
+    private String carName = "default name";
     @Inject
     private Wheel roundWheel;
     @Inject

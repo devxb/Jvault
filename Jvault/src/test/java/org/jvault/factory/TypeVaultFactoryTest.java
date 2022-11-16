@@ -56,7 +56,7 @@ public class TypeVaultFactoryTest {
     public void READ_WITH_PROPERTIES_VAULT_FACTORY_TEST(){
         // given
         TypeVaultFactory vaultFactory = TypeVaultFactory.getInstance();
-        PropertiesVaultFactoryBuildInfo buildInfo = new PropertiesVaultFactoryBuildInfo("/Users/devxb/develop/Jvault/Jvault/Jvault/src/test/java/org/jvault/struct/scanwithproperties/buildinfo.properties");
+        PropertiesVaultFactoryBuildInfo buildInfo = new PropertiesVaultFactoryBuildInfo("src/test/java/org/jvault/struct/scanwithproperties/buildinfo.properties");
 
         // when
         Vault<Class<?>> vault = vaultFactory.get(buildInfo, VaultType.CLASS);
@@ -90,7 +90,7 @@ public class TypeVaultFactoryTest {
     public void READ_FROM_CLASS_WITH_PROPERTIES_CONFIG_VAULT_FACTORY_TEST(){
         // given
         TypeVaultFactory vaultFactory = org.jvault.factory.TypeVaultFactory.getInstance();
-        PropertiesVaultFactoryBuildInfo buildInfo = new PropertiesVaultFactoryBuildInfo("/Users/devxb/develop/Jvault/Jvault/Jvault/src/test/java/org/jvault/struct/readfromclass/readfromclass.properties");
+        PropertiesVaultFactoryBuildInfo buildInfo = new PropertiesVaultFactoryBuildInfo("src/test/java/org/jvault/struct/readfromclass/readfromclass.properties");
 
         // when
         Vault<Class<?>> vault = vaultFactory.get(buildInfo, VaultType.CLASS);

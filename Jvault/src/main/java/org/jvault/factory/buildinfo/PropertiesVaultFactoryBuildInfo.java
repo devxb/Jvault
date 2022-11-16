@@ -3,6 +3,8 @@ package org.jvault.factory.buildinfo;
 import org.jvault.factory.extensible.VaultFactoryBuildInfo;
 import org.jvault.metadata.API;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -11,6 +13,7 @@ import java.util.Properties;
 
 /**
  * Receive the path of *.properties file and specify the return value of the {@link VaultFactoryBuildInfo} methods.
+ * The path must be specified based on the root path of classloader.<br> Like this "src/main/org/jvault/helloworld.properties"
  *
  * <hr>
  * Below is examples of .properties phrases
@@ -69,7 +72,7 @@ public final class PropertiesVaultFactoryBuildInfo extends AbstractVaultFactoryB
      * @since 0.1
      */
     public PropertiesVaultFactoryBuildInfo(String propertiesSrc) {
-        try (InputStream input = Files.newInputStream(Paths.get(propertiesSrc))) {
+        try (InputStream input = Files.newInputStream((new File(propertiesSrc)).toPath())) {
             Properties properties = new Properties();
             properties.load(input);
             VAULT_NAME = getVaultName(propertiesSrc, properties);

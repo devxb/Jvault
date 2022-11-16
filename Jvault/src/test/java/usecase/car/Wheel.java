@@ -1,4 +1,4 @@
-package usecase.car.wheel;
+package usecase.car;
 
 public interface Wheel {
 

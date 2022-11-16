@@ -1,7 +1,6 @@
 package usecase.car;
 
 import org.jvault.annotation.Inject;
-import usecase.car.wheel.Wheel;
 
 public final class Car implements Vehicle{
 
