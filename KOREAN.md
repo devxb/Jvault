@@ -7,7 +7,7 @@
 [Java doc](https://docs.jvault.org/)    
 [License](/LICENSE)    
    
-![current jvault version](https://img.shields.io/badge/Jvault-0.1-orange) ![test method coverage](https://img.shields.io/badge/Method%20coverage-100%25-brightgreen) ![test line coverage](https://img.shields.io/badge/Line%20coverage-92%25-brightgreen) ![test class coverage](https://img.shields.io/badge/Class%20coverage-91%25-brightgreen) ![needed jdk version](https://img.shields.io/badge/JDK-8-blue) ![libarry status](https://img.shields.io/badge/library%20status-activity-green)    
+![current jvault version](https://img.shields.io/badge/Jvault-0.1.1-orange) ![test method coverage](https://img.shields.io/badge/Method%20coverage-100%25-brightgreen) ![test line coverage](https://img.shields.io/badge/Line%20coverage-92%25-brightgreen) ![test class coverage](https://img.shields.io/badge/Class%20coverage-91%25-brightgreen) ![needed jdk version](https://img.shields.io/badge/JDK-8-blue) ![libarry status](https://img.shields.io/badge/library%20status-activity-green)    
 ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fdevxb%2FJvault&count_bg=%23C8C13D&title_bg=%23555555&icon=&icon_color=%23FFFFFF&title=HIT+COUNT&edge_flat=false) ![made with love](https://img.shields.io/badge/Made%20with-Love--❤-red)    
    
 Jvault는 클래스를 허가된 클래스와 패키지 에서만 접근가능하도록 제한하고 제한된 클래스 끼리의 의존성을 연결 하는 라이브러리 입니다.   
@@ -27,14 +27,14 @@ Jvaut를 사용하면, 내부 API를 외부 사용자로부터 효과적으로 �
 Jvault는 Gradle, Maven 빌드툴을 이용해 프로젝트에 다운로드 할 수 있습니다.
 
 ``` gradle
-implementation 'org.jvault:jvault-core:0.1'
+implementation 'org.jvault:jvault-core:0.1.1'
 ```
    
 ``` maven
 <dependency>
   <groupId>org.jvault</groupId>
   <artifactId>jvault-core</artifactId>
-  <version>0.1</version>
+  <version>0.1.1</version>
 </dependency>
 ```
    
