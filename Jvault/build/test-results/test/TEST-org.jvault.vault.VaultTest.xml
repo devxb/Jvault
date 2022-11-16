@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.jvault.vault.VaultTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-11-16T06:04:21" hostname="xb-apple.local" time="0.001">
-  <properties/>
-  <testcase name="SAME_BEAN_OF_BOTH_CLASSVAULT_AND_INSTANCEVAULT_TEST()" classname="org.jvault.vault.VaultTest" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
