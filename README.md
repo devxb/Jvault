@@ -399,8 +399,8 @@ public final class VehicleFactory {
 Now the user gets a Car object through VehicleFactory like this:   
    
 ``` Java
-	Car car = VehicleFactory.getVehicle(Car.class);  
-	InstancedCar instancedCar = VehicleFactory.getVehicle(InstancedCar.class);
+Car car = VehicleFactory.getVehicle(Car.class);  
+InstancedCar instancedCar = VehicleFactory.getVehicle(InstancedCar.class);
 ```
    
 > __TIP__ : I recommend reusing ClassVault every time as in the code above, ClassVault is more efficient because it caches requests that satisfy certain conditions(The class passed as a parameter is marked with @InternalBean(type = Type.SINGLETON) and must be included in the scope of Vault's bean scan.), and uses the cache to process incoming requests after this.   
