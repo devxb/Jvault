@@ -3,4 +3,7 @@ KOREAN.md
 LICENSE
 .DS_Store
 Jvault/build/
-.idea
+.idea/
+Jvault/.idea/
+Jvault/.gradle/
+Jvault/gradle/
