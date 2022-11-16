@@ -393,16 +393,17 @@ public final class VehicleFactory {
         return INSTANCE.CLASS_VAULT.inject(type);  
     }  
   
-}```
-   
-이제 사용자는 VehicleFactory를 통해서 다음과 같이 Car 객체를 얻습니다.   
-   
-``` Java
-	Car car = VehicleFactory.getVehicle(Car.class);  
-	InstancedCar instancedCar = VehicleFactory.getVehicle(InstancedCar.class);
+}
 ```
    
-> __TIP__ : 저는 위 코드와 같이 ClassVault를 매번 재사용하는 방식을 추천하는데, ClassVault는 특정 조건(파라미터로 전달되는 클래스가 @InternalBean(type = Type.SINGLETON)으로 마킹되어있으며, Vault의 Bean스캔 범위에 포함되어야함.) 을 만족하는 요청을 캐시하고 이 다음부터 들어오는 요청에 대해 캐시된 객체를 반환하기 때문에 더 효율적 입니다.
+이제 사용자는 VehicleFactory를 통해서 Car 객체를 얻을 수 있습니다.   
+   
+``` Java
+Car car = VehicleFactory.getVehicle(Car.class);  
+InstancedCar instancedCar = VehicleFactory.getVehicle(InstancedCar.class);
+```
+   
+> __TIP__ : 위 코드와 같이 ClassVault를 매번 재사용하는 방식을 추천하는데, ClassVault는 특정 조건(파라미터로 전달되는 클래스가 @InternalBean(type = Type.SINGLETON)으로 마킹되어있으며, Vault의 Bean스캔 범위에 포함되어야함.) 을 만족하는 요청을 캐시하고 이 다음부터 들어오는 요청에 대해 캐시된 객체를 반환하기 때문에 더 효율적 입니다.
    
 또한, Jvault는 스프링과 함께 사용할 수 있는데,   
 Spring Bean으로 Vault를 등록하고, Vault가 필요한 객체에서 Vault를 주입받으면 됩니다.   
