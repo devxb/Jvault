@@ -11,7 +11,25 @@
 ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fdevxb%2FJvault&count_bg=%23C8C13D&title_bg=%23555555&icon=&icon_color=%23FFFFFF&title=HIT+COUNT&edge_flat=false) ![made with love](https://img.shields.io/badge/Made%20with-Love--❤-red)    
    
 Jvault is a library that restricts a class to be accessible only to the class permitted by it and links the dependencies between the restricted classes.   
-With Jvaut, you can effectively encapsulate your internal APIs from external users, making it easier to improve the evolveability of your APIs.   
+With Jvaut, you can effectively encapsulate your internal APIs from external users and making it easier to improve the evolveability of your APIs.   
+   
+So, why Jvault?   
+   
+1, Jvault is a DI library, it's means Jvault allows you to write code against interfaces, not implementations.   
+   
+2, Since Jvault does not depend on any library or framework, it can be used in various development environments (ex. Spring).   
+   
+3, Jvault helps you choose which classes can use you, so you can design an architecture like this:     
+If you are a library developer or developer creating an API that works on other code, you can completely hide your internal implementations from users and force to use only the APIs you intended.   
+Like this,   
+![Group 31-2](https://user-images.githubusercontent.com/62425964/202200662-8ef29169-8d15-4f48-a5e5-7eec98b410a1.svg)    
+Now, client does not access your internal implements and only accessible the API defined you. (Even if the client doesn't know about Jvault)   
+   
+And, Jvault may helpful, If your application is being developed based on a monolithic architecture and you want to gradually decouple services.   
+![Group 30](https://user-images.githubusercontent.com/62425964/202200768-50049555-73b6-415f-aca3-a1daa36d56e1.svg)    
+Above, you can see that the internal implementations are hidden, and applications communicate through each other's APIs. 
+   
+
 
 <br>
 
@@ -171,7 +189,7 @@ public final class Car implements Vehicle{
 
 Vault is a variant of BeanFactory, and plays a role for injecting InternalBeans (registered in Vault) into the passed parameters. Therefore, the parameter passed to the Vault does not need to be an InternalBean, which is why the Car class was not marked as @InternalBean earlier.   
    
-> __TIP__ : If the parameter passed to Vault is marked with @InternalBean(type = Type.SINGLETON) and is included in the scope of Vault's bean scan, the same instance is returned for every request. Otherwise, a new object is returned for every request. - This behavior is for ClassVault, and for the behavior of other Vault implementations, refer to [Javadoc](https://docs.jvault.org).   
+> __TIP__ : If the parameter passed to Vault is marked with @InternalBean(type = Type.SINGLETON) and is included in the scope of Vault's bean scan, the same instance is returned for every request. Otherwise, a new object is returned for every request. - This behavior is for ClassVault, and for the behavior of other Vault implementations, refer to [Javadoc](https://docs.jvault.org/org/jvault/vault/package-summary.html).   
    
 Since the word Vault is a bit abstract and the role of Vault may not be well understood, let's take a look at the code that uses Vault in advance.   
    
@@ -227,7 +245,7 @@ ClassVault vault = vaultFactory.get(buildInfo, VaultType.CLASS);
 Car car = vault.inject(Car.class);
 ```
    
-If you want to create a different type of vault, you can change the value of VaultType passed as an argument of vaultFactory. For the types of VaultTypes that can be selected, refer to [Java doc](https://docs.jvault.org).   
+If you want to create a different type of vault, you can change the value of VaultType passed as an argument of vaultFactory. For the types of VaultTypes that can be selected, refer to [Java doc](https://docs.jvault.org/org/jvault/vault/VaultType.html).   
    
 In the code above, a vault with SquareWheel and RoundWheel registered as beans is created, and the vault can receive Car.class and all classes in the car and wheel package as parameters. Also, since the Car class is specified to be injected with a bean named "squareWheel", a Car instance injected with a bean named "squareWheel" is created by __vault.inject(Car.class);__.   
    
@@ -289,7 +307,7 @@ ClassVault vault = vaultFactory.get(buildInfo, VaultType.CLASS);
 Car car = vault.inject(Car.class);
 ```
    
-For more types of vaults that can be created, refer to [Java doc](https://docs.jvault.org).
+For more types of vaults that can be created, refer to [Java doc](https://docs.jvault.org/org/jvault/vault/VaultType.html).
    
 <br>
    
@@ -374,7 +392,7 @@ instancedCar.meter();
 ```
    
 In the code above, the user actually gets and uses the InstancedCar object with no knowledge of the Jvault API.   
-For more detailed usage of InstanceVault, see [Java doc](https://docs.jvault.org).   
+For more detailed usage of InstanceVault, see [Java doc](https://docs.jvault.org/org/jvault/vault/InstanceVault.html).   
    
 A better way is to provide a Factory rather than a constructor, or a separate method to get an Instance.   
    
@@ -420,7 +438,7 @@ Also, if you need to use Spring Bean in InternalBean, you can use _ApplicationCo
 ### Jvault Extensions
 
 The Jvault library provides a way to modify library behavior at runtime.   
-All runtime extensions are performed using [JvaultRuntimeExtension.class](). For example, if you want to register your own BeanReader instead of the AnnotatedBeanReader provided by Jvault at default, you can inject the implementation of the BeanReader interface into JvaultRuntimeExtension.   
+All runtime extensions are performed using [JvaultRuntimeExtension.class](https://docs.jvault.org/org/jvault/extension/JvaultRuntimeExtension.html). For example, if you want to register your own BeanReader instead of the AnnotatedBeanReader provided by Jvault at default, you can inject the implementation of the BeanReader interface into JvaultRuntimeExtension.   
    
 ``` Java
 BeanReader nullBeanReader = param -> null;  
@@ -436,7 +454,7 @@ JvaultRuntimeExtension.reset(BeanReader.class);
 JvaultRuntimeExtension.resetAll();
 ```
    
-See [Java doc](https://docs.jvault.org) for more detailed Jvault extensions.
+See [Java doc](https://docs.jvault.org/org/jvault/extension/JvaultRuntimeExtension.html) for more detailed Jvault extensions.
    
 <h2></h2>
 
