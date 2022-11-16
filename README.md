@@ -15,11 +15,11 @@ With Jvaut, you can effectively encapsulate your internal APIs from external use
    
 So, why Jvault?   
    
-1, Jvault is a DI library, it's means Jvault allows you to write code against interfaces, not implementations.   
+1, __Jvault is a DI library__, it's means Jvault allows you to write code against interfaces, not implementations.   
    
-2, Since Jvault does not depend on any library or framework, it can be used in various development environments (ex. Spring).   
+2, __Since Jvault does not depend on any library or framework__, it can be used in various development environments (ex. Spring).   
    
-3, Jvault helps you choose which classes can use you, so you can design an architecture like this:     
+3, __Jvault helps you choose which classes can use you__, so you can design an architecture like this:     
 If you are a library developer or developer creating an API that works on other code, you can completely hide your internal implementations from users and force to use only the APIs you intended.   
 Like this,   
 ![Group 31-2](https://user-images.githubusercontent.com/62425964/202200662-8ef29169-8d15-4f48-a5e5-7eec98b410a1.svg)    
