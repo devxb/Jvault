@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.jvault.extension.RuntimeExtensionTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-11-16T06:00:24" hostname="xb-apple.local" time="0.003">
-  <properties/>
-  <testcase name="FAIL_BEAN_READER_RUNTIME_EXTENSION_TEST()" classname="org.jvault.extension.RuntimeExtensionTest" time="0.001"/>
-  <testcase name="BEAN_READER_RUNTIME_EXTENSION_TEST()" classname="org.jvault.extension.RuntimeExtensionTest" time="0.002"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
