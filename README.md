@@ -414,7 +414,7 @@ Also, if you need to use Spring Bean in InternalBean, you can use _ApplicationCo
    
 <br>
    
-### Jvault 확장
+### Jvault Extensions
 
 The Jvault library provides a way to modify library behavior at runtime.   
 All runtime extensions are performed using [JvaultRuntimeExtension.class](). For example, if you want to register your own BeanReader instead of the AnnotatedBeanReader provided by Jvault at default, you can inject the implementation of the BeanReader interface into JvaultRuntimeExtension.   
