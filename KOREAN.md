@@ -149,6 +149,8 @@ public final class Car implements Vehicle{
 | value | 주입할 빈의 이름을 지정합니다. |
    
 필드 주입은 value의 값이 생략되면 필드의 이름을 기준으로 Bean을 찾아서 등록합니다.   
+    
+생성자 주입의 경우, 주입에 사용할 생성자 메소드 위에 @Inject어노테이션을 마킹해야하며, 생성자의 파라미터에 @Inject어노테이션을 마킹해야 합니다.   
    
 ``` Java
 package usecase.car;
