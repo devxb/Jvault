@@ -83,7 +83,7 @@ Let's see how to use it through an example of registering SquareWheel.class, as 
 package usecase.car.wheel;
 
 import org.jvault.annotation.InternalBean;  
-import org.jvault.beans.Type;
+import org.jvault.bean.Type;
 
 @InternalBean(
 	name = "squareWheel",
