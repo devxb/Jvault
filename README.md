@@ -156,6 +156,8 @@ The information that can be parametered in the @Inject annotation is as follows.
    
 Field injection finds and registers a bean based on the field's name if the value is omitted.   
    
+For constructor injection, @Inject annotation must be marked on the constructor method to be used for injection, and the parameter of the constructor must be marked with @Inject annotation.   
+   
 ``` Java
 package usecase.car;
 
