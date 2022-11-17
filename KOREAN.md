@@ -77,7 +77,7 @@ Wheel 인터페이스의 구현 중 하나인 SquareWheel을 InternalBean으로 
 package usecase.car.wheel;
 
 import org.jvault.annotation.InternalBean;  
-import org.jvault.beans.Type;
+import org.jvault.bean.Type;
 
 @InternalBean(
 	name = "squareWheel",
