@@ -1,7 +1,6 @@
 package org.jvault.bean.composition;
 
 import org.jvault.bean.Bean;
-import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.metadata.InternalAPI;
 
 @InternalAPI

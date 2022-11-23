@@ -149,15 +149,11 @@ public final class ClassVault extends AbstractVault<Class<?>> {
     }
 
     private Object loadBeanFromConstructor(Class<?> cls, Constructor<?> constructor) {
-        List<Parameter> parameters = REFLECTION.getAnnotatedConstructorParameters(constructor);
+        List<String> beanNames = REFLECTION.getAnnotatedConstructorParameters(constructor);
         List<Object> instancedParameters = new ArrayList<>();
-        for (Parameter parameter : parameters) {
-            Inject inject = parameter.getDeclaredAnnotation(Inject.class);
-            String value = inject.value();
-
-            throwIfCanNotFindDefinedBean(value);
-
-            instancedParameters.add(BEANS.get(value).loadIfInjectable(cls));
+        for (String beanName : beanNames) {
+            throwIfCanNotFindDefinedBean(beanName);
+            instancedParameters.add(BEANS.get(beanName).loadIfInjectable(cls));
         }
         return invokeConstructor(cls.getSimpleName(), constructor, instancedParameters.toArray());
     }

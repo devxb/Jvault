@@ -24,7 +24,7 @@ abstract class AbstractBean implements Bean {
     }
 
     @Override
-    public boolean isInjectable(Class<?> cls) {
+    public final boolean isInjectable(Class<?> cls) {
         if (ACCESS_PACKAGES.length == 0 && ACCESS_CLASSES.length == 0) return true;
         return isClassInjectable(cls) || isPackageInjectable(cls);
     }
@@ -55,7 +55,7 @@ abstract class AbstractBean implements Bean {
     }
 
     @Override
-    public <R> R loadIfInjectable(Class<?> cls){
+    public final <R> R loadIfInjectable(Class<?> cls){
         if(!isInjectable(cls)) throw new DisallowedAccessException(INSTANCE.getClass().getName(), cls.getName());
         return load();
     }

@@ -8,4 +8,8 @@ public final class ChoiceConstructorBean {
 
     private ChoiceConstructorBean(){}
 
+    String hello(){
+        return this.getClass().getSimpleName();
+    }
+
 }

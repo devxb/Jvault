@@ -12,8 +12,10 @@ import org.jvault.struct.annotationconfigwithclass.AnnotationConfigWithClass;
 import org.jvault.struct.buildvault.BuildVault;
 import org.jvault.struct.buildvaultcannotinjectbean.BuildVaultCannotInjectBean;
 import org.jvault.struct.buildvaultcannotinjectclass.BuildVaultCannotInjectClass;
+import org.jvault.struct.choiceconstructorinject.ChoiceConstructor;
 import org.jvault.struct.duplicatevault.DuplicateVault;
 import org.jvault.struct.genericbean.Generic;
+import org.jvault.struct.notannotatedconstructorinject.NotAnnotatedConstructorInject;
 import org.jvault.struct.vaultinjectsingletonbean.AnnotationConfigWithNotScan;
 import org.jvault.struct.vaultinjectsingletonbean.AnnotationConfigWithScan;
 import org.jvault.struct.vaultinjectsingletonbean.VaultInjectBean;
@@ -145,8 +147,10 @@ public class ClassVaultTest {
         TypeVaultFactory vaultFactory = TypeVaultFactory.getInstance();
         AnnotationVaultFactoryBuildInfo annotationVaultFactoryBuildInfo = new AnnotationVaultFactoryBuildInfo(org.jvault.struct.choiceconstructorinject.AnnotationConfig.class);
 
+        ClassVault classVault = vaultFactory.get(annotationVaultFactoryBuildInfo, VaultType.CLASS);
+        ChoiceConstructor choiceConstructor = classVault.inject(ChoiceConstructor.class);
         // then
-        Assertions.assertThrows(IllegalStateException.class, ()-> vaultFactory.get(annotationVaultFactoryBuildInfo, VaultType.CLASS));
+        Assertions.assertSame(choiceConstructor.helloFirstBean(), choiceConstructor.helloSecondBean());
     }
 
     @Test
@@ -229,6 +233,20 @@ public class ClassVaultTest {
 
         // then
         Assertions.assertEquals("Generic", generic.hello());
+    }
+
+    @Test
+    public void NOT_ANNOTATED_CONSTRUCTOR_INJECT(){
+        // given
+        TypeVaultFactory typeVaultFactory = TypeVaultFactory.getInstance();
+        AnnotationVaultFactoryBuildInfo buildInfo = new AnnotationVaultFactoryBuildInfo(org.jvault.struct.notannotatedconstructorinject.AnnotationConfig.class);
+
+        // when
+        ClassVault classVault = typeVaultFactory.get(buildInfo, VaultType.CLASS);
+        NotAnnotatedConstructorInject notAnnotatedConstructorInject = classVault.inject(NotAnnotatedConstructorInject.class);
+
+        // then
+        Assertions.assertEquals("NotAnnotatedConstructorInjectNotAnnotatedConstructorInjectBean", notAnnotatedConstructorInject.hello());
     }
 
 }

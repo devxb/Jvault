@@ -112,13 +112,9 @@ public final class InstanceVault extends AbstractVault<Object>{
 
     private <R> R injectBeanToConstructor(R injectTarget, Constructor<R> constructor){
         Class<?> injectTargetClass = injectTarget.getClass();
-        List<Parameter> parameters = REFLECTION.getAnnotatedConstructorParameters(constructor);
-        for(Parameter parameter : parameters){
-            Inject inject = parameter.getDeclaredAnnotation(Inject.class);
-            String beanName = inject.value();
-
+        List<String> beanNames = REFLECTION.getAnnotatedConstructorParameters(constructor);
+        for(String beanName : beanNames){
             throwIfCanNotFindDefinedBean(beanName);
-
             Field field = getInjectTargetField(injectTargetClass, beanName);
             field.setAccessible(true);
             injectBeanToField(injectTarget, field, beanName);

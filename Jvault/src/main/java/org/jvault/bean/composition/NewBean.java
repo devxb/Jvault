@@ -2,7 +2,6 @@ package org.jvault.bean.composition;
 
 import org.jvault.annotation.Inject;
 import org.jvault.bean.Bean;
-import org.jvault.exceptions.DisallowedAccessException;
 import org.jvault.exceptions.NoDefinedInternalBeanException;
 import org.jvault.metadata.InternalAPI;
 import org.jvault.util.Reflection;
@@ -13,7 +12,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @InternalAPI
 public final class NewBean extends AbstractBean {
@@ -87,10 +85,6 @@ public final class NewBean extends AbstractBean {
         return bean;
     }
 
-    private void throwIfCanNotFindDefinedBean(String beanName) {
-        if (!BEANS.containsKey(beanName)) throw new NoDefinedInternalBeanException(beanName);
-    }
-
     private Object loadBeanFromDefaultConstructor(Class<?> cls) {
         try {
             Constructor<?> constructor = cls.getDeclaredConstructor();
@@ -100,6 +94,10 @@ public final class NewBean extends AbstractBean {
                  IllegalAccessException e) {
             throw new IllegalStateException("Can not find default constructor in this class \"" + NAME + "\"");
         }
+    }
+
+    private void throwIfCanNotFindDefinedBean(String beanName) {
+        if (!BEANS.containsKey(beanName)) throw new NoDefinedInternalBeanException(beanName);
     }
 
     private void injectBeanToField(Field field, Object bean, Object instance) {

@@ -10,6 +10,7 @@ import org.jvault.struct.instancevaultconstructorinject.InstanceVaultConstructor
 import org.jvault.struct.instancevaultconstructorinjectfail.InstanceVaultConstructorInjectFail;
 import org.jvault.struct.instancevaultfieldinject.InstanceVaultFieldInject;
 import org.jvault.struct.instancevaultfieldinjectfail.InstanceVaultFieldInjectFail;
+import org.jvault.struct.notannotatedconstructorinject.NotAnnotatedConstructorInject;
 
 public class InstanceVaultTest {
 
@@ -73,6 +74,18 @@ public class InstanceVaultTest {
 
         // then
         Assertions.assertThrows(IllegalStateException.class, ()-> instanceVault.inject(instanceVaultConstructorInjectFail));
+    }
+
+    @Test
+    public void NOT_ANNOTATED_CONSTRUCTOR_INJECT(){
+        // given
+        NotAnnotatedConstructorInject notAnnotatedConstructorInject = new NotAnnotatedConstructorInject();
+
+        // when
+        String result = notAnnotatedConstructorInject.hello();
+
+        // then
+        Assertions.assertEquals("NotAnnotatedConstructorInjectNotAnnotatedConstructorInjectBean", notAnnotatedConstructorInject.hello());
     }
 
 }

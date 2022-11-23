@@ -20,7 +20,7 @@ abstract class AbstractVault<P> implements Vault<P> {
         BEANS = builder.getBeans();
     }
 
-    protected void throwIfParamDoesNotAccessible(Class<?> param){
+    protected final void throwIfParamDoesNotAccessible(Class<?> param){
         if (!isVaultAccessible(param)) throw new DisallowedAccessException(NAME, param.getPackage().getName());
     }
     private boolean isVaultAccessible(Class<?> cls) {

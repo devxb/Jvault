@@ -16,7 +16,6 @@ import org.jvault.util.Reflection;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Parameter;
 import java.util.*;
 
 @InternalAPI
@@ -42,8 +41,7 @@ public final class DefaultBeanLoader implements BeanLoader {
         SCC_ENTER = new HashMap<>();
     }
 
-    DefaultBeanLoader() {
-    }
+    DefaultBeanLoader() {}
 
     @Override
     public Map<String, Bean> load(List<Class<?>> beanClasses) {
@@ -107,14 +105,12 @@ public final class DefaultBeanLoader implements BeanLoader {
     }
 
     private void registerBeanFromConstructor(Class<?> beanClass, Constructor<?> constructor) {
-        List<Parameter> parameters = REFLECTION.getAnnotatedConstructorParameters(constructor);
+        List<String> parametersBeanName = REFLECTION.getAnnotatedConstructorParameters(constructor);
         List<Object> instancedParameters = new ArrayList<>();
-        for (Parameter parameter : parameters) {
-            Inject inject = parameter.getDeclaredAnnotation(Inject.class);
-            String value = inject.value();
-            loadBeanIfNotLoadedBean(value);
-            throwIfNotInjectable(value, beanClass);
-            instancedParameters.add(BEAN_INSTANCES.get(value));
+        for (String beanName : parametersBeanName) {
+            loadBeanIfNotLoadedBean(beanName);
+            throwIfNotInjectable(beanName, beanClass);
+            instancedParameters.add(BEAN_INSTANCES.get(beanName));
         }
         try {
             constructor.setAccessible(true);

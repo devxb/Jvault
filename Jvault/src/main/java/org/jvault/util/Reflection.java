@@ -7,9 +7,7 @@ import org.jvault.metadata.InternalAPI;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @InternalAPI
 public final class Reflection {
@@ -47,12 +45,15 @@ public final class Reflection {
         return ans;
     }
 
-    public List<Parameter> getAnnotatedConstructorParameters(Constructor<?> constructor){
+    public List<String> getAnnotatedConstructorParameters(Constructor<?> constructor){
         throwIfConstructorDoesNotAnnotatedInject(constructor);
+        List<String> parametersBeanName = new ArrayList<>();
         Parameter[] parameters = constructor.getParameters();
-        for(Parameter parameter : parameters)
-            throwIfInjectConstructorParameterHasNotValue(parameter.getDeclaredAnnotation(Inject.class));
-        return Arrays.asList(parameters);
+        for(Parameter parameter : parameters) {
+            String beanName = getBeanNameByParameter(parameter);
+            parametersBeanName.add(beanName);
+        }
+        return parametersBeanName;
     }
 
     private void throwIfConstructorDoesNotAnnotatedInject(Constructor<?> constructor){
@@ -61,9 +62,14 @@ public final class Reflection {
                     "only accept constructors marked with \"@Inject\" as parameters.\"");
     }
 
-    private void throwIfInjectConstructorParameterHasNotValue(Inject inject) {
-        if (inject == null || inject.value().equals(""))
-            throw new IllegalStateException("Constructor injection must specify \"@Inject(value = \"?\")\"");
+    private String getBeanNameByParameter(Parameter parameter){
+        Inject inject = parameter.getDeclaredAnnotation(Inject.class);
+        if(inject == null) return convertToBeanName(parameter.getType().getSimpleName());
+        return inject.value();
+    }
+
+    private String convertToBeanName(String name) {
+        return name.substring(0, 1).toLowerCase() + name.subSequence(1, name.length());
     }
 
 }
