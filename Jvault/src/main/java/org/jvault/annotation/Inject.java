@@ -29,11 +29,19 @@ import java.lang.annotation.Target;
  * SECOND. CONSTRUCTOR INJECTION
  * <pre>
  * {@code @Inject
- * private HelloWorld(@Inject("helloToo") HelloToo helloToo){}}
+ * private HelloWorld(@Inject("customNamedHelloToo") HelloToo helloToo){}}
+ * </pre>
+ * <br>
+ *
+ * <pre>
+ * {@code @Inject
+ * private HelloWorld(HelloToo helloToo){}}
  * </pre>
  *
  * In this case, @Inject annotation should be marked on the constructor to be used for injection,<br>
- * and @Inject annotation should be marked on the constructor parameter to be injected.<br>
+ * If there is @Inject in the constructor parameter, the bean is found and registered based on the value of the @Inject.<br>
+ * If there is no @Inject annotation on the parameter of the constructor,<br>
+ * the bean is registered based on the value in which the first letter of the parameter's type name is lowercase.<br>
  * Also, always input the value of @Inject of the marked parameter. <br> <br>
  *
  * If the @Inject-marked parameter of the constructor <br>
